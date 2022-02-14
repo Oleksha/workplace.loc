@@ -1,0 +1,12 @@
+{
+  "autoload": {
+    "psr-4": {
+      "workplace\\": "vendor/workplace/core",
+      "app\\": "app"
+    }
+  },
+  "require": {
+    "gabordemooij/redbean": "dev-master",
+    "ext-json": "*"
+  }
+}
