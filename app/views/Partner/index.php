@@ -51,5 +51,34 @@
                 <?php endif; ?>
             </ul>
         </nav>
+
+        <?php if($partners_all): ?>
+            <table id="example" class="display" style="width:100%">
+                <thead>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Адрес</th>
+                    <th>ИНН</th>
+                    <th>КПП</th>
+                    <th>ЕР</th>
+                    <th>Кредиторка</th>
+                    <th>Отсрочка</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($partners_all as $partner): ?>
+                    <tr>
+                        <th><a href="partner/<?= $partner->inn;?>"><?= $partner->name;?></a></th>
+                        <td><?= $partner->address;?></td>
+                        <td><?= $partner->inn;?></td>
+                        <td><?= $partner->kpp;?></td>
+                        <td><?= $partner->er;?></td>
+                        <td>111&nbsp;199,36&nbsp;₽</td>
+                        <td><?= $partner->delay;?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
     </div>
 </main>

@@ -23,6 +23,7 @@ class PartnerController extends AppController {
 
         // получение списка КА из БД
         $partners = \R::find('partner', "ORDER BY name LIMIT $start, $perpage");
+        $partners_all = \R::find('partner', "ORDER BY name");
         // формируем метатеги для страницы
         $this->setMeta('Cписок активных контрагентов', 'Описание...', 'Ключевые слова...');
         // Получение количества действующих ЕР
@@ -30,8 +31,12 @@ class PartnerController extends AppController {
             $ers = \R::getAll('SELECT * FROM er WHERE data_end >= CURDATE() AND id_partner = ?', [$partner['id']]);
             $partner['er'] = count($ers);
         }
+        foreach ($partners_all as $partner) {
+            $ers = \R::getAll('SELECT * FROM er WHERE data_end >= CURDATE() AND id_partner = ?', [$partner['id']]);
+            $partner['er'] = count($ers);
+        }
         // Передаем полученные данные в вид
-        $this->set(compact('partners', 'pagination'));
+        $this->set(compact('partners', 'pagination', 'partners_all'));
     }
 
     public function viewAction() {

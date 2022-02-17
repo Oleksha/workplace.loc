@@ -1,6 +1,28 @@
+$(document).ready(function() {
+    $('#example').dataTable( {
+        "language": {
+            "url": "/DataTables/DataTables-1.11.3/js/ru.json"
+        },
+        "aoColumns": [
+            null,
+            {"bSearchable": false },
+            {"sClass": "text-center",
+                "bSearchable": false },
+            {"sClass": "text-center",
+                "bSearchable": false },
+            {"sClass": "text-center",
+                "bSearchable": false },
+            {"sClass": "text-center",
+                "bSearchable": false },
+            {"sClass": "text-center",
+                "bSearchable": false },
+
+        ]
+    } );
+});
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
-})
+});
 /* Поиск */
 let partners = new Bloodhound ({
     datumTokenizer: Bloodhound.tokenizers.whitespace,
