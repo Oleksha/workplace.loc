@@ -22,6 +22,7 @@ class MainController extends AppController {
       
       // получение списка не оплаченных приходов из БД
       $receipt = \R::find('receipt', "WHERE (date_pay is NULL) OR (date_pay = CURDATE()) ORDER BY partner LIMIT $start, $perpage");
+        $receipt_all = \R::find('receipt', "WHERE (date_pay is NULL) OR (date_pay = CURDATE()) ORDER BY partner");
       /*
       array(
             [1] (
@@ -37,7 +38,7 @@ class MainController extends AppController {
       */
         $rec = [];
       // Получаем дополнительную информацию
-        foreach ($receipt as $value) {
+        foreach ($receipt_all as $value) {
             // Получаем номер оплаты если он есть
             $partner = \R::findOne('partner', 'name = ?', [$value->partner]);
             $delay = [];

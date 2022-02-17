@@ -19,6 +19,11 @@ $(document).ready(function() {
 
         ]
     } );
+    $('#main_index').dataTable( {
+        "language": {
+            "url": "/DataTables/DataTables-1.11.3/js/ru.json"
+        }
+    } );
 });
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
