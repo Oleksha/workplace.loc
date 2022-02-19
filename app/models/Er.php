@@ -53,8 +53,4 @@ class Er extends AppModel {
         }
     }
 
-    public function delEr($table, $id) {
-
-    }
-
 }

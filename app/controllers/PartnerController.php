@@ -69,6 +69,7 @@ class PartnerController extends AppController {
     }
 
     public function addAction() {
+        unset($_SESSION['form_data']); // Очищаем сессию данных о КА
         // если существуют переданные данные методом POST
         if (!empty($_POST)) {
             // создаем объект класса-модели User
@@ -88,6 +89,7 @@ class PartnerController extends AppController {
                 if ($id = $user->save('partner')) {
                     // если все прошло хорошо в ID номер зарегистрированного пользователя
                     //$_SESSION['success'] = 'Контрагент сохранен в БД';
+                    unset($_SESSION['form_data']);
                     // перезагрузим страницу
                     redirect("/partner/" . $data['inn']);
                 } else {
@@ -126,6 +128,7 @@ class PartnerController extends AppController {
         $partner = new Partner();
         $partner->load($edit_ka);
         $partner->edit('partner', $edit_ka['id_ka']);
+        unset($_SESSION['form_data']);
         redirect();
     }
 

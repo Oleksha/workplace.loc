@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $('#example').dataTable( {
+        "aLengthMenu": [[7, 15, 25, -1], [7, 15, 25, "All"]],
         "language": {
             "url": "/DataTables/DataTables-1.11.3/js/ru.json"
         },
@@ -20,9 +21,19 @@ $(document).ready(function() {
         ]
     } );
     $('#main_index').dataTable( {
+        "aLengthMenu": [[7, 15, 25, -1], [7, 15, 25, "All"]],
         "language": {
             "url": "/DataTables/DataTables-1.11.3/js/ru.json"
-        }
+        },
+        "aoColumns": [
+            null,
+            {"bSearchable": false },
+            null,
+            {"bSearchable": false },
+            {"bSearchable": false },
+            {"bSearchable": false }
+
+        ]
     } );
 });
 $(function () {
@@ -100,8 +111,8 @@ $('body').on('click', '.add-er-link', function (e) {
 });
 
 /**
- * Показывает нашу корзину
- * @param cart полученные данные
+ * Показывает модальное окно с данными ЕР
+ * @param er полученные данные
  */
 function showEr(er) {
     // выводим содержимое страницы
@@ -113,20 +124,6 @@ function showAddEr(er) {
     // выводим содержимое страницы
     $('#addERModal .modal-body').html(er);
     $('#addERModal').modal();
-}
-
-function clearEr() {
-    $.ajax({
-        url: '/er/clear', // всегда указываем от корня
-        type: 'GET', // тип передаваемого запроса
-        success: function (res) {
-            // если данные получены
-        },
-        error: function () {
-            // если данных нет или запрос не дошел
-            alert('Ошибка получения данных с сервера! Попробуйте позже.');
-        }
-    });
 }
 
 $('body').on('click', '.edit-ka-link', function (e) {
