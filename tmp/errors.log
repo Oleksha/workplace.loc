@@ -98,3 +98,15 @@
 --------------------
 [2022-02-17 16:59:05] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
 --------------------
+[2022-02-19 15:47:43] Текст ошибки: Контроллер app\controllers\ReceiptController не найден | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 46
+--------------------
+[2022-02-19 15:47:43] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-02-19 17:02:54] Текст ошибки: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_partner' in 'field list' | Файл: F:\WebServer\domains\workplace.loc\vendor\gabordemooij\redbean\RedBeanPHP\Driver\RPDO.php | Строка: 202
+--------------------
+[2022-02-19 17:02:55] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-02-19 19:25:28] Текст ошибки: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`workplace`.`er`, CONSTRAINT `budget_item` FOREIGN KEY (`id_budget_item`) REFERENCES `budget_items` (`id`)) | Файл: F:\WebServer\domains\workplace.loc\vendor\gabordemooij\redbean\RedBeanPHP\Driver\RPDO.php | Строка: 202
+--------------------
+[2022-02-19 19:25:28] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------

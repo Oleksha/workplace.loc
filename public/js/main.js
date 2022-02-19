@@ -153,3 +153,56 @@ function showEditKa(ka) {
     $('#editKAModal').modal();
 }
 
+$('body').on('click', '.add-receipt-link', function (e) {
+    e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
+    // получаем необходимые нам данные
+    let partner = $(this).data('name'); // наименование КА
+
+    // отправляем стандартный аякс запрос на сервер
+    $.ajax({
+        url: '/receipt/add', // всегда указываем от корня
+        data: {partner: partner}, // передаем данные
+        type: 'GET', // тип передаваемого запроса
+        success: function (res) {
+            // если данные получены
+            showAddReceipt(res);
+        },
+        error: function () {
+            // если данных нет или запрос не дошел
+            alert('Ошибка получения данных с сервера! Попробуйте позже.');
+        }
+    });
+});
+
+$('body').on('click', '.edit-receipt-link', function (e) {
+    e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
+    // получаем необходимые нам данные
+    let id = $(this).data('id'); // идентификатор прихода
+
+    // отправляем стандартный аякс запрос на сервер
+    $.ajax({
+        url: '/receipt/edit', // всегда указываем от корня
+        data: {id: id}, // передаем данные
+        type: 'GET', // тип передаваемого запроса
+        success: function (res) {
+            // если данные получены
+            showEditReceipt(res);
+        },
+        error: function () {
+            // если данных нет или запрос не дошел
+            alert('Ошибка получения данных с сервера! Попробуйте позже.');
+        }
+    });
+});
+
+function showAddReceipt(receipt) {
+    // выводим содержимое страницы
+    $('#addReceiptModal .modal-body').html(receipt);
+    $('#addReceiptModal').modal();
+}
+function showEditReceipt(receipt) {
+    // выводим содержимое страницы
+    $('#editReceiptModal .modal-body').html(receipt);
+    $('#editReceiptModal').modal();
+}
+

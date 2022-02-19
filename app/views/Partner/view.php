@@ -1,14 +1,16 @@
 <main class="content">
     <div class="container">
         <h1 class="mt-1">Карточка контрагента</h1>
+        <?php if (!empty($partner)) : ?>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?=PATH;?>">Главная</a></li>
                 <li class="breadcrumb-item"><a href="<?=PATH;?>/partner">Список контрагентов</a></li>
-                <li class="breadcrumb-item active" aria-current="page"><?=$partner->name ?></li>
+                <li class="breadcrumb-item active" aria-current="page"><?=
+                    $partner->name; ?></li>
             </ol>
         </nav>
-        <h2><?=$partner->name ?></h2>
+        <h2><?=$partner->name; ?></h2>
         <div id="accordion">
             <div class="card">
                 <div class="card-header" id="headingOne">
@@ -82,7 +84,7 @@
                             }
                             ?>
                         </p>
-                        <a type="button" class="btn btn-outline-info edit-ka-link" href="partner/edit" data-id="<?= $partner->id;?>">Редактировать</a>
+                        <a type="button" class="btn btn-outline-info edit-ka-link" data-id="<?= $partner->id;?>">Редактировать</a>
                     </div>
                 </div>
             </div>
@@ -96,7 +98,7 @@
                 </div>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                     <div class="card-body">
-                        <?php if($ers): ?>
+                        <?php if(!empty($ers)): ?>
                             <?php foreach ($ers as $er): ?>
                                 <?php $result = false; $result_date = false; $result_sum = false; ?>
                                 <?php $date = strtotime('+30 days'); ?>
@@ -136,7 +138,7 @@
                                                 </span>
                                             </div>
                                             <div class="col-2">
-                                                <a type="button" class="btn btn-outline-info edit-er-link" href="er/edit" data-id="<?= $er['id'];?>" data-toggle="tooltip" data-placement="top" title="Изменить" data-partner_id="<?= $partner->id;?>">
+                                                <a type="button" class="btn btn-outline-info edit-er-link" data-id="<?= $er['id'];?>" data-toggle="tooltip" data-placement="top" title="Изменить" data-partner_id="<?= $partner->id;?>">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"></path>
                                                     </svg>
@@ -172,7 +174,7 @@
                 </div>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                     <div class="card-body">
-                        <?php if($receipt): ?>
+                        <?php if(!empty($receipt)): ?>
                         <table class="table table-striped table-sm">
                             <thead>
                             <tr class="table-active text-center">
@@ -188,7 +190,7 @@
                             <tbody>
                             <?php foreach ($receipt as $item): ?>
                                 <tr>
-                                    <th class="text-center h-100 align-middle" scope="row"><a href="receipt/edit" class="edit-receipt" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
+                                    <th class="text-center h-100 align-middle" scope="row"><a href="receipt/edit" class="edit-receipt-link" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
                                     <td class="text-center h-100 align-middle"><?= $item['date'];?></td>
                                     <td class="text-center h-100 align-middle"><?= number_format($item['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
                                     <td class="text-center h-100 align-middle"><?= $item['num_doc'];?></td>
@@ -203,12 +205,13 @@
                         <h3>Данные о приходах отсутствуют</h3>
                         <?php endif; ?>
                         <div class="d-flex justify-content-center">
-                            <a type="button" href="receipt/add" class="btn btn-outline-info mt-3 add-er-link" data-id="<?= $partner->name;?>">Добавить новый приход</a>
+                            <a type="button" class="btn btn-outline-info mt-3 add-receipt-link" data-name="<?= $partner->name;?>">Добавить новый приход</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <?php endif; ?>
     </div>
 </main>
 
@@ -217,7 +220,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Редактирование данных юридического лица</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearEr()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -277,3 +280,48 @@
         </div>
     </div>
 </div>
+
+<div id="addReceiptModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавление нового прихода</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="receipt/add-receipt" id="receipt_add" role="form" class="was-validated">
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="editReceiptModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Редактирование данных прихода</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="receipt/edit-receipt" id="receipt_add" role="form" class="was-validated">
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+}
