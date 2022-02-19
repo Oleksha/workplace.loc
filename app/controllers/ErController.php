@@ -37,13 +37,6 @@ class ErController extends AppController {
         redirect();
     }
 
-    /**
-     * @return void очищает данные об ЕР записанном в сессии
-     */
-    public function clearAction() {
-        unset($_SESSION['er']); // Очищаем сессию cart все товары в корзине
-    }
-
     public function editErAction() {
         // получаем данные пришедшие методом POST
         $edit_er = !empty($_POST) ? $_POST : null;

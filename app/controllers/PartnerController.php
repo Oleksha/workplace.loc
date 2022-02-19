@@ -9,53 +9,41 @@ use workplace\libs\Pagination;
 
 class PartnerController extends AppController {
 
-
-
     public function indexAction() {
-        // получаем номер страницы
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        // получаем количество КА на одну страницу
-        $perpage = App::$app->getProperty('pagination');
-        // получаем количество КА
-        $total = \R::count('partner');
-        $pagination = new Pagination($page, $perpage, $total);
-        $start = $pagination->getStart();
-
         // получение списка КА из БД
-        $partners = \R::find('partner', "ORDER BY name LIMIT $start, $perpage");
-        $partners_all = \R::find('partner', "ORDER BY name");
+        $partners = \R::find('partner', "ORDER BY name");
         // формируем метатеги для страницы
         $this->setMeta('Cписок активных контрагентов', 'Описание...', 'Ключевые слова...');
         // Получение количества действующих ЕР
         foreach ($partners as $partner) {
             $ers = \R::getAll('SELECT * FROM er WHERE data_end >= CURDATE() AND id_partner = ?', [$partner['id']]);
             $partner['er'] = count($ers);
-        }
-        foreach ($partners_all as $partner) {
-            $ers = \R::getAll('SELECT * FROM er WHERE data_end >= CURDATE() AND id_partner = ?', [$partner['id']]);
-            $partner['er'] = count($ers);
+            $sum = 0;
+            $receipts = \R::getAll('SELECT * FROM receipt WHERE partner = ?', [$partner['name']]);
+            foreach ($receipts as $receipt) {
+                if (is_null($receipt['date_pay'])) {
+                    $sum += $receipt['sum'];
+                }
+            }
+            $partner['sum'] = $sum;
         }
         // Передаем полученные данные в вид
-        $this->set(compact('partners', 'pagination', 'partners_all'));
+        $this->set(compact('partners'));
     }
 
     public function viewAction() {
-        // получение алиаса запрашиваемого контрагента
+        // получение ИНН запрашиваемого контрагента
         $inn = $this->route['inn'];
         // получение данных по КА из БД
         $partner = \R::findOne('partner', 'inn = ?', [$inn]);
         if (!$partner) {
             // Если такого контрагента нет выбрасываем исключение
-            throw new \Exception('Контрагент с кодом ' . $inn . 'не найден', 500);
+            throw new \Exception('Контрагент с ИНН ' . $inn . ' не найден', 500);
         }
-
-        // хлебные крошки
-
         // единоличные решения
         // Получаем id контрагента
         $id = $partner['id'];
         // получение данных по ЕР для КА из БД
-        // $ers = \R::getAll('SELECT er.*, budget_items.* FROM er, budget_items WHERE er.id_budget_item = budget_items.id AND er.data_end >= CURDATE() AND er.id_partner = ?', [$id]);
         $ers = \R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$id]);
 
         // Приходы
