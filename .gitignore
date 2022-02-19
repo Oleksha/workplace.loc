@@ -1,1 +1,9 @@
 /composer.lock
+/.idea/.gitignore
+/.idea/dataSources.xml
+/.idea/deployment.xml
+/.idea/modules.xml
+/.idea/php.xml
+/.idea/sqldialects.xml
+/.idea/vcs.xml
+/.idea/workplace.loc.iml
