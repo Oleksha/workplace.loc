@@ -110,3 +110,7 @@
 --------------------
 [2022-02-19 19:25:28] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
 --------------------
+[2022-02-20 08:13:35] Текст ошибки: Метод app\controllers\ReceiptController::paymentAction не найден | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 42
+--------------------
+[2022-02-20 14:47:43] Текст ошибки: Метод app\controllers\ReceiptController::paymentAction не найден | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 42
+--------------------

@@ -195,6 +195,27 @@ $('body').on('click', '.edit-receipt-link', function (e) {
     });
 });
 
+$('body').on('click', '.pay-receipt-link', function (e) {
+    e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
+    // получаем необходимые нам данные
+    let id = $(this).data('id'), // идентификатор прихода
+        partner = $(this).data('partner'); // идентификатор прихода
+    // отправляем стандартный аякс запрос на сервер
+    $.ajax({
+        url: '/receipt/pay', // всегда указываем от корня
+        data: {id: id, partner: partner}, // передаем данные
+        type: 'GET', // тип передаваемого запроса
+        success: function (res) {
+            // если данные получены
+            showPaymentReceipt(res);
+        },
+        error: function () {
+            // если данных нет или запрос не дошел
+            alert('Ошибка получения данных с сервера! Попробуйте позже.');
+        }
+    });
+});
+
 function showAddReceipt(receipt) {
     // выводим содержимое страницы
     $('#addReceiptModal .modal-body').html(receipt);
@@ -205,4 +226,10 @@ function showEditReceipt(receipt) {
     $('#editReceiptModal .modal-body').html(receipt);
     $('#editReceiptModal').modal();
 }
+function showPaymentReceipt(receipt) {
+    // выводим содержимое страницы
+    $('#editReceiptModal .modal-body').html(receipt);
+    $('#editReceiptModal').modal();
+}
+
 
