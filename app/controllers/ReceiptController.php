@@ -89,13 +89,21 @@ class ReceiptController extends AppController {
         $receipt_num = $receipt->number . '/' . $year;
         $payments = \R::getAll('SELECT * FROM payment WHERE receipt = ?', [$receipt_num]);
 
+        // получаем все неоплаченные приходы этого КА
+        $receipts = \R::find('receipt', 'partner = ? AND date_pay IS NULL', [$name]);
+        $recs = [];
+        foreach ($receipts as $receipt) {
+            $recs[] = dateYear($receipt->number, $receipt->date);
+        }
+
+
         if (!empty($payments)) {
             // если есть редактируем ее. Получаем идентификатор оплаты
             $id_pay= $payments->id;
         } else {
             // если нет добавляем ее
             $payment = new Payment();
-            $payment->addPayment($name, $receipt_num);
+            $payment->addPayment($name, $receipt_num, $recs);
             if ($this->isAjax()) {
                 // Если запрос пришел АЯКСом
                 $this->loadView('payment_add_modal');

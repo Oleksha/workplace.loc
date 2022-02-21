@@ -17,3 +17,8 @@ function redirect($http = false) {
 function h($str) {
     return htmlspecialchars($str, ENT_QUOTES);
 }
+
+function dateYear($data, $date) {
+    $year = date('Y', strtotime($date));
+    return $data . '/' . $year;
+}

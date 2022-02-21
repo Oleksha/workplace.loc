@@ -228,8 +228,8 @@ function showEditReceipt(receipt) {
 }
 function showPaymentReceipt(receipt) {
     // выводим содержимое страницы
-    $('#editReceiptModal .modal-body').html(receipt);
-    $('#editReceiptModal').modal();
+    $('#payReceiptModal .modal-body').html(receipt);
+    $('#payReceiptModal').modal();
 }
 
 

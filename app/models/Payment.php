@@ -38,7 +38,7 @@ class Payment extends AppModel {
         }
     }
 
-    public function addPayment($name, $receipt) {
+    public function addPayment($name, $receipt, $receipts) {
         unset($_SESSION['payment']); // Очищаем сессию
         $_SESSION['payment'] = [
             'date' => null,
@@ -46,12 +46,13 @@ class Payment extends AppModel {
             'sum' => null,
             'vat' => null,
             'partner' => $name,
-            'receipt' => $receipt,
+            'receipt' => $receipts,
             'num_er' => null,
             'sum_er' => null,
             'num_bo' => null,
             'sum_bo' => null,
             'date_pay' => null,
+            'receipt_current' => $receipt,
         ];
     }
 

@@ -299,7 +299,7 @@
 </div>
 
 <div id="addReceiptModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog " role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Добавление нового прихода</h5>
@@ -321,7 +321,7 @@
 </div>
 
 <div id="editReceiptModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog " role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Редактирование данных прихода</h5>
@@ -330,6 +330,28 @@
                 </button>
             </div>
             <form method="post" action="receipt/edit-receipt" id="receipt_add" role="form" class="was-validated">
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="payReceiptModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Внесение/Изменение данных об оплате </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="receipt/pay-receipt" id="receipt_pay" role="form">
                 <div class="modal-body">
 
                 </div>

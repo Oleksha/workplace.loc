@@ -1,3 +1,9 @@
+<select name="receipt" id="receipt" data-placeholder="Choose a Country..." class="chosen-select" multiple  tabindex="4">
+    <option value="1">проверка 1</option>
+    <option value="2">проверка 2</option>
+    <option value="3">проверка 3</option>
+    <option value="4">проверка 4</option>
+</select>
 <div class="has-feedback">
     <label for="name">Наименование контрагента</label>
     <input type="text" name="name" class="form-control" id="name" placeholder="Наименование КА" value="<?=isset($_SESSION['payment']['partner']) ? h($_SESSION['payment']['partner']) : '';?>" disabled>
@@ -27,8 +33,9 @@
 </div>
 <div class="form-row">
     <div class="has-feedback col-6">
-        <label for="receipt">Номер Приходов</label>
-        <input type="text" name="receipt" class="form-control" id="receipt" placeholder="Номер документа" value="<?=isset($_SESSION['payment']['receipt']) ? h($_SESSION['payment']['receipt']) : '';?>" required>
+        <label for="receipt">Номер Приходов</label><br>
+
+        <!--<input type="text" name="" class="form-control" id="" placeholder="Номер документа" value="<?=isset($_SESSION['payment']['receipt']) ? h($_SESSION['payment']['receipt']) : '';?>" required>-->
     </div>
     <div class="has-feedback col-6">
         <label for="date_pay">Дата оплаты</label>

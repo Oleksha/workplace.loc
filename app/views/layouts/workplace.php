@@ -9,6 +9,8 @@
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="css/sticky-footer-navbar.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="chosen/docsupport/prism.css"/>
+    <link rel="stylesheet" type="text/css" href="chosen/chosen.css"/>
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body class="d-flex flex-column h-100">
@@ -43,7 +45,8 @@
         </nav>
     </header>
     <div class="content">
-        <?=$content;?>
+        <?= /** @var string $content */
+        $content;?>
     </div>
     <footer class="footer mt-auto py-3">
         <div class="container">
@@ -54,10 +57,13 @@
     <script>
         let path = '<?=PATH;?>';
     </script>
-    <script src="js/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="chosen/docsupport/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="chosen/chosen.jquery.js"></script>
+    <script type="text/javascript" src="chosen/docsupport/prism.js"></script>
+    <script type="text/javascript" src="chosen/docsupport/init.js"></script>
     <script type="text/javascript" src="DataTables/datatables.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/typeahead.bundle.js"></script>
-    <script src="js/main.js"></script>
+    <script type="text/javascript" src="js/typeahead.bundle.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
