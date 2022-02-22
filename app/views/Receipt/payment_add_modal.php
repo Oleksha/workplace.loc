@@ -91,4 +91,7 @@
         <label for="sum_bo">Сумма БО</label>
         <input type="text" name="sum_bo" class="form-control" id="sum_bo" placeholder="" value="<?=isset($_SESSION['payment']['sum_bo']) ? h($_SESSION['payment']['sum_bo']) : '';?>" required>
     </div>
-</div><input type="hidden" name="partner" value="<?=isset($_SESSION['receipt']['partner']) ? h($_SESSION['receipt']['partner']) : '';?>">
+</div>
+<input type="hidden" name="partner" value="<?=isset($_SESSION['payment']['partner']) ? h($_SESSION['payment']['partner']) : '';?>">
+<input type="hidden" name="id" value="<?=isset($_SESSION['payment']['id']) ? h($_SESSION['payment']['id']) : '';?>">
+
