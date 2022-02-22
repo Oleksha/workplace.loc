@@ -1,9 +1,3 @@
-<select name="receipt" id="receipt" data-placeholder="Choose a Country..." class="chosen-select" multiple  tabindex="4">
-    <option value="1">проверка 1</option>
-    <option value="2">проверка 2</option>
-    <option value="3">проверка 3</option>
-    <option value="4">проверка 4</option>
-</select>
 <div class="has-feedback">
     <label for="name">Наименование контрагента</label>
     <input type="text" name="name" class="form-control" id="name" placeholder="Наименование КА" value="<?=isset($_SESSION['payment']['partner']) ? h($_SESSION['payment']['partner']) : '';?>" disabled>
@@ -32,10 +26,27 @@
     </div>
 </div>
 <div class="form-row">
+    <script type="text/javascript" src="chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".number_receipt_select").chosen({
+                width: "100%"
+            });
+        });
+    </script>
     <div class="has-feedback col-6">
-        <label for="receipt">Номер Приходов</label><br>
-
-        <!--<input type="text" name="" class="form-control" id="" placeholder="Номер документа" value="<?=isset($_SESSION['payment']['receipt']) ? h($_SESSION['payment']['receipt']) : '';?>" required>-->
+        <label for="receipt">Номера приходов</label><br>
+        <select name="number_receipt" id="number_receipt" data-placeholder="Выберите приход..." class="number_receipt_select" multiple>
+            <?php foreach ($_SESSION['payment']['receipt'] as $value) : ?>
+                <option value="<?= $value;?>"
+                    <?php 
+                        if ($value == $_SESSION['payment']['receipt_current']) {
+                            echo " selected";
+                        }
+                    ?>
+                ><?= $value;?></option>
+            <?php endforeach; ?>
+        </select>
     </div>
     <div class="has-feedback col-6">
         <label for="date_pay">Дата оплаты</label>
