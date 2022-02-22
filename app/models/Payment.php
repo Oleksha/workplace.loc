@@ -19,23 +19,24 @@ class Payment extends AppModel {
         'date_pay' => '',
     ];
 
-    public function editReceipt($receipt) {
-        unset($_SESSION['receipt']); // Очищаем сессию
-        if (!is_null($receipt)) {
-            $_SESSION['receipt'] = [
-                'id' => $receipt->id,
-                'date' => $receipt->date,
-                'number' => $receipt->number,
-                'sum' => $receipt->sum,
-                'vat' => $receipt->vat,
-                'partner' => $receipt->partner,
-                'num_doc' => $receipt->num_doc,
-                'date_doc' => $receipt->date_doc,
-                'note' => $receipt->note,
-                'num_pay' => $receipt->num_pay,
-                'date_pay' => $receipt->date_pay,
-            ];
-        }
+    public function editPayment($name, $receipt, $receipts, $ers, $payments) {
+        unset($_SESSION['payment']); // Очищаем сессию
+        $_SESSION['payment'] = [
+            'id' => $payments['id'],
+            'number' => $payments['number'],
+            'date' => $payments['date'],
+            'sum' => $payments['sum'],
+            'vat' => $payments['vat'],
+            'partner' => $name,
+            'receipt' => $receipts,
+            'num_er' => $ers,
+            'sum_er' => $payments['sum_er'],
+            'num_bo' => $payments['num_bo'],
+            'sum_bo' => $payments['sum_bo'],
+            'date_pay' => null,
+            'receipt_current' => $receipt,
+            'num_er_current' => $payments['num_er'],
+        ];
     }
 
     public function addPayment($name, $receipt, $receipts, $ers) {
