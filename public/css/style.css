@@ -127,3 +127,8 @@ span.twitter-typeahead {
     top: 46px !important;
 }
 /*search*/
+
+.chosen-container-multi .chosen-choices {
+    padding: 5px;
+    border-radius: 4px;
+}
