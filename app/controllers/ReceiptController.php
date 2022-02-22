@@ -90,7 +90,7 @@ class ReceiptController extends AppController {
         $name = $receipt->partner;
         $year = date('Y', strtotime($receipt->date));
         $receipt_num = $receipt->number . '/' . $year;
-        $payments = \R::getAll('SELECT * FROM payment WHERE receipt = ?', [$receipt_num]);
+        $payments = \R::findOne('payment', 'receipt = ?', [$receipt_num]);
 
         // получаем все неоплаченные приходы этого КА
         $receipts = \R::find('receipt', 'partner = ? AND date_pay IS NULL', [$name]);
@@ -102,7 +102,13 @@ class ReceiptController extends AppController {
 
         if (!empty($payments)) {
             // если есть редактируем ее. Получаем идентификатор оплаты
-            $id_pay= $payments->id;
+            $payment = new Payment();
+            $payment->editPayment($name, $receipt_num, $recs, $er, $payments);
+            if ($this->isAjax()) {
+                // Если запрос пришел АЯКСом
+                $this->loadView('payment_add_modal');
+            }
+            redirect();
         } else {
             // если нет добавляем ее
             $payment = new Payment();
