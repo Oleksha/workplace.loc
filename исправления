@@ -1,0 +1,28 @@
+// это в payment_add_modal
+
+<script type="text/javascript" src="chosen/chosen.jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".number_receipt_select").chosen({
+                width: "100%"
+            });
+        });
+    </script>
+        <label for="number_receipt">Номер Приходов</label><br>
+        <select name="number_receipt" id="number_receipt" data-placeholder="Выберите приход..." class="number_receipt_select" multiple>
+            <?php foreach ($_SESSION['payment']['receipt'] as $value) : ?>
+                <option value="<?= $value;?>"
+                    <?php 
+                        if ($value == $_SESSION['payment']['receipt_current']) {
+                            echo " selected";
+                        }
+                    ?>
+                ><?= $value;?></option>
+            <?php endforeach; ?>
+        </select>
+
+// это в style.css
+.chosen-container-multi .chosen-choices {
+    padding: 5px;
+    border-radius: 4px;
+}
