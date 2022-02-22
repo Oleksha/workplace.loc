@@ -131,5 +131,11 @@ class ReceiptController extends AppController {
         $receipt->addReceipt($partner);
         */
     }
+    
+    public function payReceiptAction() {
+        // получаем данные пришедшие методом POST
+        $pay_receipt = !empty($_POST) ? $_POST : null;
+        debug($pay_receipt); die;
+    }
 
 }
