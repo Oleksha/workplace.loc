@@ -77,8 +77,11 @@ class ReceiptController extends AppController {
         $ers = \R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$partner_id]);
         // получаем массив используемых статей расхода
         $budget_items = [];
+        $er = [];
         foreach ($ers as $k => $v) {
             $budget_items[] = $v['name_budget_item'];
+            $er[$k]['budget'] = $v['name_budget_item'];
+            $er[$k]['number'] = $v['number'];
         }
         // необходимо получить используемые БО
 
@@ -103,7 +106,7 @@ class ReceiptController extends AppController {
         } else {
             // если нет добавляем ее
             $payment = new Payment();
-            $payment->addPayment($name, $receipt_num, $recs);
+            $payment->addPayment($name, $receipt_num, $recs, $er);
             if ($this->isAjax()) {
                 // Если запрос пришел АЯКСом
                 $this->loadView('payment_add_modal');
