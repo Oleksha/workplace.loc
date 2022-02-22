@@ -74,7 +74,7 @@ class ReceiptController extends AppController {
         $partner_id = !empty($_GET['partner']) ? (int)$_GET['partner'] : null;
         // получение сопутствующих данных
         // получаем все действующие ЕР для этого КА
-        $ers = \R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$partner_id]);
+        $ers = \R::getAll("SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?", [$partner_id]);
         // получаем массив используемых статей расхода
         $budget_items = [];
         $er = [];
@@ -89,8 +89,9 @@ class ReceiptController extends AppController {
         $receipt = \R::findOne('receipt', 'id = ?', [$id]);
         $name = $receipt->partner;
         $year = date('Y', strtotime($receipt->date));
-        $receipt_num = $receipt->number . '/' . $year;
-        $payments = \R::findOne('payment', 'receipt = ?', [$receipt_num]);
+        $receipt_num = '%' . $receipt->number . '/' . $year . '%';
+        $payments = \R::findOne('payment', "receipt LIKE ?", [$receipt_num]);
+
 
         // получаем все неоплаченные приходы этого КА
         $receipts = \R::find('receipt', 'partner = ? AND date_pay IS NULL', [$name]);
@@ -98,30 +99,21 @@ class ReceiptController extends AppController {
         foreach ($receipts as $receipt) {
             $recs[] = dateYear($receipt->number, $receipt->date);
         }
-
-
-        if (!empty($payments)) {
+        //debug($recs);die;
+        $payment = new Payment();
+        if ($payments) {
             // если есть редактируем ее. Получаем идентификатор оплаты
-            $payment = new Payment();
-            $payment->editPayment($name, $receipt_num, $recs, $er, $payments);
-            if ($this->isAjax()) {
-                // Если запрос пришел АЯКСом
-                $this->loadView('payment_add_modal');
-            }
-            redirect();
+            $payment->editPayment($name, $recs, $er, $payments);
         } else {
             // если нет добавляем ее
-            $payment = new Payment();
-            $payment->addPayment($name, $receipt_num, $recs, $er);
-            if ($this->isAjax()) {
-                // Если запрос пришел АЯКСом
-                $this->loadView('payment_add_modal');
-            }
-            redirect();
+            $payment->addPayment($name, trim($receipt_num,'%'), $recs, $er);
+            //debug($_SESSION['payment']);die;
         }
-
-
-
+        if ($this->isAjax()) {
+            // Если запрос пришел АЯКСом
+            $this->loadView('payment_add_modal');
+        }
+        redirect();
 
 
         /*/ получаем данные пришедшие методом POST

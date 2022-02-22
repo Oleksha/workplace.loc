@@ -351,7 +351,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="receipt/pay-receipt" id="receipt_pay" role="form">
+            <form method="post" action="receipt/pay-receipt" id="receipt_pay" role="form" class="was-validated">
                 <div class="modal-body">
 
                 </div>

@@ -15,7 +15,7 @@
 <div class="form-row">
     <div class="has-feedback col-6">
         <label for="sum">Сумма оплаты</label>
-        <input type="number" name="sum" class="form-control" id="sum"  placeholder="" step="0.01" value="<?=isset($_SESSION['payment']['sum']) ? h($_SESSION['payment']['sum']) : '';?>" required>
+        <input type="text" name="sum" class="form-control" id="sum"  placeholder="" step="0.01" value="<?=isset($_SESSION['payment']['sum']) ? h($_SESSION['payment']['sum']) : '';?>" required>
     </div>
     <div class="has-feedback col-6">
         <label for="vat">НДС</label>
@@ -39,10 +39,16 @@
         <select name="number_receipt" id="number_receipt" data-placeholder="Выберите приход..." class="number_receipt_select" multiple>
             <?php foreach ($_SESSION['payment']['receipt'] as $value) : ?>
                 <option value="<?= $value;?>"
-                    <?php 
+                    <?php
+                    if (is_array($_SESSION['payment']['receipt_current'])) {
+                        if (in_array($value, $_SESSION['payment']['receipt_current'])) {
+                            echo " selected";
+                        }
+                    } else {
                         if ($value == $_SESSION['payment']['receipt_current']) {
                             echo " selected";
                         }
+                    }
                     ?>
                 ><?= $value;?></option>
             <?php endforeach; ?>
@@ -50,7 +56,7 @@
     </div>
     <div class="has-feedback col-6">
         <label for="date_pay">Дата оплаты</label>
-        <input type="date" name="date_pay" class="form-control" id="date_pay" placeholder="" value="<?=isset($_SESSION['payment']['date_pay']) ? h($_SESSION['payment']['date_pay']) : '';?>" required>
+        <input type="date" name="date_pay" class="form-control" id="date_pay" placeholder="" value="<?=isset($_SESSION['payment']['date_pay']) ? h($_SESSION['payment']['date_pay']) : '';?>">
     </div>
 </div>
 <div class="form-row">
@@ -67,9 +73,11 @@
             <?php foreach ($_SESSION['payment']['num_er'] as $k => $v) : ?>
                 <optgroup label="<?= $v['budget'];?>">
                     <option value="<?= $v['number'];?>"
-                    <?php 
-                        if ($v['number'] == $_SESSION['payment']['num_er_current']) {
-                            echo " selected";
+                    <?php
+                        if (is_array($_SESSION['payment']['num_er_current'])) {
+                            if (in_array($v['number'], $_SESSION['payment']['num_er_current'])) {
+                                echo " selected";
+                            }
                         }
                     ?>
                     ><?= $v['number'];?></option>
