@@ -13,9 +13,9 @@ class Receipt extends AppModel {
         'partner' => '',
         'num_doc' => '',
         'date_doc' => '',
-        'note' => '',
-        'num_pay' => '',
-        'date_pay' => '',
+        'note' => null,
+        'num_pay' => null,
+        'date_pay' => null,
     ];
 
     public function editReceipt($receipt) {
