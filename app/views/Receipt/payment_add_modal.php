@@ -66,7 +66,13 @@
         <select name="num_er" id="num_er" data-placeholder="Выберите ЕР..." class="num_er_select" multiple>
             <?php foreach ($_SESSION['payment']['num_er'] as $k => $v) : ?>
                 <optgroup label="<?= $v['budget'];?>">
-                    <option value="<?= $v['number'];?>"><?= $v['number'];?></option>
+                    <option value="<?= $v['number'];?>"
+                    <?php 
+                        if ($v['number'] == $_SESSION['payment']['num_er_current']) {
+                            echo " selected";
+                        }
+                    ?>
+                    ><?= $v['number'];?></option>
                 </optgroup>
             <?php endforeach; ?>
         </select>
