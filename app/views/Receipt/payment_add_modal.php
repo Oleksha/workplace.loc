@@ -54,9 +54,22 @@
     </div>
 </div>
 <div class="form-row">
+    <script type="text/javascript">
+            $(function(){
+                $(".num_er_select").chosen({
+                    width: "100%"
+                });
+            });
+        </script>
     <div class="has-feedback col-6">
-        <label for="num_er">Номер ЕР</label>
-        <input type="text" name="num_er" class="form-control" id="num_er" placeholder="Номер документа" value="<?=isset($_SESSION['payment']['num_er']) ? h($_SESSION['payment']['num_er']) : '';?>" required>
+        <label for="num_er">Номер ЕР</label><br>
+        <select name="num_er" id="num_er" data-placeholder="Выберите ЕР..." class="num_er_select" multiple>
+            <?php foreach ($_SESSION['payment']['num_er'] as $k => $v) : ?>
+                <optgroup label="<?= $v['budget'];?>">
+                    <option value="<?= $v['number'];?>"><?= $v['number'];?></option>
+                </optgroup>
+            <?php endforeach; ?>
+        </select>
     </div>
     <div class="has-feedback col-6">
         <label for="sum_er">Сумма ЕР</label>
