@@ -36,7 +36,7 @@
     </script>
     <div class="has-feedback col-6">
         <label for="receipt">Номера приходов</label><br>
-        <select name="number_receipt" id="number_receipt" data-placeholder="Выберите приход..." class="number_receipt_select" multiple>
+        <select name="number_receipt[]" id="number_receipt" data-placeholder="Выберите приход..." class="number_receipt_select" multiple>
             <?php foreach ($_SESSION['payment']['receipt'] as $value) : ?>
                 <option value="<?= $value;?>"
                     <?php
@@ -69,7 +69,7 @@
         </script>
     <div class="has-feedback col-6">
         <label for="num_er">Номер ЕР</label><br>
-        <select name="num_er" id="num_er" data-placeholder="Выберите ЕР..." class="num_er_select" multiple>
+        <select name="num_er[]" id="num_er" data-placeholder="Выберите ЕР..." class="num_er_select" multiple>
             <?php foreach ($_SESSION['payment']['num_er'] as $k => $v) : ?>
                 <optgroup label="<?= $v['budget'];?>">
                     <option value="<?= $v['number'];?>"

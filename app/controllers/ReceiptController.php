@@ -127,6 +127,11 @@ class ReceiptController extends AppController {
     public function payReceiptAction() {
         // получаем данные пришедшие методом POST
         $pay_receipt = !empty($_POST) ? $_POST : null;
+        if (empty($pay_receipt['id'])) {
+            echo 'это новая ЗО';
+        } else {
+            echo 'это редактируемая ЗО';
+        }
         debug($pay_receipt); die;
     }
 

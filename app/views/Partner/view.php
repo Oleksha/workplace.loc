@@ -76,82 +76,6 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-header" id="headingTwo">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                            Юридическая информация
-                        </button>
-                    </h5>
-                </div>
-
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                    <div class="card-body">
-                        <h5 class="card-title">Юридический адрес</h5>
-                        <p class="card-text">
-                            <?php
-                            if (!$partner->address) {
-                                echo 'Нет данных';
-                            } else {
-                                echo $partner->address;
-                            }
-                            ?>
-                        </p>
-                        <h5 class="card-title">ИНН / КПП</h5>
-                        <p class="card-text">
-                            <?php
-                            if (!$partner->inn) {
-                                echo 'Нет данных';
-                            } else {
-                                echo $partner->inn;
-                            }
-                            ?>&nbsp;/&nbsp;
-                            <?php
-                            if (!$partner->kpp) {
-                                echo 'Нет данных';
-                            } else {
-                                echo $partner->kpp;
-                            }
-                            ?>
-                        </p>
-                        <h5 class="card-title">e-mail</h5>
-                        <p class="card-text">
-                            <?php
-                            if (!$partner->email) {
-                                echo 'Нет данных';
-                            } else {
-                                echo '<a href="mailto:'.$partner->email.'">'.$partner->email.'</a>';
-                            }
-                            ?>
-                        </p>
-                        <h5 class="card-title">р/с / Банк / БИК</h5>
-                        <p class="card-text">
-                            <?php
-                            if (!$partner->kpp) {
-                                echo 'Нет данных';
-                            } else {
-                                echo $partner->account;
-                            }
-                            ?>&nbsp;/&nbsp;
-                            <?php
-                            if (!$partner->kpp) {
-                                echo 'Нет данных';
-                            } else {
-                                echo $partner->bank;
-                            }
-                            ?>&nbsp;/&nbsp;
-                            <?php
-                            if (!$partner->kpp) {
-                                echo 'Нет данных';
-                            } else {
-                                echo $partner->bic;
-                            }
-                            ?>
-                        </p>
-                        <a type="button" class="btn btn-outline-info edit-ka-link" data-id="<?= $partner->id;?>">Редактировать</a>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
                 <div class="card-header" id="headingThree">
                     <h5 class="mb-0">
                         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -227,7 +151,82 @@
                     </div>
                 </div>
             </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            Юридическая информация
+                        </button>
+                    </h5>
+                </div>
 
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <h5 class="card-title">Юридический адрес</h5>
+                        <p class="card-text">
+                            <?php
+                            if (!$partner->address) {
+                                echo 'Нет данных';
+                            } else {
+                                echo $partner->address;
+                            }
+                            ?>
+                        </p>
+                        <h5 class="card-title">ИНН / КПП</h5>
+                        <p class="card-text">
+                            <?php
+                            if (!$partner->inn) {
+                                echo 'Нет данных';
+                            } else {
+                                echo $partner->inn;
+                            }
+                            ?>&nbsp;/&nbsp;
+                            <?php
+                            if (!$partner->kpp) {
+                                echo 'Нет данных';
+                            } else {
+                                echo $partner->kpp;
+                            }
+                            ?>
+                        </p>
+                        <h5 class="card-title">e-mail</h5>
+                        <p class="card-text">
+                            <?php
+                            if (!$partner->email) {
+                                echo 'Нет данных';
+                            } else {
+                                echo '<a href="mailto:'.$partner->email.'">'.$partner->email.'</a>';
+                            }
+                            ?>
+                        </p>
+                        <h5 class="card-title">р/с / Банк / БИК</h5>
+                        <p class="card-text">
+                            <?php
+                            if (!$partner->kpp) {
+                                echo 'Нет данных';
+                            } else {
+                                echo $partner->account;
+                            }
+                            ?>&nbsp;/&nbsp;
+                            <?php
+                            if (!$partner->kpp) {
+                                echo 'Нет данных';
+                            } else {
+                                echo $partner->bank;
+                            }
+                            ?>&nbsp;/&nbsp;
+                            <?php
+                            if (!$partner->kpp) {
+                                echo 'Нет данных';
+                            } else {
+                                echo $partner->bic;
+                            }
+                            ?>
+                        </p>
+                        <a type="button" class="btn btn-outline-info edit-ka-link" data-id="<?= $partner->id;?>">Редактировать</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <?php endif; ?>
     </div>
