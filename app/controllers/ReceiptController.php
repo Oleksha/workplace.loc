@@ -127,12 +127,55 @@ class ReceiptController extends AppController {
     public function payReceiptAction() {
         // получаем данные пришедшие методом POST
         $pay_receipt = !empty($_POST) ? $_POST : null;
-        if (empty($pay_receipt['id'])) {
-            echo 'это новая ЗО';
-        } else {
-            echo 'это редактируемая ЗО';
+        $num = '';
+        $receipt = $pay_receipt['receipt'];
+        foreach ($pay_receipt['receipt'] as &$value) {
+            $num .= $value . ';';
         }
+        $num = rtrim($num, ';'); 
+        $pay_receipt['receipt'] = $num;
+        $num = '';
+        foreach ($pay_receipt['num_er'] as &$value) {
+            $num .= $value . ';';
+        }
+        $num = rtrim($num, ';'); 
+        $pay_receipt['num_er'] = $num;
+        if (empty($pay_receipt['date_pay'])) {
+            $pay_receipt['date_pay'] = NULL;
+             //echo 'заменил на NULL';
+        }
+        
+        debug($id);
         debug($pay_receipt); die;
+        if (empty($pay_receipt['id'])) {
+            //echo 'это новая ЗО';
+            $pay = new Payment();
+            $pay->load($pay_receipt);
+            $pay->save('payment'); 
+        } else {
+            //echo 'это редактируемая ЗО';
+            $pay = new Payment();
+            $pay->load($pay_receipt);
+            $pay->edit('payment', $pay_receipt['id']);            
+        }
+        // внесение изменений в приход
+        $id = $this->editMy($receipt); // получаем массив ID приходов
+        redirect();        
+    }
+
+    public function editMy($receipt) {
+        // проходимся по всем элементам массива
+        $id_receipt = [];
+        foreach ($receipt as &$value) {
+            $num_receipt = $value; // номер прихода 00000000/2022
+            $num_receipt = explode('/', $num_receipt);
+            $number = $num_receipt[0]; // 00000000
+            $year = $num_receipt[1];   // 2022
+            // получаем  данные о приходе
+            $receipt_full = \R::findOne('receipt', "number = ? AND YEAR(date) = {$year}", [$number]);
+            $id_receipt[] = $receipt_full->id;
+        }
+        return $id_receipt;
     }
 
 }
