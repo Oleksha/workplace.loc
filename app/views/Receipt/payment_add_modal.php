@@ -36,7 +36,7 @@
     </script>
     <div class="has-feedback col-6">
         <label for="receipt">Номера приходов</label><br>
-        <select name="number_receipt[]" id="number_receipt" data-placeholder="Выберите приход..." class="number_receipt_select" multiple>
+        <select name="receipt[]" id="receipt" data-placeholder="Выберите приход..." class="number_receipt_select" multiple>
             <?php foreach ($_SESSION['payment']['receipt'] as $value) : ?>
                 <option value="<?= $value;?>"
                     <?php
