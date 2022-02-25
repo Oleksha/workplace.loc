@@ -144,9 +144,6 @@ class ReceiptController extends AppController {
             $pay_receipt['date_pay'] = NULL;
              //echo 'заменил на NULL';
         }
-        
-        debug($id);
-        debug($pay_receipt); die;
         if (empty($pay_receipt['id'])) {
             //echo 'это новая ЗО';
             $pay = new Payment();
