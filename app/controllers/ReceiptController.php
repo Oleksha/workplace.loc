@@ -160,6 +160,22 @@ class ReceiptController extends AppController {
         }
         // внесение изменений в приход
         $id = $this->editMy($receipt); // получаем массив ID приходов
+        foreach ($id as $k => $v) {
+            $edit_receipt['id'] = $v['id'];
+            $edit_receipt['date'] = $v['date'];
+            $edit_receipt['number'] = $v['number'];
+            $edit_receipt['sum'] = $v['sum'];
+            $edit_receipt['vat'] = $v['vat'];
+            $edit_receipt['partner'] = $v['partner'];
+            $edit_receipt['num_doc'] = $v['num_doc'];
+            $edit_receipt['date_doc'] = $v['date_doc'];
+            $edit_receipt['note'] = $v['note'];
+            $edit_receipt['num_pay'] = dateYear($pay_receipt['number'], $pay_receipt['date']);
+            $edit_receipt['date_pay'] = $v['date_pay'];
+            $receipt = new Receipt();
+            $receipt->load($edit_receipt);
+            $receipt->edit('receipt', $edit_receipt['id']);
+        }
         redirect();        
     }
 
