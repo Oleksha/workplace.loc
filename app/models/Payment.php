@@ -16,7 +16,7 @@ class Payment extends AppModel {
         'sum_er' => '',
         'num_bo' => '',
         'sum_bo' => '',
-        'date_pay' => '',
+        'date_pay' => null,
     ];
 
     public function editPayment($name, $receipts, $ers, $payments) {
