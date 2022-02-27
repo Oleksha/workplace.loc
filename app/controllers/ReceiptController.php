@@ -95,18 +95,21 @@ class ReceiptController extends AppController {
 
         // получаем все неоплаченные приходы этого КА
         $receipts = \R::find('receipt', 'partner = ? AND date_pay IS NULL', [$name]);
-        $recs = [];
-        foreach ($receipts as $receipt) {
-            $recs[] = dateYear($receipt->number, $receipt->date);
+        $recs = []; // массив содержащий приходы в формате TOF0000000/2022
+        $sums = []; // массив содержащий суммы
+        foreach ($receipts as $k => $v) {
+            $recs[] = dateYear($v->number, $v->date);
+            $sums[$k]['number'] = dateYear($v->number, $v->date);
+            $sums[$k]['summa'] = $v->sum;
         }
-        //debug($recs);die;
+        //debug($recs);debug($sums);die;
         $payment = new Payment();
         if ($payments) {
             // если есть редактируем ее. Получаем идентификатор оплаты
             $payment->editPayment($name, $recs, $er, $payments);
         } else {
             // если нет добавляем ее
-            $payment->addPayment($name, trim($receipt_num,'%'), $recs, $er);
+            $payment->addPayment($name, trim($receipt_num,'%'), $recs, $er, $sums);
             //debug($_SESSION['payment']);die;
         }
         if ($this->isAjax()) {

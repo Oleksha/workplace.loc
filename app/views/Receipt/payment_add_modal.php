@@ -15,7 +15,24 @@
 <div class="form-row">
     <div class="has-feedback col-6">
         <label for="sum">Сумма оплаты</label>
-        <input type="text" name="sum" class="form-control" id="sum"  placeholder="" step="0.01" value="<?=isset($_SESSION['payment']['sum']) ? h($_SESSION['payment']['sum']) : '';?>" required>
+        <?php
+        $sum = '';
+        if (is_array($_SESSION['payment']['sum'])) {
+            foreach ($_SESSION['payment']['sum'] as $k =>$value) {
+                if (is_array($_SESSION['payment']['receipt_current'])) {
+                    if (in_array($value['number'], $_SESSION['payment']['receipt_current'])) {
+                        $sum .= $value['summa'] . ';';
+                    }
+                } else {
+                    if ($value['number'] == $_SESSION['payment']['receipt_current']) {
+                        $sum .= $value['summa'] . ';';
+                    }
+                }
+            }
+            $sum = rtrim($sum, ';');
+        } else $sum = $_SESSION['payment']['sum'];
+        ?>
+        <input type="text" name="sum" class="form-control" id="sum"  placeholder="" step="0.01" value="<?=isset($sum) ? $sum : '';?>" required>
     </div>
     <div class="has-feedback col-6">
         <label for="vat">НДС</label>
@@ -35,22 +52,22 @@
         });
     </script>
     <div class="has-feedback col-6">
-        <label for="receipt">Номера приходов</label><br>
-        <select name="receipt[]" id="receipt" data-placeholder="Выберите приход..." class="number_receipt_select" multiple>
-            <?php foreach ($_SESSION['payment']['receipt'] as $value) : ?>
-                <option value="<?= $value;?>"
+        <label for="receipt_select">Номера приходов</label><br>
+        <select name="receipt[]" id="receipt_select" data-placeholder="Выберите приход..." class="number_receipt_select" multiple>
+            <?php foreach ($_SESSION['payment']['sum'] as $value) : ?>
+                <option value="<?= $value['number'];?>" data-sum="<?= $value['summa'];?>"
                     <?php
                     if (is_array($_SESSION['payment']['receipt_current'])) {
-                        if (in_array($value, $_SESSION['payment']['receipt_current'])) {
+                        if (in_array($value['number'], $_SESSION['payment']['receipt_current'])) {
                             echo " selected";
                         }
                     } else {
-                        if ($value == $_SESSION['payment']['receipt_current']) {
+                        if ($value['number'] == $_SESSION['payment']['receipt_current']) {
                             echo " selected";
                         }
                     }
                     ?>
-                ><?= $value;?></option>
+                ><?= $value['number'];?></option>
             <?php endforeach; ?>
         </select>
     </div>
