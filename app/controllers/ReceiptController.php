@@ -189,7 +189,7 @@ class ReceiptController extends AppController {
             $year = $num_receipt[1];   // 2022
             // получаем  данные о приходе
             $receipt_full = \R::findOne('receipt', "number = ? AND YEAR(date) = {$year}", [$number]);
-            $id_receipt[] = $receipt_full->id;
+            $id_receipt[] = $receipt_full;
         }
         return $id_receipt;
     }
