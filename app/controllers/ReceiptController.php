@@ -106,7 +106,7 @@ class ReceiptController extends AppController {
         $payment = new Payment();
         if ($payments) {
             // если есть редактируем ее. Получаем идентификатор оплаты
-            $payment->editPayment($name, $recs, $er, $payments);
+            $payment->editPayment($name, $recs, $er, $payments, $sums);
         } else {
             // если нет добавляем ее
             $payment->addPayment($name, trim($receipt_num,'%'), $recs, $er, $sums);
@@ -147,6 +147,7 @@ class ReceiptController extends AppController {
             $pay_receipt['date_pay'] = NULL;
              //echo 'заменил на NULL';
         }
+        // внесение изменений в приход        
         if (empty($pay_receipt['id'])) {
             //echo 'это новая ЗО';
             $pay = new Payment();
