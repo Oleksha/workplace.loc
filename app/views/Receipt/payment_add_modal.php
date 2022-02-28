@@ -18,7 +18,7 @@
         <?php
         $sum = '';
         if (is_array($_SESSION['payment']['sum'])) {
-            foreach ($_SESSION['payment']['sum'] as $k =>$value) {
+            foreach ($_SESSION['payment']['sum'] as $k => $value) {
                 if (is_array($_SESSION['payment']['receipt_current'])) {
                     if (in_array($value['number'], $_SESSION['payment']['receipt_current'])) {
                         $sum .= $value['summa'] . ';';
@@ -43,28 +43,16 @@
     </div>
 </div>
 <div class="form-row">
-    <script type="text/javascript" src="chosen/chosen.jquery.min.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            $(".number_receipt_select").chosen({
-                width: "100%"
-            });
-        });
-    </script>
     <div class="has-feedback col-6">
         <label for="receipt_select">Номера приходов</label><br>
         <select name="receipt[]" id="receipt_select" data-placeholder="Выберите приход..." class="number_receipt_select" multiple>
-            <?php foreach ($_SESSION['payment']['sum'] as $value) : ?>
+            <?php foreach ($_SESSION['payment']['receipt'] as $k => $value) : ?>
                 <option value="<?= $value['number'];?>" data-sum="<?= $value['summa'];?>"
                     <?php
                     if (is_array($_SESSION['payment']['receipt_current'])) {
-                        if (in_array($value['number'], $_SESSION['payment']['receipt_current'])) {
-                            echo " selected";
-                        }
+                        if (in_array($value['number'], $_SESSION['payment']['receipt_current'])) echo " selected";
                     } else {
-                        if ($value['number'] == $_SESSION['payment']['receipt_current']) {
-                            echo " selected";
-                        }
+                        if ($value['number'] == $_SESSION['payment']['receipt_current']) echo " selected";
                     }
                     ?>
                 ><?= $value['number'];?></option>
@@ -77,13 +65,6 @@
     </div>
 </div>
 <div class="form-row">
-    <script type="text/javascript">
-            $(function(){
-                $(".num_er_select").chosen({
-                    width: "100%"
-                });
-            });
-        </script>
     <div class="has-feedback col-6">
         <label for="num_er">Номер ЕР</label><br>
         <select name="num_er[]" id="num_er" data-placeholder="Выберите ЕР..." class="num_er_select" multiple>
@@ -119,4 +100,18 @@
 </div>
 <input type="hidden" name="partner" value="<?=isset($_SESSION['payment']['partner']) ? h($_SESSION['payment']['partner']) : '';?>">
 <input type="hidden" name="id" value="<?=isset($_SESSION['payment']['id']) ? h($_SESSION['payment']['id']) : '';?>">
+<script type="text/javascript" src="chosen/chosen.jquery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $(".number_receipt_select").chosen({
+            width: "100%"
+        });
+    })
+    $(function(){
+        $(".num_er_select").chosen({
+            width: "100%"
+         });
+    })
+</script>
+    
 
