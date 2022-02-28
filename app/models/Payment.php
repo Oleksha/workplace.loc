@@ -19,7 +19,7 @@ class Payment extends AppModel {
         'date_pay' => null,
     ];
 
-    public function editPayment($name, $receipts, $ers, $payments) {
+    public function editPayment($name, $receipts, $ers, $payments, $sums) {
         unset($_SESSION['payment']); // Очищаем сессию
         $_SESSION['payment'] = [
             'id' => $payments['id'],
@@ -28,7 +28,7 @@ class Payment extends AppModel {
             'sum' => $payments['sum'],
             'vat' => $payments['vat'],
             'partner' => $name,
-            'receipt' => $receipts,
+            'receipt' => $sums,
             'num_er' => $ers,
             'sum_er' => $payments['sum_er'],
             'num_bo' => $payments['num_bo'],
