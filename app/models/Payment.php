@@ -47,7 +47,7 @@ class Payment extends AppModel {
             'sum' => $sums,
             'vat' => null,
             'partner' => $name,
-            'receipt' => $receipts,
+            'receipt' => $sums,
             'num_er' => $ers,
             'sum_er' => null,
             'num_bo' => null,
