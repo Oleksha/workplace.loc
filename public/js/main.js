@@ -21,6 +21,17 @@ $(document).ready(function() {
         ]
     } );
     $('#main_index').dataTable( {
+        "createdRow": function ( row, data, index ) {
+                if ( data[4] == "Подано на оплату" ) {
+                    $('td', row).eq(3).addClass('table-warning');
+                } 
+                if ( data[4] == "Приход не обработан" ) {
+                    $('td', row).eq(3).addClass('table-danger');
+                }
+                if ( data[4] == "Оплачено" ) {
+                    $('td', row).eq(3).addClass('table-success');
+                }
+             },    
         "aLengthMenu": [[7, 15, 25, -1], [7, 15, 25, "All"]],
         "language": {
             "url": "/DataTables/DataTables-1.11.3/js/ru.json"
@@ -34,7 +45,7 @@ $(document).ready(function() {
             {"bSearchable": false }
 
         ]
-    } );
+    });
 });
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
