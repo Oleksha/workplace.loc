@@ -16,6 +16,7 @@ class Partner extends AppModel {
         'phone' => '',
         'email' => '',
         'delay' => '',
+        'vat' => '',
     ];
 
     /**
