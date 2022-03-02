@@ -77,9 +77,19 @@
                         <div class="has-feedback col-3">
                             <label for="vat">НДС</label>
                             <select class="form-control" name="vat" id="vat">
-                                <option value="">Выберите...</option>
-                                <option value="1.20" selected>20%</option>
-                                <option value="1.00">Без НДС</option>
+                                <?php if (!empty($_SESSION['form_data']['vat'])) : ?>
+                                    <?php if ($_SESSION['form_data']['vat'] == '1.20') : ?>
+                                        <option value="1.20" selected>20%</option>
+                                        <option value="1.00">Без НДС</option>
+                                    <?php elseif ($_SESSION['form_data']['vat'] == '1.00') : ?>
+                                        <option value="1.20">20%</option>
+                                        <option value="1.00" selected>Без НДС</option>
+                                    <?php endif; ?>
+                                <?php else : ?>
+                                    <option value="">Выберите...</option>
+                                    <option value="1.20">20%</option>
+                                    <option value="1.00">Без НДС</option>
+                                <?php endif; ?>
                             </select>
                         </div>
                     </div>
