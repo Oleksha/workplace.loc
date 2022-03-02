@@ -76,7 +76,7 @@ class ReceiptController extends AppController {
         $partner_id = !empty($_GET['partner']) ? (int)$_GET['partner'] : null;
         // получение сопутствующих данных
         // получаем все действующие ЕР для этого КА
-
+        $ers = \R::getAll("SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= '{$receipt->date}') AND id_partner = ?", [$partner_id]);
         // получаем массив используемых статей расхода
         $budget_items = [];
         $er = [];
