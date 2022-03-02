@@ -74,7 +74,24 @@
                             <label for="delay">Отсрочка</label>
                             <input type="text" name="delay" class="form-control" id="delay" placeholder="Отсрочка" value="<?=isset($_SESSION['form_data']['delay']) ? h($_SESSION['form_data']['delay']) : '';?>">
                         </div>
-
+                        <div class="has-feedback col-3">
+                            <label for="vat">НДС</label>
+                            <select class="form-control" name="vat" id="vat">
+                                <?php if (!empty($_SESSION['form_data']['vat'])) : ?>
+                                    <?php if ($_SESSION['form_data']['vat'] == '1.20') : ?>
+                                        <option value="1.20" selected>20%</option>
+                                        <option value="1.00">Без НДС</option>
+                                    <?php elseif ($_SESSION['form_data']['vat'] == '1.00') : ?>
+                                        <option value="1.20">20%</option>
+                                        <option value="1.00" selected>Без НДС</option>
+                                    <?php endif; ?>
+                                <?php else : ?>
+                                    <option value="">Выберите...</option>
+                                    <option value="1.20">20%</option>
+                                    <option value="1.00">Без НДС</option>
+                                <?php endif; ?>
+                            </select>
+                        </div>
                     </div>
                     <div class="row d-flex justify-content-center mt-3">
                         <button type="submit" class="btn btn-primary">Сохранить данные КА</button>
