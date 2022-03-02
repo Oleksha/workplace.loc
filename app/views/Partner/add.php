@@ -62,17 +62,25 @@
                         <input type="text" name="address" class="form-control" id="address" placeholder="Юридический адрес" value="<?=isset($_SESSION['form_data']['address']) ? h($_SESSION['form_data']['address']) : '';?>">
                     </div>
                     <div class="form-row">
-                        <div class="has-feedback col-4">
+                        <div class="has-feedback col-3">
                             <label for="phone">Телефоны</label>
                             <input type="text" name="phone" class="form-control" id="phone" placeholder="Телефоны" value="<?=isset($_SESSION['form_data']['phone']) ? h($_SESSION['form_data']['phone']) : '';?>">
                         </div>
-                        <div class="has-feedback col-4">
+                        <div class="has-feedback col-3">
                             <label for="email">E-mail</label>
                             <input type="text" name="email" class="form-control" id="email" placeholder="E-mail" value="<?=isset($_SESSION['form_data']['email']) ? h($_SESSION['form_data']['email']) : '';?>">
                         </div>
-                        <div class="has-feedback col-4">
+                        <div class="has-feedback col-3">
                             <label for="delay">Отсрочка</label>
                             <input type="text" name="delay" class="form-control" id="delay" placeholder="Отсрочка" value="<?=isset($_SESSION['form_data']['delay']) ? h($_SESSION['form_data']['delay']) : '';?>">
+                        </div>
+                        <div class="has-feedback col-3">
+                            <label for="vat">НДС</label>
+                            <select class="form-control" name="vat" id="vat">
+                                <option value="">Выберите...</option>
+                                <option value="1.20" selected>20%</option>
+                                <option value="1.00">Без НДС</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center mt-3">
