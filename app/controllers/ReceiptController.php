@@ -71,12 +71,12 @@ class ReceiptController extends AppController {
     public function payAction() {
         // получаем переданный идентификатор прихода
         $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
-
-
+        // получаем полные данные о приходе
+        $receipt = \R::findOne('receipt', 'id = ?', [$id]);
         $partner_id = !empty($_GET['partner']) ? (int)$_GET['partner'] : null;
         // получение сопутствующих данных
         // получаем все действующие ЕР для этого КА
-        $ers = \R::getAll("SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= '{$receipt->date}') AND id_partner = ?", [$partner_id]);
+
         // получаем массив используемых статей расхода
         $budget_items = [];
         $er = [];
@@ -88,8 +88,6 @@ class ReceiptController extends AppController {
         // необходимо получить используемые БО
 
         // нужно проверить есть ли у этого прихода ЗО
-        // получаем полные данные о приходе
-        $receipt = \R::findOne('receipt', 'id = ?', [$id]);
         $name = $receipt->partner;
         $year = date('Y', strtotime($receipt->date));
         $receipt_num = '%' . $receipt->number . '/' . $year . '%';
