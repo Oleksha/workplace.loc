@@ -32,7 +32,7 @@ $(document).ready(function() {
                     $('td', row).eq(3).addClass('table-success');
                 }
              },    
-        "aLengthMenu": [[7, 15, 25, -1], [7, 15, 25, "All"]],
+        "aLengthMenu": [[9, 15, 25, -1], [9, 15, 25, "All"]],
         "language": {
             "url": "/DataTables/DataTables-1.11.3/js/ru.json"
         },
