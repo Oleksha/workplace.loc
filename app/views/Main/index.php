@@ -67,13 +67,15 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Здесь будет форма оплаты</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-primary">Оплатить</button>
-            </div>
+            <form method="post" action="receipt/pay-enter" id="pay_enter" role="form" class="was-validated">
+                <div class="modal-body">
+                    <p>Здесь будет форма оплаты</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Оплатить</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
