@@ -24,7 +24,9 @@ class MainController extends AppController {
                 'sum' => $value->sum,
                 'num_pay' => $value->num_pay,
                 'date_pay' => $value->date_pay,
-                'delay' => isset($delay) ? $delay : null
+                'delay' => isset($delay) ? $delay : null,
+                'id_receipt' => $value->id,
+                'payment' => $value->payment,
             ];
         }
       
