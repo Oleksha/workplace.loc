@@ -42,8 +42,8 @@ $(document).ready(function() {
             null,
             {"bSearchable": false },
             {"bSearchable": false },
-            {"bSearchable": false }
-
+            {"sClass": "text-center",
+                "bSearchable": false }
         ]
     });
 });
