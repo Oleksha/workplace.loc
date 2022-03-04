@@ -39,6 +39,25 @@ class MainController extends AppController {
 
     }
     
+    public function payAction() {
+        // получаем переданный идентификатор прихода
+        $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
+        debug($id); die;
+        /*$receipt = null;
+        if ($id) {
+            // если у нас есть ID получаем все данные об этом приходе
+            $receipt = \R::findOne('receipt', 'id = ?', [$id]);
+            if (!$receipt) return false; // если такого прихода нет дальнейшие действия бессмысленны
+        }
+        $rec = new Receipt();
+        $rec->editReceipt($receipt);
+        if ($this->isAjax()) {
+            // Если запрос пришел АЯКСом
+            $this->loadView('receipt_edit_modal');
+        }
+        redirect();*/
+    }
+    
     //**
      * Функция получения данных об оплате конкретного прихода
      * $num_receipt mix номер прихода в виде 0000000000/2022 или массив номеров
