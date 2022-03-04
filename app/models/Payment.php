@@ -33,7 +33,7 @@ class Payment extends AppModel {
             'sum_er' => $payments['sum_er'],
             'num_bo' => $payments['num_bo'],
             'sum_bo' => $payments['sum_bo'],
-            'date_pay' => null,
+            'date_pay' => $payments['date_pay'],
             'receipt_current' => explode(';', $payments['receipt']),
             'num_er_current' => explode(';', $payments['num_er']),
         ];
