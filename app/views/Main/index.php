@@ -28,15 +28,19 @@
                       $status = 'Оплачено';
                       $color = ' table-success';
                   }
-                  if ($item['delay']) {
-                      $date_elements = explode('-', $item['date']);
-                      $date = new DateTime($item['date']);
-                      $delay = (int)$item['delay'];
-                      date_add($date, date_interval_create_from_date_string("$delay days"));
-                      $pay = date_format($date, 'Y-m-d');
-                  } else {
-                      $pay = 'Нет данных';
-                  }
+                    if ($item['pay_date']) {
+                        $pay = $item['pay_date'];
+                    } else {
+                        if ($item['delay']) {
+                            $date_elements = explode('-', $item['date']);
+                            $date = new DateTime($item['date']);
+                            $delay = (int)$item['delay'];
+                            date_add($date, date_interval_create_from_date_string("$delay days"));
+                            $pay = date_format($date, 'Y-m-d');
+                        } else {
+                            $pay = 'Нет данных';
+                        }
+                    }
                   ?>
                   <tr>
                       <th><a href="partner/<?= $item['inn'];?>"><?= $item['partner'];?></a></th>
