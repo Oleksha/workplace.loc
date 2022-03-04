@@ -23,7 +23,8 @@ class MainController extends AppController {
                 'date' => $value->date,
                 'sum' => $value->sum,
                 'num_pay' => $value->num_pay,
-                'date_pay' => $value->date_pay,
+                'date_pay' => $value->date_pay, // дата оплаты
+                'pay_date' => $this->getDatePayment(dateYear($value->number, $value->date)), // дата планируемой оплаты
                 'delay' => isset($delay) ? $delay : null,
                 'id_receipt' => $value->id,
                 'payment' => $value->payment,
@@ -36,6 +37,26 @@ class MainController extends AppController {
       // Передаем полученные данные в вид
       $this->set(compact('receipt'));
 
+    }
+    
+    //**
+     * Функция получения данных об оплате конкретного прихода
+     * $num_receipt mix номер прихода в виде 0000000000/2022 или массив номеров
+     */
+    public function getDatePayment($num_receipt) {
+        $date_payment = null;
+        // получаем данные об оплатах данного прихода
+        $receipts = \R::getAll("SELECT * FROM payment WHERE receipt LIKE ?", ['%'.$num_receipt.'%']);
+        foreach ($receipts as $receipt) { 
+            if (!is_null($date_payment)) {
+                if ($receipt['date_pay'] > $date_payment) {
+                    $date_payment = $receipt['date_pay'];
+                }
+            } else {
+                $date_payment = $receipt['date_pay'];
+            }
+        }
+        return $date_payment;
     }
 
 }
