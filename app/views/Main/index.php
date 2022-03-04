@@ -75,16 +75,16 @@
   </div>
 </main>
 
-<div id="payModal" class="modal" tabindex="-1" role="dialog">
+<div id="payModalMain" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Подаем на оплату</h5>
+                <h5 class="modal-title">Приход оплачен</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="receipt/pay-enter" id="pay_enter" role="form" class="was-validated">
+            <form method="post" action="main/pay-enter" id="pay_enter" role="form" class="was-validated">
                 <div class="modal-body">
                     <p>Здесь будет форма оплаты</p>
                 </div>
