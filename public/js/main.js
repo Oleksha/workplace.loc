@@ -243,4 +243,28 @@ function showPaymentReceipt(receipt) {
     $('#payReceiptModal').modal();
 }
 
+$('body').on('click', '.payment-link', function (e) {
+    e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
+    // получаем необходимые нам данные
+    let id = $(this).data('id_receipt') // идентификатор прихода
+    // отправляем стандартный аякс запрос на сервер
+    $.ajax({
+        url: '/main/pay', // всегда указываем от корня
+        data: {id: id}, // передаем данные
+        type: 'GET', // тип передаваемого запроса
+        success: function (res) {
+            // если данные получены
+            showPaymentReceipt(res);
+        },
+        error: function () {
+            // если данных нет или запрос не дошел
+            alert('Ошибка получения данных с сервера! Попробуйте позже.');
+        }
+    });
+});
 
+function showPaymentOnly(receipt) {
+    // выводим содержимое страницы
+    $('#payModalMain .modal-body').html(receipt);
+    $('#payModalMain').modal();
+}
