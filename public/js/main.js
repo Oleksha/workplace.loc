@@ -243,22 +243,23 @@ function showPaymentReceipt(receipt) {
     $('#payReceiptModal').modal();
 }
 
-$('body').on('click', '.payment-link', function (e) {
+$('body').on('click', '.payment_pay_link', function (e) {
     e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
     // получаем необходимые нам данные
     let id = $(this).data('id_receipt') // идентификатор прихода
     // отправляем стандартный аякс запрос на сервер
+    alert(id);
     $.ajax({
         url: '/main/pay', // всегда указываем от корня
         data: {id: id}, // передаем данные
         type: 'GET', // тип передаваемого запроса
         success: function (res) {
             // если данные получены
-            showPaymentReceipt(res);
+            showPaymentOnly(res);
         },
         error: function () {
             // если данных нет или запрос не дошел
-            alert('Ошибка получения данных с сервера! Попробуйте позже.');
+            alert('Ошибка получения данных с сервера! Попробуйте ytcrjkmrj позже.');
         }
     });
 });
