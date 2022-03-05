@@ -61,7 +61,7 @@
     </div>
     <div class="has-feedback col-6">
         <label for="date_pay">Дата оплаты</label>
-        <input type="date" name="date_pay" class="form-control" id="date_pay" placeholder="" value="<?=isset($_SESSION['payment']['date_pay']) ? h($_SESSION['payment']['date_pay']) : '';?>">
+        <input type="date" name="date_pay" class="form-control" id="date_pay" placeholder="" value="<?=isset($_SESSION['payment']['date_pay']) ? h($_SESSION['payment']['date_pay']) : '';?>" required>
     </div>
 </div>
 <div class="form-row">
@@ -113,5 +113,3 @@
          });
     })
 </script>
-    
-
