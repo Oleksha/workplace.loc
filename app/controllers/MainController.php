@@ -16,6 +16,7 @@ class MainController extends AppController {
             // Получаем отсрочку оплаты
             $delay = $partner->delay;
             // формирум массив для вывода
+            
             $receipt[$value->id] = [
                 'partner' => $value->partner,
                 'inn' => $partner->inn,
@@ -30,7 +31,7 @@ class MainController extends AppController {
                 'payment' => $value->payment,
             ];
         }
-      
+        //debug($receipt);die;
       // формируем метатеги для страницы
       $this->setMeta('Главная страница', 'Содержит информацию о неоплаченных приходах', 'Ключевые слова');
       
@@ -38,10 +39,11 @@ class MainController extends AppController {
       $this->set(compact('receipt'));
 
     }
-    
+
     public function payAction() {
         // получаем переданный идентификатор прихода
         $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
+        
         debug($id); die;
         /*$receipt = null;
         if ($id) {
@@ -53,12 +55,12 @@ class MainController extends AppController {
         $rec->editReceipt($receipt);
         if ($this->isAjax()) {
             // Если запрос пришел АЯКСом
-            $this->loadView('receipt_edit_modal');
+            $this->loadView('main_edit_modal');
         }
         redirect();*/
     }
-    
-    //**
+
+    /**
      * Функция получения данных об оплате конкретного прихода
      * $num_receipt mix номер прихода в виде 0000000000/2022 или массив номеров
      */
