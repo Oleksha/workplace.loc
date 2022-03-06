@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Receipt;
+
 class MainController extends AppController {
 
     public function indexAction() {
@@ -43,21 +45,47 @@ class MainController extends AppController {
     public function payAction() {
         // получаем переданный идентификатор прихода
         $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
-        
-        debug($id); die;
-        /*$receipt = null;
+        unset($_SESSION['pay_date']); // Очищаем сессию
+        $_SESSION['pay_date'] = [
+            'id' => $id,
+            'date' => null,
+        ];
+        /*debug($id); die;
+        $receipt = null;
         if ($id) {
             // если у нас есть ID получаем все данные об этом приходе
             $receipt = \R::findOne('receipt', 'id = ?', [$id]);
             if (!$receipt) return false; // если такого прихода нет дальнейшие действия бессмысленны
         }
         $rec = new Receipt();
-        $rec->editReceipt($receipt);
+        $rec->editReceipt($receipt);*/
+
         if ($this->isAjax()) {
             // Если запрос пришел АЯКСом
-            $this->loadView('main_edit_modal');
+            $this->loadView('pay_add_date');
+
         }
-        redirect();*/
+        redirect();
+    }
+
+    public function payEnterAction() {
+        $data = !empty($_POST) ? $_POST : null;
+        $id_receipt = $data['id'];
+        $pay_date = $data['date'];
+        // необходимо внести оплату в приход
+        $edit_receipt = \R::findOne('receipt', 'id = ?', [$id_receipt]);
+        //debug($edit_receipt);
+        $receipt = new Receipt();
+        $receipt->editReceipt($edit_receipt);
+        $_SESSION['receipt']['date_pay'] = $pay_date;
+        $receipt->load($_SESSION['receipt']);
+        //debug($receipt->attributes);die;
+        $receipt->edit('receipt', $id_receipt);
+
+        // необходимо проверить совпадает ли оплата в ЗО с окончательной оплатой
+
+        //
+        redirect();
     }
 
     /**
