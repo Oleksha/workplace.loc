@@ -168,12 +168,13 @@ function showEditKa(ka) {
 $('body').on('click', '.add-receipt-link', function (e) {
     e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
     // получаем необходимые нам данные
-    let partner = $(this).data('name'); // наименование КА
+    let partner = $(this).data('name'), // наименование КА
+        vat = $(this).data('vat'); // идентификаиор КА
 
     // отправляем стандартный аякс запрос на сервер
     $.ajax({
         url: '/receipt/add', // всегда указываем от корня
-        data: {partner: partner}, // передаем данные
+        data: {vat: vat, partner: partner}, // передаем данные
         type: 'GET', // тип передаваемого запроса
         success: function (res) {
             // если данные получены
@@ -211,11 +212,12 @@ $('body').on('click', '.pay-receipt-link', function (e) {
     e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
     // получаем необходимые нам данные
     let id = $(this).data('id'), // идентификатор прихода
-        partner = $(this).data('partner'); // идентификатор прихода
+        partner = $(this).data('partner'), // имя контрагента
+        vat = $(this).data('vat'); // ставка НДС
     // отправляем стандартный аякс запрос на сервер
     $.ajax({
         url: '/receipt/pay', // всегда указываем от корня
-        data: {id: id, partner: partner}, // передаем данные
+        data: {id: id, partner: partner, vat: vat}, // передаем данные
         type: 'GET', // тип передаваемого запроса
         success: function (res) {
             // если данные получены

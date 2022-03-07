@@ -41,8 +41,11 @@ class ReceiptController extends AppController {
         // получаем данные пришедшие методом POST
         // получаем переданное наименование КА
         $partner = !empty($_GET['partner']) ? $_GET['partner'] : null;
+        $vat = !empty($_GET['vat']) ? $_GET['vat'] : null;
+        //debug($vat);die;
         $receipt = new Receipt();
         $receipt->addReceipt($partner);
+        $_SESSION['receipt']['vat'] = $vat;
         if ($this->isAjax()) {
             // Если запрос пришел АЯКСом
             $this->loadView('receipt_add_modal');
@@ -71,6 +74,7 @@ class ReceiptController extends AppController {
     public function payAction() {
         // получаем переданный идентификатор прихода
         $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
+        $vat = !empty($_GET['vat']) ? $_GET['vat'] : null;
         // получаем полные данные о приходе
         $receipt = \R::findOne('receipt', 'id = ?', [$id]);
         $partner_id = !empty($_GET['partner']) ? (int)$_GET['partner'] : null;
@@ -111,6 +115,7 @@ class ReceiptController extends AppController {
         } else {
             // если нет добавляем ее
             $payment->addPayment($name, trim($receipt_num,'%'), $recs, $er, $sums);
+            $_SESSION['payment']['vat'] = $vat;
             //debug($_SESSION['payment']);die;
         }
         if ($this->isAjax()) {

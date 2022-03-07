@@ -20,8 +20,8 @@
     <div class="has-feedback col-6">
         <label for="vat">НДС</label>
         <select class="form-control" name="vat" id="vat">
-            <option value="1.20" selected>20%</option>
-            <option value="1.00">Без НДС</option>
+            <option value="1.20" <?php if ($_SESSION['receipt']['vat'] == '1.20') { echo ' selected';} ?>>20%</option>
+            <option value="1.00" <?php if ($_SESSION['receipt']['vat'] == '1.00') { echo ' selected';} ?>>Без НДС</option>
         </select>
     </div>
 </div>
