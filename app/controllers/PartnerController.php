@@ -45,7 +45,7 @@ class PartnerController extends AppController {
         $id = $partner['id'];
         // получение данных по ЕР для КА из БД
         $ers = \R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$id]);
-
+        $ers = $this->costs($ers, $partner['vat']);
         // Приходы
         $name = $partner['name'];
         $receipt = \R::getAll('SELECT * FROM receipt WHERE partner = ?', [$name]);
@@ -54,6 +54,36 @@ class PartnerController extends AppController {
         $this->setMeta($partner->name, 'Описание...', 'Ключевые слова...');
         // Передаем полученные данные в вид
         $this->set(compact('partner', 'ers', 'receipt'));
+    }
+
+    /**
+     * @param $ers array список ЕР
+     * @param $vat double ставка НДС
+     * @return array список ЕР с остатками средств
+     */
+    public function costs($ers, $vat) {
+        foreach ($ers as $k => $er) {
+            $er_num = '%' . $er['number'] . '%';
+            // получаем все оплаты использующие эту ЕР
+            $payments = \R::find('payment', "num_er LIKE ?", [$er_num]);
+            // проходимся по каждому приходу чтобы получить суммы расхода по данной ЕР
+            /* создаем массив в виде
+                [0] [
+                    number: 00000000,
+                    summa: 123.12
+                */
+            $sum = 0.00;
+            foreach ($payments as $payment) {
+                // каждая оплата может использовать несколько ЕР
+                $nums = explode(';', $payment->num_er);
+                $sums = explode(';', $payment->sum_er);
+                $key = array_search($er['number'], $nums);
+                $sum += $sums[$key];
+            }
+            $sum = round($sum / $vat, 2);
+            $ers[$k]['cost'] = $sum;
+        }
+        return $ers;
     }
 
     public function addAction() {
