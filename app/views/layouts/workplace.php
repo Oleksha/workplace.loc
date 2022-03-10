@@ -33,7 +33,7 @@
                             <a class="nav-link" href="/partner">Контрагенты</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="er.html">Единоличные решения</a>
+                            <a class="nav-link" href="/budget">Бюджет</a>
                         </li>
                     </ul>
                     <!--<form class="form-inline mt-2 mt-md-0">
