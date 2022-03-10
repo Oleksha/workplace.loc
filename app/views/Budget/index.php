@@ -28,9 +28,23 @@
                 <tbody>
                 <?php foreach ($budgets as $budget): ?>
                     <tr>
-                        <td><?= $budget->scenario;?></td><!--<a href="partner/<?= $partner->inn;?>"><?= $partner->name;?></a>-->
-                        <td><?= $budget->month_exp;?></td>
-                        <td><?= $budget->month_pay;?></td>
+                        <?php 
+                            $date = date_create($budget->scenario);
+                            $_monthsList = array(
+                                "1"=>"Январь","2"=>"Февраль","3"=>"Март",
+                                "4"=>"Апрель","5"=>"Май", "6"=>"Июнь",
+                                "7"=>"Июль","8"=>"Август","9"=>"Сентябрь",
+                                "10"=>"Октябрь","11"=>"Ноябрь","12"=>"Декабрь");
+                                 
+                            $scenario = $_monthsList[date_format($date, "n")].'&nbsp;'.date_format($date, "Y");
+                            $date = date_create($budget->month_exp);
+                            $month_exp = $_monthsList[date_format($date, "n")].'&nbsp;'.date_format($date, "Y");
+                            $date = date_create($budget->month_pay);
+                            $month_pay = $_monthsList[date_format($date, "n")].'&nbsp;'.date_format($date, "Y");
+                        ?>
+                        <td><?= $scenario;?></td><!--<a href="partner/<?= $partner->inn;?>"><?= $partner->name;?></a>-->
+                        <td><?= $month_exp;?></td>
+                        <td><?= $month_pay;?></td>
                         <td><?= $budget->number;?></td>
                         <td><?= number_format($budget->summa, 2, ',', '&nbsp;');?>&nbsp;₽</td>
                         <td><?= $budget->vat;?></td>                        
