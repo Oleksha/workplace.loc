@@ -45,7 +45,7 @@ class PartnerController extends AppController {
         $id = $partner['id'];
         // получение данных по ЕР для КА из БД
         $ers = \R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$id]);
-        $ers = $this->costs($ers, $partner['vat']);
+        $ers = $this->costs($ers, $partner['vat'], $partner['name']);
         // Приходы
         $name = $partner['name'];
         $receipt = \R::getAll('SELECT * FROM receipt WHERE partner = ?', [$name]);
@@ -65,7 +65,7 @@ class PartnerController extends AppController {
         foreach ($ers as $k => $er) {
             $er_num = '%' . $er['number'] . '%';
             // получаем все оплаты использующие эту ЕР
-            $payments = \R::find('payment', "num_er LIKE ?", [$er_num]);
+            $payments = \R::find('payment', "(partner = '{$name}') AND (num_er LIKE ?)", [$er_num]);
             // проходимся по каждому приходу чтобы получить суммы расхода по данной ЕР
             /* создаем массив в виде
                 [0] [
