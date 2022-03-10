@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    $('#bo_view').dataTable( {
+        "language": {
+            "url": "/DataTables/DataTables-1.11.3/js/ru.json"
+        }
+    });
     $('#example').dataTable( {
         "aLengthMenu": [[7, 15, 25, -1], [7, 15, 25, "All"]],
         "language": {
