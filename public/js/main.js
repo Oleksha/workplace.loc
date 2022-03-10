@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $('#bo_view').dataTable( {
+        "ordering": false,
         "language": {
             "url": "/DataTables/DataTables-1.11.3/js/ru.json"
         }

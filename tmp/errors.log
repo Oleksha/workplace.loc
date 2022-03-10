@@ -542,3 +542,7 @@
 --------------------
 [2022-03-08 17:09:39] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
 --------------------
+[2022-03-10 17:48:03] Текст ошибки: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'workplace.budget' doesn't exist | Файл: F:\WebServer\domains\workplace.loc\vendor\gabordemooij\redbean\RedBeanPHP\Driver\RPDO.php | Строка: 202
+--------------------
+[2022-03-10 17:48:03] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------

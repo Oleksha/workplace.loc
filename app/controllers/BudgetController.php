@@ -1,11 +1,11 @@
-namespace app\controllers;
+<?php
 
-use workplace\App;
+namespace app\controllers;
 
 class BudgetController extends AppController {
 
     public function indexAction() {
-       // получение БО из БД
+        // получение БО из БД
         $budgets = \R::find('budget', "ORDER BY scenario, number");
         // формируем метатеги для страницы
         $this->setMeta('Список бюджетных операций', 'Описание...', 'Ключевые слова...');
