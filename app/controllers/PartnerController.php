@@ -61,7 +61,7 @@ class PartnerController extends AppController {
      * @param $vat double ставка НДС
      * @return array список ЕР с остатками средств
      */
-    public function costs($ers, $vat) {
+    public function costs($ers, $vat, $name) {
         foreach ($ers as $k => $er) {
             $er_num = '%' . $er['number'] . '%';
             // получаем все оплаты использующие эту ЕР
