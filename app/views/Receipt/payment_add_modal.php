@@ -14,25 +14,20 @@
 </div>
 <div class="form-row">
     <div class="has-feedback col-6">
-        <label for="sum">Сумма оплаты</label>
-        <?php
-        $sum = '';
-        if (is_array($_SESSION['payment']['sum'])) {
-            foreach ($_SESSION['payment']['sum'] as $k => $value) {
-                if (is_array($_SESSION['payment']['receipt_current'])) {
-                    if (in_array($value['number'], $_SESSION['payment']['receipt_current'])) {
-                        $sum .= $value['summa'] . ';';
+        <label for="sum_select">Сумма оплаты</label>
+        <select name="sum[]" id="sum_select" data-placeholder="Выберите сумму..." class="sum_receipt_select" multiple>
+            <?php foreach ($_SESSION['payment']['receipt'] as $k => $value) : ?>
+                <option value="<?= $value['summa'];?>" data-number="<?= $value['number'];?>"
+                    <?php
+                    if (is_array($_SESSION['payment']['receipt_current'])) {
+                        if (in_array($value['number'], $_SESSION['payment']['receipt_current'])) echo " selected";
+                    } else {
+                        if ($value['number'] == $_SESSION['payment']['receipt_current']) echo " selected";
                     }
-                } else {
-                    if ($value['number'] == $_SESSION['payment']['receipt_current']) {
-                        $sum .= $value['summa'] . ';';
-                    }
-                }
-            }
-            $sum = rtrim($sum, ';');
-        } else $sum = $_SESSION['payment']['sum'];
-        ?>
-        <input type="text" name="sum" class="form-control" id="sum"  placeholder="" step="0.01" value="<?=isset($sum) ? $sum : '';?>" required>
+                    ?>
+                ><?= $value['summa'];?></option>
+            <?php endforeach; ?>
+        </select>        
     </div>
     <div class="has-feedback col-6">
         <label for="vat">НДС</label>
@@ -106,10 +101,11 @@
         $(".number_receipt_select").chosen({
             width: "100%"
         });
-    })
-    $(function(){
         $(".num_er_select").chosen({
             width: "100%"
-         });
+        });
+        $(".sum_receipt_select").chosen({
+            width: "100%"
+        });
     })
 </script>
