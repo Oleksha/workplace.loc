@@ -114,7 +114,7 @@
         for(var i = 0; i < ids.length; i++) {
             sum += parseFloat(ids[i]);
         }
-        $('#sum_er').val(sum);
-        $('#sum_bo').val(sum);
+        $('#sum_er').val(sum.toFixed(2));
+        $('#sum_bo').val(sum.toFixed(2));
     });
 </script>
