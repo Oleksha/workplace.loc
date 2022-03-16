@@ -72,13 +72,13 @@ class ReceiptController extends AppController {
     }
 
     public function payAction() {
-        // получаем переданный идентификатор прихода
-        $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
-        $vat = !empty($_GET['vat']) ? $_GET['vat'] : null;
-        // получаем полные данные о приходе
+        // получаем переданный дметодом GET данные 
+        $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;                    // идентификатор прихода  
+        $vat = !empty($_GET['vat']) ? $_GET['vat'] : null;                      // ставка НДС по которой работает КА
+        $partner_id = !empty($_GET['partner']) ? (int)$_GET['partner'] : null;  // идентификатор контрагента
+        // получаем полные данные о текущем приходе
         $receipt = \R::findOne('receipt', 'id = ?', [$id]);
-        $partner_id = !empty($_GET['partner']) ? (int)$_GET['partner'] : null;
-        // получение сопутствующих данных
+        /* Получение сопутствующих данных */
         // получаем все действующие ЕР для этого КА
         $ers = \R::getAll("SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= '{$receipt->date}') AND id_partner = ?", [$partner_id]);
         // получаем массив используемых статей расхода
@@ -92,11 +92,10 @@ class ReceiptController extends AppController {
         // необходимо получить используемые БО
 
         // нужно проверить есть ли у этого прихода ЗО
-        $name = $receipt->partner;
-        $year = date('Y', strtotime($receipt->date));
-        $receipt_num = '%' . $receipt->number . '/' . $year . '%';
-        $payments = \R::findOne('payment', "receipt LIKE ?", [$receipt_num]);
-
+        $name = $receipt->partner;                                              // имя КА (ВСС ООО)
+        $year = date('Y', strtotime($receipt->date));                           // получаем год прихода (2022)
+        $receipt_num = '%' . $receipt->number . '/' . $year . '%';              // Получаем используемый номер прихода (TOF00000000/2022)
+        $payments = \R::findOne('payment', "receipt LIKE ?", [$receipt_num]);   // Получаем заявку на оплату для этого прихода (если есть)
 
         // получаем все неоплаченные приходы этого КА
         $receipts = \R::find('receipt', 'partner = ? AND date_pay IS NULL', [$name]);
@@ -107,13 +106,41 @@ class ReceiptController extends AppController {
             $sums[$k]['number'] = dateYear($v->number, $v->date);
             $sums[$k]['summa'] = $v->sum;
         }
+        /*
+        Array $recs
+        (
+            [0] => TOF00000278/2022
+            [1] => TOF00000279/2022
+            [2] => TOF00000280/2022
+        )
+        Array $sums
+        (
+            [138] => Array
+                (
+                    [number] => TOF00000278/2022 - номер неоплаченного прихода
+                    [summa] => 37044.00          - сумма этого прихода
+                
+
+            [139] => Array
+                (
+                    [number] => TOF00000279/2022
+                    [summa] => 20752.88
+                )
+
+            [140] => Array
+                (
+                    [number] => TOF00000280/2022
+                    [summa] => 3998.74
+                )   
+        )
+        */
         //debug($recs);debug($sums);die;
         $payment = new Payment();
         if ($payments) {
-            // если есть редактируем ее. Получаем идентификатор оплаты
+            // если есть ЗО редактируем ее. Получаем идентификатор оплаты
             $payment->editPayment($name, $recs, $er, $payments, $sums);
         } else {
-            // если нет добавляем ее
+            // если нет ЗО добавляем ее
             $payment->addPayment($name, trim($receipt_num,'%'), $recs, $er, $sums);
             $_SESSION['payment']['vat'] = $vat;
             //debug($_SESSION['payment']);die;
@@ -123,32 +150,30 @@ class ReceiptController extends AppController {
             $this->loadView('payment_add_modal');
         }
         redirect();
-
-
-        /*/ получаем данные пришедшие методом POST
-        // получаем переданное наименование КА
-        $partner = !empty($_GET['partner']) ? $_GET['partner'] : null;
-        $receipt = new Receipt();
-        $receipt->addReceipt($partner);
-        */
     }
     
     public function payReceiptAction() {
         // получаем данные пришедшие методом POST
         $pay_receipt = !empty($_POST) ? $_POST : null;
-        $num = '';
-        $receipt = $pay_receipt['receipt'];
+        $num = '';                                      // обнуляем переменную
+        $receipt = $pay_receipt['receipt'];             // получаем массив приходов
         foreach ($pay_receipt['receipt'] as &$value) {
-            $num .= $value . ';';
+            $num .= $value . ';';                       // добавляем значение прихода (TOF00000278/2022;TOF00000278/2022;)
         }
-        $num = rtrim($num, ';'); 
-        $pay_receipt['receipt'] = $num;
-        $num = '';
+        $num = rtrim($num, ';');            // убираем конечный знак ; получаем (TOF00000278/2022;TOF00000278/2022)
+        $pay_receipt['receipt'] = $num;     // записываем в сессию полученный результат
+        $num = '';                                      // обнуляем переменную
         foreach ($pay_receipt['num_er'] as &$value) {
-            $num .= $value . ';';
+            $num .= $value . ';';                       // добавляем номера ЕР (0009/122021ТЛТ;0008/092021ТЛТ;)
         }
-        $num = rtrim($num, ';'); 
-        $pay_receipt['num_er'] = $num;
+        $num = rtrim($num, ';');            // убираем конечный знак ; получаем (0009/122021ТЛТ;0008/092021ТЛТ)
+        $pay_receipt['num_er'] = $num;      // записываем в сессию полученный результат
+        $num = '';                                      // обнуляем переменную
+        foreach ($pay_receipt['sum'] as &$value) {
+            $num .= $value . ';';                       // добавляем номера ЕР (2000.00;2000.00;)
+        }
+        $num = rtrim($num, ';');            // убираем конечный знак ; получаем (2000.00;2000.00)
+        $pay_receipt['sum'] = $num;      // записываем в сессию полученный результат
         if (empty($pay_receipt['date_pay'])) {
             $pay_receipt['date_pay'] = NULL;
              //echo 'заменил на NULL';
