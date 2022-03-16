@@ -108,4 +108,13 @@
             width: "100%"
         });
     })
+    $("#sum_select").change(function() {
+        const ids = $('#sum_select').val();
+        var sum = 0;
+        for(var i = 0; i < ids.length; i++) {
+            sum += parseFloat(ids[i]);
+        }
+        $('#sum_er').val(sum);
+        $('#sum_bo').val(sum);
+    });
 </script>
