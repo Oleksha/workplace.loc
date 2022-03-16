@@ -23,49 +23,172 @@
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                     <div class="card-body">
                         <?php if(!empty($receipt)): ?>
-                            <table class="table table-striped table-sm">
-                                <thead>
-                                <tr class="table-active text-center">
-                                    <th scope="col" class="h-100 align-middle">Номер</th>
-                                    <th scope="col" class="h-100 align-middle">Дата</th>
-                                    <th scope="col" class="h-100 align-middle">Сумма</th>
-                                    <th scope="col" class="h-100 align-middle">Документ</th>
-                                    <th scope="col" class="h-100 align-middle">Дата док.</th>
-                                    <th scope="col" class="h-100 align-middle">Примечание</th>
-                                    <th scope="col" class="h-100 align-middle">Оплата</th>
-                                    <th scope="col" class="h-100 align-middle">Действия</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php foreach ($receipt as $item): ?>
-                                    <tr>
-                                        <th class="text-center h-100 align-middle" scope="row"><a href="#" class="edit-receipt-link" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
-                                        <td class="text-center h-100 align-middle"><?= $item['date'];?></td>
-                                        <td class="text-center h-100 align-middle"><?= number_format($item['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
-                                        <td class="text-center h-100 align-middle"><?= $item['num_doc'];?></td>
-                                        <td class="text-center h-100 align-middle"><?= $item['date_doc'];?></td>
-                                        <td class="h-100 align-middle"><?= $item['note'];?></td>
-                                        <td class="text-center h-100 align-middle"><?= $item['date_pay'];?></td>
-                                        <td class="text-center h-100 align-middle">
-                                            <a type="button" class="btn btn-outline-info btn-sm pay-receipt-link" data-toggle="tooltip" data-placement="top" title="Оплата" data-id="<?= $item['id'];?>" data-partner="<?= $partner->id;?>" data-vat="<?= $partner->vat;?>">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
-                                                    <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
-                                                    <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
-                                                    <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
-                                                </svg>
-                                            </a>
-                                            <a type="button" class="btn btn-outline-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Удалить" href="receipt/del?id=<?= $item['id'];?>" onclick="return window.confirm('OK?');">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" fill="red"/>
-                                                    <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" fill="red"/>
-                                                </svg>
-                                            </a>
-                                        </td>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Неоплаченные</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Оплаченные</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Все</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <table class="table table-striped table-sm">
+                                    <thead>
+                                    <tr class="table-active text-center">
+                                        <th scope="col" class="h-100 align-middle">Номер</th>
+                                        <th scope="col" class="h-100 align-middle">Дата</th>
+                                        <th scope="col" class="h-100 align-middle">Сумма</th>
+                                        <th scope="col" class="h-100 align-middle">Документ</th>
+                                        <th scope="col" class="h-100 align-middle">Дата док.</th>
+                                        <th scope="col" class="h-100 align-middle">Примечание</th>
+                                        <th scope="col" class="h-100 align-middle">Оплата</th>
+                                        <th scope="col" class="h-100 align-middle">Действия</th>
                                     </tr>
-                                <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    <?php $pay_no = 0; ?>
+                                    <?php foreach ($receipt as $item): ?>
+                                        <?php if (is_null($item['date_pay'])) : ?>
+                                        <tr>
+                                            <th class="text-center h-100 align-middle" scope="row"><a href="#" class="edit-receipt-link" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
+                                            <td class="text-center h-100 align-middle"><?= $item['date'];?></td>
+                                            <td class="text-center h-100 align-middle"><?= number_format($item['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
+                                            <td class="text-center h-100 align-middle"><?= $item['num_doc'];?></td>
+                                            <td class="text-center h-100 align-middle"><?= $item['date_doc'];?></td>
+                                            <td class="h-100 align-middle"><?= $item['note'];?></td>
+                                            <td class="text-center h-100 align-middle"><?= $item['date_pay'];?></td>
+                                            <td class="text-center h-100 align-middle">
+                                                <a type="button" class="btn btn-outline-info btn-sm pay-receipt-link" data-toggle="tooltip" data-placement="top" title="Оплата" data-id="<?= $item['id'];?>" data-partner="<?= $partner->id;?>" data-vat="<?= $partner->vat;?>">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+                                                        <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
+                                                        <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
+                                                        <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+                                                    </svg>
+                                                </a>
+                                                <a type="button" class="btn btn-outline-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Удалить" href="receipt/del?id=<?= $item['id'];?>" onclick="return window.confirm('OK?');">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" fill="red"/>
+                                                        <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" fill="red"/>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php $pay_no += 1; ?>
+                                        <?php endif; ?>                                        
+                                    <?php endforeach; ?>
+                                    <?php if ($pay_no == 0) : ?>
+                                        <tr>
+                                            <td colspan="8" class="text-center">Информации о неоплаченных приходах нет</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <table class="table table-striped table-sm">
+                                    <thead>
+                                    <tr class="table-active text-center">
+                                        <th scope="col" class="h-100 align-middle">Номер</th>
+                                        <th scope="col" class="h-100 align-middle">Дата</th>
+                                        <th scope="col" class="h-100 align-middle">Сумма</th>
+                                        <th scope="col" class="h-100 align-middle">Документ</th>
+                                        <th scope="col" class="h-100 align-middle">Дата док.</th>
+                                        <th scope="col" class="h-100 align-middle">Примечание</th>
+                                        <th scope="col" class="h-100 align-middle">Оплата</th>
+                                        <th scope="col" class="h-100 align-middle">Действия</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php $pay_yes = 0; ?>
+                                    <?php foreach ($receipt as $item): ?>
+                                        <?php if (!is_null($item['date_pay'])) : ?>
+                                        <tr>
+                                            <th class="text-center h-100 align-middle" scope="row"><a href="#" class="edit-receipt-link" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
+                                            <td class="text-center h-100 align-middle"><?= $item['date'];?></td>
+                                            <td class="text-center h-100 align-middle"><?= number_format($item['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
+                                            <td class="text-center h-100 align-middle"><?= $item['num_doc'];?></td>
+                                            <td class="text-center h-100 align-middle"><?= $item['date_doc'];?></td>
+                                            <td class="h-100 align-middle"><?= $item['note'];?></td>
+                                            <td class="text-center h-100 align-middle"><?= $item['date_pay'];?></td>
+                                            <td class="text-center h-100 align-middle">
+                                                <a type="button" class="btn btn-outline-info btn-sm pay-receipt-link" data-toggle="tooltip" data-placement="top" title="Оплата" data-id="<?= $item['id'];?>" data-partner="<?= $partner->id;?>" data-vat="<?= $partner->vat;?>">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+                                                        <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
+                                                        <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
+                                                        <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+                                                    </svg>
+                                                </a>
+                                                <a type="button" class="btn btn-outline-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Удалить" href="receipt/del?id=<?= $item['id'];?>" onclick="return window.confirm('OK?');">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" fill="red"/>
+                                                        <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" fill="red"/>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php $pay_yes += 1; ?>
+                                        <?php endif; ?>                                        
+                                    <?php endforeach; ?>
+                                    <?php if ($pay_yes == 0) : ?>
+                                        <tr>
+                                            <td colspan="8" class="text-center">Информации об оплаченных приходах нет</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                <table class="table table-striped table-sm">
+                                    <thead>
+                                    <tr class="table-active text-center">
+                                        <th scope="col" class="h-100 align-middle">Номер</th>
+                                        <th scope="col" class="h-100 align-middle">Дата</th>
+                                        <th scope="col" class="h-100 align-middle">Сумма</th>
+                                        <th scope="col" class="h-100 align-middle">Документ</th>
+                                        <th scope="col" class="h-100 align-middle">Дата док.</th>
+                                        <th scope="col" class="h-100 align-middle">Примечание</th>
+                                        <th scope="col" class="h-100 align-middle">Оплата</th>
+                                        <th scope="col" class="h-100 align-middle">Действия</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach ($receipt as $item): ?>
+                                        <tr>
+                                            <th class="text-center h-100 align-middle" scope="row"><a href="#" class="edit-receipt-link" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
+                                            <td class="text-center h-100 align-middle"><?= $item['date'];?></td>
+                                            <td class="text-center h-100 align-middle"><?= number_format($item['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
+                                            <td class="text-center h-100 align-middle"><?= $item['num_doc'];?></td>
+                                            <td class="text-center h-100 align-middle"><?= $item['date_doc'];?></td>
+                                            <td class="h-100 align-middle"><?= $item['note'];?></td>
+                                            <td class="text-center h-100 align-middle"><?= $item['date_pay'];?></td>
+                                            <td class="text-center h-100 align-middle">
+                                                <a type="button" class="btn btn-outline-info btn-sm pay-receipt-link" data-toggle="tooltip" data-placement="top" title="Оплата" data-id="<?= $item['id'];?>" data-partner="<?= $partner->id;?>" data-vat="<?= $partner->vat;?>">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
+                                                        <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
+                                                        <path d="M1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4.083c.058-.344.145-.678.258-1H3a2 2 0 0 0-2-2V3a2 2 0 0 0 2-2h10a2 2 0 0 0 2 2v3.528c.38.34.717.728 1 1.154V1a1 1 0 0 0-1-1H1z"/>
+                                                        <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
+                                                    </svg>
+                                                </a>
+                                                <a type="button" class="btn btn-outline-info btn-sm"  data-toggle="tooltip" data-placement="top" title="Удалить" href="receipt/del?id=<?= $item['id'];?>" onclick="return window.confirm('OK?');">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z" fill="red"/>
+                                                        <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z" fill="red"/>
+                                                    </svg>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <?php else : ?>
                             <h3>Данные о приходах отсутствуют</h3>
                         <?php endif; ?>
@@ -363,4 +486,3 @@
         </div>
     </div>
 </div>
-
