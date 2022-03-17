@@ -47,9 +47,7 @@
                       <th><a href="partner/<?= $item['inn'];?>"><?= $item['partner'];?></a></th>
                       <td>Поступление товаров и услуг <?= $item['number'];?> от <?= $item['date'];?></td>
                       <td><?= number_format($item['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
-                      <td>
-                          <?= $pay;?>
-                      </td>
+                      <td><?= $pay;?></td>
                       <td><?= $status;?></td>
                       <td>
                         <?php if ($status == 'Подано на оплату') : ?>
