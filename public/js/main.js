@@ -27,6 +27,7 @@ $(document).ready(function() {
         ]
     } );
     $('#main_index').dataTable( {
+        "order": [[ 3, "asc" ]],        
         "createdRow": function ( row, data, index ) {
                 if ( data[4] == "Подано на оплату" ) {
                     $('td', row).eq(3).addClass('table-warning');
