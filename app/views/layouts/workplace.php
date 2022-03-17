@@ -54,6 +54,8 @@
         </div>
     </footer>
 
+    <div class="preloader"><img src="img/ring.svg" alt=""></div>
+
     <script>
         let path = '<?=PATH;?>';
     </script>
