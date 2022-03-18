@@ -132,3 +132,9 @@ span.twitter-typeahead {
     padding: 5px;
     border-radius: 4px;
 }
+
+/* фильтр */
+
+.preloader {
+    display: none;
+}
