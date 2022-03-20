@@ -79,33 +79,34 @@ $('body').on('change', '.filters select', function () {
             url: location.href,
             data: {filter: data},
             type: 'GET',
-            /*beforeSend: function () {
+            beforeSend: function () {
                 // перед отправкой мы должны включить прелоадер
-                $('.preloader').fadeIn(300, function() {
+                $('.preloader').fadeIn(100, function() {
                     // обратимся к классу показывающему продукты
                     // и скроем все отображаемые на экране продукты
-                    $('.product-one').hide();
+                    $('#bo_view').hide();
                 });
-            },*/
+            },
             success: function (res) {
                 // постепенно скроем прелоадер и
-                /*$('.preloader').delay(500).fadeOut('show', function () {
+                $('.preloader').delay(100).fadeOut('show', function () {
                     // в класс показывающий продукты подгружаем
                     // полученный ответ с сервера и показываем его
-                    $('.product-one').html(res).fadeIn();
+                    $('#bo_view').html(res).fadeIn();
                     let url = location.search.replace(/filter(.+?)(&|$)/g, ''); //$2
                     let newURL = location.pathname + url + (location.search ? "&" : "?") + "filter=" + data;
                     newURL = newURL.replace('&&', '&');
                     newURL = newURL.replace('?&', '?');
                     history.pushState({}, '', newURL);
-                });*/
+                });
+                $('#bo_view').dataTable().ajax.reload();
             },
             error: function (res) {
                 alert('Errors');
             }
         });
     }
-    alert(data);
+    //alert(data);
 });
 /* Фильтр конец */
 

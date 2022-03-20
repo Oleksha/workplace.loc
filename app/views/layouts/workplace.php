@@ -66,6 +66,6 @@
     <script type="text/javascript" src="chosen/docsupport/init.js"></script>
     <script type="text/javascript" src="DataTables/datatables.min.js"></script>
     <script type="text/javascript" src="js/typeahead.bundle.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/main.js?<?echo time();?>"></script>
 </body>
 </html>

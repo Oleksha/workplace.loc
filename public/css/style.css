@@ -134,7 +134,21 @@ span.twitter-typeahead {
 }
 
 /* фильтр */
-
 .preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background: #fefefe;
+    opacity: .5;
     display: none;
+}
+
+.preloader img {
+    position: relative;
+    left: 50%;
+    top: 50vh;
+    margin: -100px 0 0 -100px;
 }

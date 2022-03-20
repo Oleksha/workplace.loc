@@ -562,3 +562,11 @@
 --------------------
 [2022-03-12 16:36:45] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
 --------------------
+[2022-03-19 07:17:33] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-19 07:18:02] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-20 16:07:41] Текст ошибки: syntax error, unexpected '?>' | Файл: F:\WebServer\domains\workplace.loc\app\views\Budget\index.php | Строка: 97
+--------------------
+[2022-03-20 16:07:42] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
