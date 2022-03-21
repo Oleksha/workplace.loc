@@ -98,8 +98,8 @@ $('body').on('change', '.filters select', function () {
                     newURL = newURL.replace('&&', '&');
                     newURL = newURL.replace('?&', '?');
                     history.pushState({}, '', newURL);
+                    location.reload();
                 });
-                $('#bo_view').dataTable().ajax.reload();
             },
             error: function (res) {
                 alert('Errors');

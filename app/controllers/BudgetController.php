@@ -4,8 +4,6 @@ namespace app\controllers;
 
 class BudgetController extends AppController {
 
-    public $myJSON = '';
-
     public function indexAction() {
         $cur_date = isset($_GET['filter']) ? $_GET['filter'] : date('Y-m-d');
         $year = mb_substr($cur_date, 0, 4);
@@ -23,31 +21,14 @@ class BudgetController extends AppController {
         }
         // начинаем работать с AJAX-запросом если включены фильтра
         // если данные пришли AJAX-запросом
-        $data = [];
-        $data_pre = [];
-        foreach ($budgets as $budget) {
-            $data_pre['id'] = $budget->id;
-            $data_pre['scenario'] = $budget->scenario;
-            $data_pre['month_exp'] = $budget->month_exp;
-            $data_pre['month_pay'] = $budget->month_pay;
-            $data_pre['number'] = $budget->number;
-            $data_pre['summa'] = $budget->summa;
-            $data_pre['payment'] = $budget->payment;
-            $data_pre['ostatok'] = $budget->summa - $budget->payment;
-            $data_pre['vat'] = $budget->vat;
-            $data_pre['budget_item'] = $budget->budget_item;
-            $data[] = $data_pre;
-        }
-        $data = json_encode($data);
-        $data = '{"data":'.$data.'}';
         if ($this->isAjax()) {
 
-            $this->loadView('filter', compact('budgets', 'year', 'month', 'data'));
+            $this->loadView('filter', compact('budgets', 'year', 'month'));
         }
         // формируем метатеги для страницы
         $this->setMeta('Список бюджетных операций', 'Описание...', 'Ключевые слова...');
         // Передаем полученные данные в вид
-        $this->set(compact('budgets', 'year', 'month', 'data'));
+        $this->set(compact('budgets', 'year', 'month'));
     }
 
     private function get_sum($payments, $num_bo, $vat_bo) {
@@ -83,5 +64,3 @@ class BudgetController extends AppController {
     }
 
 }
-
-//echo BudgetController.$myJSON;

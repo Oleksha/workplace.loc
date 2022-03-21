@@ -7,14 +7,12 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="<?=PATH;?>">Главная</a></li>
-                    <!--<li class="breadcrumb-item"><a type="button" href="<?=PATH;?>/partner/add">Добавить КА</a></li>-->
                     <li class="breadcrumb-item active" aria-current="page">Бюджетные операции</li>
             </ol>
         </nav>
 
         <div class="breadcrumb filters">
             <div class="col-auto">
-                <label class="sr-only" for="inlineFormInputGroup">Имя пользователя</label>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text">Год</div>
@@ -47,44 +45,6 @@
                 </div>
             </div>
         </div>
-
-        <!--<table id="example_budget" class="display" style="width:100%">
-            <thead>
-            <tr>
-                <th>Сценарий</th>
-                <th>МР</th>
-                <th>МО</th>
-                <th>Номер</th>
-                <th>Сумма</th>
-                <th>Оплачено</th>
-                <th>Остаток</th>
-                <th>НДС</th>
-                <th>Статья</th>
-            </tr>
-            </thead>
-            <tfoot>
-            <tr>
-                <th>Сценарий</th>
-                <th>МР</th>
-                <th>МО</th>
-                <th>Номер</th>
-                <th>Сумма</th>
-                <th>Оплачено</th>
-                <th>Остаток</th>
-                <th>НДС</th>
-                <th>Статья</th>
-            </tr>
-            </tfoot>
-        </table>
-        <script>
-            $(document).ready(function() {
-                $('#example_budget').DataTable({
-                    "ajax": <?php echo $data; ?>,
-                    "data": JSON
-                });
-            });
-        </script>
-        <?=debug($data);?>-->
         <div class="product-one">
             <?php if($budgets): ?>
                 <table id="bo_view" class="display" style="width:100%">
