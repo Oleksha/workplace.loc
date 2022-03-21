@@ -13,7 +13,7 @@ class BudgetController extends AppController {
         $budget_date = $year . '-' . $month . '-01';
         //debug($budget_date);die;
         // получение БО из БД
-        $budgets = \R::find('budget', "WHERE scenario = '{$budget_date}' ORDER BY scenario, number");
+        $budgets = \R::find('budget', "WHERE scenario = '{$budget_date}' AND status = 'Согласован' ORDER BY scenario, number");
         // получаем расходы по выбранным БО
         foreach ($budgets as $item) {
             // получаем номер БО 
