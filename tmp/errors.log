@@ -570,3 +570,7 @@
 --------------------
 [2022-03-20 16:07:42] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
 --------------------
+[2022-03-21 18:39:51] Текст ошибки: Метод app\controllers\BudgetController::viewAction не найден | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 42
+--------------------
+[2022-03-21 18:39:52] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------

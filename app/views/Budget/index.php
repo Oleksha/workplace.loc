@@ -81,7 +81,7 @@
                             <td><?= $scenario;?></td>
                             <td><?= $month_exp;?></td>
                             <td><?= $month_pay;?></td>
-                            <th><?= $budget->number;?></th>
+                            <th><a href="budget/view?id=<?= $budget->id;?>"><?= $budget->number;?></a></th>
                             <td><?= number_format($budget->summa, 2, ',', '&nbsp;');?>&nbsp;₽</td>
                             <td><?= number_format($budget->payment, 2, ',', '&nbsp;');?>&nbsp;₽</td>
                             <th><?= number_format($budget->summa - $budget->payment, 2, ',', '&nbsp;');?>&nbsp;₽</th>

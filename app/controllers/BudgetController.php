@@ -63,4 +63,8 @@ class BudgetController extends AppController {
         return $sum;
     }
 
+    public function viewAction() {
+        $id_bo = isset($_GET['id']) ? $_GET['id'] : null;
+    }
+
 }
