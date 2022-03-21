@@ -36,7 +36,7 @@
                         </div>
                         <div class="has-feedback col-4">
                             <label for="inn">ИНН</label>
-                            <input type="text" name="inn" class="form-control" id="inn" placeholder="ИНН" value="<?=isset($_SESSION['form_data']['inn']) ? h($_SESSION['form_data']['inn']) : '';?>" required>
+                            <input type="text" name="inn" class="form-control" id="inn" placeholder="ИНН" value="<?=isset($_SESSION['form_data']['inn']) ? h($_SESSION['form_data']['inn']) : '';?>">
                         </div>
                         <div class="has-feedback col-4">
                             <label for="kpp">КПП</label>
