@@ -63,8 +63,56 @@ class BudgetController extends AppController {
         return $sum;
     }
 
+    private function get_array_sum($payments, $num_bo, $vat_bo) {
+        $pay_arr = [];
+        foreach ($payments as $payment) {
+            $pay['date'] = $payment->date;
+            $nums = explode(';', trim($payment->num_bo));
+            $sums = explode(';', trim($payment->sum_bo));
+            $key = array_search($num_bo, $nums);
+            if ($vat_bo == '1.20') {
+                // если БО с НДС
+                if ($payment->vat == '1.20') {
+                    // если платеж с НДС
+                    $pay['summa'] = $sums[$key];
+                }
+                if ($payment->vat == '1.00') {
+                    // если платеж без НДС
+                    $pay['summa'] = round($sums[$key] * 1.2, 2);
+                }
+            }
+            if ($vat_bo == '1.00') {
+                // если БО без НДС
+                if ($payment->vat == '1.00') {
+                    // если платеж без НДС
+                    $pay['summa'] = $sums[$key];
+                }
+                if ($payment->vat == '1.20') {
+                    // если платеж с НДС
+                    $pay['summa'] = round($sums[$key] / 1.2, 2);
+                }
+            }  
+            $pay['partner'] = $payment->partner; 
+            $pay_arr[] = $pay;      
+        }
+        return $pay_arr;
+    }
+
     public function viewAction() {
         $id_bo = isset($_GET['id']) ? $_GET['id'] : null;
+        $budget = \R::findOne('budget', 'id = ?', [$id_bo]);
+        $year = mb_substr($budget['scenario'], 0, 4);
+        // формируем строку в виде CUB012345678/2022
+        $num_bo = $budget['number'].'/'.$year;
+        // получаем все оплты по этой БО
+        $payments = \R::find('payment', "num_bo LIKE '%{$num_bo}%' ORDER BY date");
+        // добавляем в массив оплаченную сумму
+        $budget['payment'] = $this->get_sum($payments, $num_bo, $budget['vat']);
+        $budget['pay_arr'] = $this->get_array_sum($payments, $num_bo, $budget['vat']);
+        // формируем метатеги для страницы
+        $this->setMeta("Просмотр бюджетной операции {$budget['number']}", 'Описание...', 'Ключевые слова...');
+        // Передаем полученные данные в вид
+        $this->set(compact('budget', 'payments'));
     }
 
 }
