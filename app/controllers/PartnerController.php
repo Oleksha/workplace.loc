@@ -48,7 +48,7 @@ class PartnerController extends AppController {
         $ers = $this->costs($ers, $partner['vat'], $partner['name']);
         // Приходы
         $name = $partner['name'];
-        $receipt = \R::getAll('SELECT * FROM receipt WHERE partner = ?', [$name]);
+        $receipt = \R::getAll('SELECT * FROM receipt WHERE partner = ? ORDER BY date', [$name]);
 
         // формируем метатеги для страницы
         $this->setMeta($partner->name, 'Описание...', 'Ключевые слова...');
