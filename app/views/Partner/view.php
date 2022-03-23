@@ -210,27 +210,35 @@
                     <div class="card-body">
                         <?php if(!empty($ers)): ?>
                             <?php foreach ($ers as $er): ?>
-                                <?php $result = false; $result_date = false; $result_sum = false; ?>
+                                <?php $result = false; $result_date = false; $result_null = false; $result_sum = false; ?>
                                 <?php $date = strtotime('+30 days'); ?>
                                 <?php if ($er['data_end'] < date('Y-m-d', $date))
                                 {
                                     $result = true;
                                     $result_date = true;
                                 }
-                                if ($er['summa'] < 30000)
+                                if (($er['summa'] - $er['cost']) < 30000)
                                 {
                                     $result = true;
                                     $result_sum = true;
+                                }
+                                if (($er['summa'] - $er['cost']) <= 0)
+                                {
+                                    $result_null = true;
                                 }
                                 ?>
                                 <div class="row align-items-center">
                                     <div class="col-12">
                                         <div class="
                                             <?php
-                                                if ($result) {
-                                                    echo 'alert alert-warning';
+                                                if ($result_null) {
+                                                    echo 'alert alert-danger';
                                                 } else {
-                                                    echo 'alert alert-success';
+                                                    if ($result) {
+                                                        echo 'alert alert-warning';
+                                                    } else {
+                                                        echo 'alert alert-success';
+                                                    }
                                                 }
                                             ?>" role="alert">
                                             <?= $er['name_budget_item'];?> - <b><i><?= $er['number'];?></i></b> - Осталось: <b><?= number_format($er['summa'] - $er['cost'], 2, ',', '&nbsp;');?>&nbsp;₽</b>
