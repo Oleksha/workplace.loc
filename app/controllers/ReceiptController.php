@@ -98,7 +98,7 @@ class ReceiptController extends AppController {
         $payments = \R::findOne('payment', "receipt LIKE ?", [$receipt_num]);   // Получаем заявку на оплату для этого прихода (если есть)
 
         // получаем все неоплаченные приходы этого КА
-        $receipts = \R::find('receipt', 'partner = ? AND date_pay IS NULL', [$name]);
+        $receipts = \R::find('receipt', 'partner = ? AND date_pay IS NULL ORDER BY date', [$name]);
         $recs = []; // массив содержащий приходы в формате TOF0000000/2022
         $sums = []; // массив содержащий суммы
         foreach ($receipts as $k => $v) {
