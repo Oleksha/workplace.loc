@@ -24,7 +24,7 @@
             ?>
             <tr>
                 <td class="text-center h-100 align-middle"><?= $payment['date'];?></td>
-                <td class="text-center h-100 align-middle"><?= number_format($payment['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
+                <td class="text-center h-100 align-middle"><?= number_format((double)$payment['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
                 <td></td>
             </tr>
             <?php endforeach; ?>
