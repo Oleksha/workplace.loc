@@ -180,6 +180,26 @@ $('body').on('click', '.add-er-link', function (e) {
         }
     });
 });
+$('body').on('click', '.view-er-link', function (e) {
+    e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
+    // получаем необходимые нам данные
+    let id = $(this).data('id') // идентификатор ЕР
+
+    // отправляем стандартный аякс запрос на сервер
+    $.ajax({
+        url: '/er/view', // всегда указываем от корня
+        data: {id: id}, // передаем данные
+        type: 'GET', // тип передаваемого запроса
+        success: function (res) {
+            // если данные получены
+            showViewEr(res);
+        },
+        error: function () {
+            // если данных нет или запрос не дошел
+            alert('Ошибка получения данных с сервера! Попробуйте позже.');
+        }
+    });
+});
 
 /**
  * Показывает модальное окно с данными ЕР
@@ -190,11 +210,15 @@ function showEr(er) {
     $('#editERModal .modal-body').html(er);
     $('#editERModal').modal();
 }
-
 function showAddEr(er) {
     // выводим содержимое страницы
     $('#addERModal .modal-body').html(er);
     $('#addERModal').modal();
+}
+function showViewEr(er) {
+    // выводим содержимое страницы
+    $('#viewERModal .modal-body').html(er);
+    $('#viewERModal').modal();
 }
 
 $('body').on('click', '.edit-ka-link', function (e) {

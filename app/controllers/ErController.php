@@ -80,4 +80,22 @@ class ErController extends AppController {
         redirect();
     }
 
+    public function viewAction() {
+        // получаем переданный идентификатор ЕР
+        $this->id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
+        if ($this->id) {
+            // если у нас есть ID получаем все данные об этом ЕР
+            $er = \R::findOne('er', 'id = ?', [$this->id]);
+            if (!$er) return false; // если такой нет дальнейшие действия бессмысленны
+            // получаем данные об оплатах
+            $er_str = "%" . $er['number'] . "%";
+            $payments = \R::find('payment', "num_er LIKE ? ORDER BY date", [$er_str]);
+            if ($this->isAjax()) {
+                // Если запрос пришел АЯКСом
+                $this->loadView('er_view_modal', compact('payments', 'er'));
+            }
+            redirect();
+        }
+    }
+
 }

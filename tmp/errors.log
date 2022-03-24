@@ -574,3 +574,9 @@
 --------------------
 [2022-03-21 18:39:52] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
 --------------------
+[2022-03-24 18:35:21] Текст ошибки: Метод app\controllers\ErController::viewAction не найден | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 42
+--------------------
+[2022-03-24 18:45:17] Текст ошибки: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'num_er' in 'where clause' | Файл: F:\WebServer\domains\workplace.loc\vendor\gabordemooij\redbean\RedBeanPHP\Driver\RPDO.php | Строка: 202
+--------------------
+[2022-03-24 18:46:50] Текст ошибки: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%'0014/112021ТЛТ'%  -- keep-cache' at line 1 | Файл: F:\WebServer\domains\workplace.loc\vendor\gabordemooij\redbean\RedBeanPHP\Driver\RPDO.php | Строка: 202
+--------------------
