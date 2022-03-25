@@ -23,8 +23,8 @@
                 $vat = $payment->vat;
             ?>
             <tr>
-                <td class="text-center h-100 align-middle"><?= $payment['date'];?></td>
-                <td class="text-center h-100 align-middle"><?= number_format((double)$payment['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
+                <td class="text-center h-100 align-middle"><?= $payment['date_pay'];?></td>
+                <td class="text-center h-100 align-middle"><?= number_format($sums[$key], 2, ',', '&nbsp;');?>&nbsp;₽</td>
                 <td></td>
             </tr>
             <?php endforeach; ?>
