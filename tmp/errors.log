@@ -580,3 +580,51 @@
 --------------------
 [2022-03-24 18:46:50] Текст ошибки: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%'0014/112021ТЛТ'%  -- keep-cache' at line 1 | Файл: F:\WebServer\domains\workplace.loc\vendor\gabordemooij\redbean\RedBeanPHP\Driver\RPDO.php | Строка: 202
 --------------------
+[2022-03-26 19:09:01] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-26 19:10:53] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-26 21:14:06] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-26 21:22:19] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 12:56:32] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 12:57:39] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 12:57:40] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 12:58:23] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 12:59:24] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 13:00:48] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 13:00:59] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 13:02:05] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 16:01:17] Текст ошибки: Cannot use object of type app\models\Budget as array | Файл: F:\WebServer\domains\workplace.loc\app\controllers\BudgetController.php | Строка: 114
+--------------------
+[2022-03-27 16:01:17] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 16:03:21] Текст ошибки: Cannot use object of type app\models\Budget as array | Файл: F:\WebServer\domains\workplace.loc\app\views\Budget\view.php | Строка: 11
+--------------------
+[2022-03-27 16:03:21] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 16:06:08] Текст ошибки: Cannot use object of type app\models\Budget as array | Файл: F:\WebServer\domains\workplace.loc\app\views\Budget\view.php | Строка: 11
+--------------------
+[2022-03-27 16:06:08] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 16:08:02] Текст ошибки: Cannot use object of type app\models\Budget as array | Файл: F:\WebServer\domains\workplace.loc\app\views\Budget\view.php | Строка: 30
+--------------------
+[2022-03-27 16:08:02] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 16:09:43] Текст ошибки: Unsupported operand types | Файл: F:\WebServer\domains\workplace.loc\app\views\Budget\view.php | Строка: 36
+--------------------
+[2022-03-27 16:09:43] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-03-27 16:11:15] Текст ошибки: Cannot use object of type app\models\Budget as array | Файл: F:\WebServer\domains\workplace.loc\app\views\Budget\view.php | Строка: 61
+--------------------
+[2022-03-27 16:11:15] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------

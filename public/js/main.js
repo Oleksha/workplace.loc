@@ -183,12 +183,12 @@ $('body').on('click', '.add-er-link', function (e) {
 $('body').on('click', '.view-er-link', function (e) {
     e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
     // получаем необходимые нам данные
-    let id = $(this).data('id') // идентификатор ЕР
-
+    let id = $(this).data('id'), // идентификатор ЕР
+        partner = $(this).data('partner') // наименование КА
     // отправляем стандартный аякс запрос на сервер
     $.ajax({
         url: '/er/view', // всегда указываем от корня
-        data: {id: id}, // передаем данные
+        data: {id: id, partner: partner}, // передаем данные
         type: 'GET', // тип передаваемого запроса
         success: function (res) {
             // если данные получены

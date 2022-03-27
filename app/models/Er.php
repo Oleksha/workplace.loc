@@ -53,4 +53,18 @@ class Er extends AppModel {
         }
     }
 
+    /**
+     * @param $er string номер Единоличного решения
+     * @param $partner string Наименование контрагента
+     * @return array массив заявок на опалату
+     */
+    public function getPayment($er, $partner = null) {
+        $er = '%' . $er . '%';
+        if ($partner) {
+            return \R::find('payment', 'num_er LIKE ? AND partner = ? ORDER BY date', [$er, $partner]);
+        } else {
+            return \R::find('payment', 'num_er LIKE ? ORDER BY date', [$er]);
+        }
+    }
+
 }

@@ -54,7 +54,7 @@
                                     <?php foreach ($receipt as $item): ?>
                                         <?php if (is_null($item['date_pay'])) : ?>
                                         <tr>
-                                            <th class="text-center h-100 align-middle" scope="row"><a href="#" class="edit-receipt-link" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
+                                            <th class="text-center h-100 align-middle" scope="row"><a href="#" class="edit-receipt-link" data-toggle="tooltip" data-placement="top" title="Редактировать" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
                                             <td class="text-center h-100 align-middle"><?= $item['date'];?></td>
                                             <td class="text-center h-100 align-middle"><?= number_format($item['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
                                             <td class="text-center h-100 align-middle"><?= $item['num_doc'];?></td>
@@ -108,7 +108,7 @@
                                     <?php foreach ($receipt as $item): ?>
                                         <?php if (!is_null($item['date_pay'])) : ?>
                                         <tr>
-                                            <th class="text-center h-100 align-middle" scope="row"><a href="#" class="edit-receipt-link" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
+                                            <th class="text-center h-100 align-middle" scope="row"><a href="#" class="edit-receipt-link" data-toggle="tooltip" data-placement="top" title="Редактировать" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
                                             <td class="text-center h-100 align-middle"><?= $item['date'];?></td>
                                             <td class="text-center h-100 align-middle"><?= number_format($item['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
                                             <td class="text-center h-100 align-middle"><?= $item['num_doc'];?></td>
@@ -160,7 +160,7 @@
                                     <tbody>
                                     <?php foreach ($receipt as $item): ?>
                                         <tr>
-                                            <th class="text-center h-100 align-middle" scope="row"><a href="#" class="edit-receipt-link" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
+                                            <th class="text-center h-100 align-middle" scope="row"><a href="#" class="edit-receipt-link" data-toggle="tooltip" data-placement="top" title="Редактировать" data-id="<?= $item['id'];?>"><?= $item['number'];?></a></th>
                                             <td class="text-center h-100 align-middle"><?= $item['date'];?></td>
                                             <td class="text-center h-100 align-middle"><?= number_format($item['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
                                             <td class="text-center h-100 align-middle"><?= $item['num_doc'];?></td>
@@ -256,7 +256,7 @@
                                                 </span>
                                             </div>
                                             <div class="col-2 text-right">
-                                                <a type="button" class="btn btn-outline-success view-er-link" data-id="<?= $er['id'];?>" data-toggle="tooltip" data-placement="top" title="Просмотреть"">
+                                                <a type="button" class="btn btn-outline-success view-er-link" data-partner="<?= $partner->name;?>" data-id="<?= $er['id'];?>" data-toggle="tooltip" data-placement="top" title="Просмотреть"">
                                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-zoom-out" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                         <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
                                                         <path d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z"/>
