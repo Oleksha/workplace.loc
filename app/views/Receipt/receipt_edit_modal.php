@@ -3,6 +3,15 @@
     <label for="name">Наименование контрагента</label>
     <input type="text" name="name" class="form-control" id="name" placeholder="Наименование КА" value="<?=isset($_SESSION['receipt']['partner']) ? h($_SESSION['receipt']['partner']) : '';?>" disabled>
 </div>
+<div class="has-feedback">
+    <label for="type">Тип документа для оплаты</label>
+    <select class="form-control" name="type" id="type">
+        <option value="">Выберите тип</option>
+        <option value="ПТ" <?php if ($_SESSION['receipt']['type'] == 'ПТ') { echo ' selected';} ?>>Поступление товаров и услуг</option>
+        <option value="ЗП" <?php if ($_SESSION['receipt']['type'] == 'ЗП') { echo ' selected';} ?>>Заказ поставщику</option>
+        <option value="АО" <?php if ($_SESSION['receipt']['type'] == 'АО') { echo ' selected';} ?>>Авансовый отчет</option>
+    </select>
+</div>
 <div class="form-row">
     <div class="has-feedback col-6">
         <label for="date">Дата прихода</label>
@@ -21,8 +30,8 @@
     <div class="has-feedback col-6">
         <label for="vat">НДС</label>
         <select class="form-control" name="vat" id="vat">
-            <option value="1.20" selected>20%</option>
-            <option value="1.00">Без НДС</option>
+            <option value="1.20" <?php if ($_SESSION['receipt']['vat'] == '1.20') { echo ' selected';} ?>>20%</option>
+            <option value="1.00" <?php if ($_SESSION['receipt']['vat'] == '1.00') { echo ' selected';} ?>>Без НДС</option>
         </select>
     </div>
 </div>
