@@ -126,6 +126,12 @@ span.twitter-typeahead {
 .input-group.input-group-lg span.twitter-typeahead .tt-dropdown-menu {
     top: 46px !important;
 }
+
+.my-row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
 /*search*/
 
 .chosen-container-multi .chosen-choices {
