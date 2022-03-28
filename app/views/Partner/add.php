@@ -30,17 +30,35 @@
                         <input type="text" name="name" class="form-control" id="name" placeholder="Наименование КА" value="<?=isset($_SESSION['form_data']['name']) ? h($_SESSION['form_data']['name']) : '';?>" required>
                     </div>
                     <div class="form-row">
-                        <div class="has-feedback col-4">
+                        <div class="has-feedback col-3">
                             <label for="alias">Номер</label>
                             <input type="text" name="alias" class="form-control" id="alias" placeholder="Номер" value="<?=isset($_SESSION['form_data']['alias']) ? h($_SESSION['form_data']['alias']) : '';?>" required>
                         </div>
-                        <div class="has-feedback col-4">
+                        <div class="has-feedback col-3">
                             <label for="inn">ИНН</label>
                             <input type="text" name="inn" class="form-control" id="inn" placeholder="ИНН" value="<?=isset($_SESSION['form_data']['inn']) ? h($_SESSION['form_data']['inn']) : '';?>">
                         </div>
-                        <div class="has-feedback col-4">
+                        <div class="has-feedback col-3">
                             <label for="kpp">КПП</label>
                             <input type="text" name="kpp" class="form-control" id="kpp" placeholder="КПП" value="<?=isset($_SESSION['form_data']['kpp']) ? h($_SESSION['form_data']['kpp']) : '';?>">
+                        </div>
+                        <div class="has-feedback col-3">
+                            <label for="type">Тип</label>
+                            <select class="form-control" name="type" id="type">
+                                <?php if (!empty($_SESSION['form_data']['type'])) : ?>
+                                    <?php if ($_SESSION['form_data']['type'] == 'ЮЛ') : ?>
+                                        <option value="ЮЛ" selected>Юридическое лицо</option>
+                                        <option value="ФЛ">Физическое лицо</option>
+                                    <?php elseif ($_SESSION['form_data']['type'] == 'ФЛ') : ?>
+                                        <option value="ЮЛ">Юридическое лицо</option>
+                                        <option value="ФЛ" selected>Физическое лицо</option>
+                                    <?php endif; ?>
+                                <?php else : ?>
+                                    <option value="">Выберите...</option>
+                                    <option value="ЮЛ">Юридическое лицо</option>
+                                    <option value="ФЛ">Физическое лицо</option>
+                                <?php endif; ?>
+                            </select>
                         </div>
                     </div>
                     <div class="has-feedback">
