@@ -131,6 +131,7 @@ span.twitter-typeahead {
     margin-right: 0;
     margin-left: 0;
     background-color: #e9ecef;
+    border: none;
 }
 
 /*search*/
