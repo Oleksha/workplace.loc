@@ -25,10 +25,11 @@
             $date = date_create($bo->month_pay);
             $month_pay = $_monthsList[date_format($date, "n")];
         ?>
-        <div class="row alert alert-secondary">
+        <div class="row alert alert-secondary my-row">
             <div class="col-10 border-right border-secondary align-middle">
                 <h2 class="text-center text-primary"><b><?= $bo->number;?></b></h2>
                 <h3 class="text-center text-muted"><?= $bo->budget_item;?></h3>
+                <hr>
                 <div class="row d-flex align-items-center">
                     <div class="col-3 text-right text-muted">Сумма БО:</div>
                     <div class="col-3 text-left"><h4><?= number_format($bo->summa, 2, ',', '&nbsp;');?>&nbsp;₽</h4></div>

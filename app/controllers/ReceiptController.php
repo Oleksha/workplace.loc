@@ -72,12 +72,18 @@ class ReceiptController extends AppController {
     }
 
     public function payAction() {
-        // получаем переданный дметодом GET данные 
+        // получаем переданные GET данные
         $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;                    // идентификатор прихода  
         $vat = !empty($_GET['vat']) ? $_GET['vat'] : null;                      // ставка НДС по которой работает КА
         $partner_id = !empty($_GET['partner']) ? (int)$_GET['partner'] : null;  // идентификатор контрагента
         // получаем полные данные о текущем приходе
         $receipt = \R::findOne('receipt', 'id = ?', [$id]);
+        $pay_key = false; // индикатор оплаты прихода
+        if (!is_null($receipt->date_pay)) {
+            // значит приход оплачен
+            $pay_key = true;
+        }
+        //debug($pay_key);die;
         /* Получение сопутствующих данных */
         // получаем все действующие ЕР для этого КА
         $ers = \R::getAll("SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= '{$receipt->date}') AND id_partner = ?", [$partner_id]);
@@ -106,6 +112,7 @@ class ReceiptController extends AppController {
             $sums[$k]['number'] = dateYear($v->number, $v->date);
             $sums[$k]['summa'] = $v->sum;
         }
+
         /*
         Array $recs
         (
@@ -134,7 +141,34 @@ class ReceiptController extends AppController {
                 )   
         )
         */
-        //debug($recs);debug($sums);die;
+        if ($pay_key) {
+            // если поступление оплачено
+            $recs = explode(';', $payments->receipt); // доступные приходы
+            $sums = explode(';', $payments->sum); // все выбранные приходы
+            foreach ($recs as  $k => $v) {
+                $new_recs[$k]['number'] = $recs[$k];
+                $new_recs[$k]['summa'] = $sums[$k];
+                $new_sums[$k]['number'] = $recs[$k];
+                $new_sums[$k]['summa'] = $sums[$k];
+            }
+            $sums = $new_sums;
+            $recs = $new_recs;
+        } else {
+            if ($payments) {
+                foreach ($receipts as $k => $v) {
+                    $recs[$k]['number'] = dateYear($v->number, $v->date);
+                    $recs[$k]['summa'] = $v->sum;
+                }
+                $recs_pay = explode(';', $payments->receipt); // доступные приходы
+                $sums_pay = explode(';', $payments->sum); // все выбранные приходы
+                foreach ($recs_pay as  $k => $v) {
+                    $new_sums[$k]['number'] = $recs_pay[$k];
+                    $new_sums[$k]['summa'] = $sums_pay[$k];
+                }
+                $sums = $new_sums;
+            }
+        }
+
         $payment = new Payment();
         if ($payments) {
             // если есть ЗО редактируем ее. Получаем идентификатор оплаты
