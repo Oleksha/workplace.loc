@@ -6,7 +6,8 @@ class Partner extends AppModel {
 
     public $attributes = [
         'name' => '',
-        'alias' => '',
+        'alias' => '',        
+        'type' => '',
         'inn' => '',
         'kpp' => '',
         'bank' => '',
