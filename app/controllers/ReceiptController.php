@@ -2,22 +2,24 @@
 
 namespace app\controllers;
 
-use app\models\Er;
 use app\models\Payment;
 use app\models\Receipt;
 use RedBeanPHP\R;
 
 class ReceiptController extends AppController {
 
+    /**
+     * @return void
+     */
     public function editAction() {
         // получаем переданный идентификатор прихода
         $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
-        //debug($id); die;
+        /** @var array $receipt данные о приходе*/
         $receipt = null;
         if ($id) {
             // если у нас есть ID получаем все данные об этом приходе
             $receipt = \R::findOne('receipt', 'id = ?', [$id]);
-            if (!$receipt) return false; // если такого прихода нет дальнейшие действия бессмысленны
+            if (!$receipt) die; // если такого прихода нет дальнейшие действия бессмысленны
         }
         $rec = new Receipt();
         $rec->editReceipt($receipt);
