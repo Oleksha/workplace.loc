@@ -77,7 +77,7 @@ class ReceiptController extends AppController {
         $vat = !empty($_GET['vat']) ? $_GET['vat'] : null;                      // ставка НДС по которой работает КА
         $partner_id = !empty($_GET['partner']) ? (int)$_GET['partner'] : null;  // идентификатор контрагента
         $receipt = \R::findOne('receipt', 'id = ?', [$id]);                     // получаем полные данные о текущем приходе
-        $pay_key = !is_null($receipt->date_pay) ? TRUE : FALSE;                 // индикатор оплаты прихода
+        $pay_key = !is_null($receipt->date_pay);                 // индикатор оплаты прихода
         /***** Начало получения данных для формирования заявки на оплату (ЗО) ******/
         /* Получаем все действующие ЕР для этого КА на момент прихода */
         $ers = \R::getAll("SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_start <= '{$receipt->date}') AND (data_end >= '{$receipt->date}') AND id_partner = ?", [$partner_id]);
@@ -117,6 +117,7 @@ class ReceiptController extends AppController {
         ) *****************************************************************/
         $receipt_select = []; // массив содержащий выбранные приходы в ЗО
         $receipt_nopay = [];  // массив содержащий неоплаченные приходы данного КА
+        $ers_sel = []; $new_er = []; $new_sums = [];
         foreach ($receipts as $k => $v) {
             $receipt_nopay[$k]['number'] = dateYear($v->number, $v->date);
             $receipt_nopay[$k]['summa'] = $v->sum;
@@ -132,26 +133,19 @@ class ReceiptController extends AppController {
                 $new_er[$k]['number'] = $er_sel[$k];
                 $new_er[$k]['summa'] = $er_sum[$k];
             }
-            $ers_sel = $new_er;          
+            $ers_sel = $new_er;
+            $recs = explode(';', $payments->receipt); // доступные приходы
+            $sums = explode(';', $payments->sum); // все выбранные приходы
+            foreach ($recs as  $k => $v) {
+                $new_recs[$k]['number'] = $recs[$k];
+                $new_recs[$k]['summa'] = $sums[$k];
+            }
+            $receipt_select = $new_recs;
             if ($pay_key) {
                 // Если ЗО создана и уже оплачена (режим просмотра)
-                $recs = explode(';', $payments->receipt); // доступные приходы
-                $sums = explode(';', $payments->sum); // все выбранные приходы
-                foreach ($recs as  $k => $v) {
-                    $new_recs[$k]['number'] = $recs[$k];
-                    $new_recs[$k]['summa'] = $sums[$k];
-                }
-                $receipt_select = $new_recs; 
-                $receipt_nopay = $new_recs;   
+                $receipt_nopay = $new_recs;
             } else {
                 // Если ЗО создана но пока не оплачена (режим редактирования)
-                $recs = explode(';', $payments->receipt); // доступные приходы
-                $sums = explode(';', $payments->sum); // все выбранные приходы
-                foreach ($recs as  $k => $v) {
-                    $new_recs[$k]['number'] = $recs[$k];
-                    $new_recs[$k]['summa'] = $sums[$k];
-                }
-                $receipt_select = $new_recs; 
                 foreach ($receipts as $k => $v) {
                     $new_sums[$k]['number'] = dateYear($v->number, $v->date);
                     $new_sums[$k]['summa'] = $v->sum;
