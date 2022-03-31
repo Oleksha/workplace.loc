@@ -39,21 +39,4 @@ class Receipt extends AppModel {
         }
     }
 
-    public function addReceipt($name) {
-        unset($_SESSION['receipt']); // Очищаем сессию
-        $_SESSION['receipt'] = [
-            'date' => null,
-            'number' => null,
-            'sum' => null,
-            'type' => null,
-            'vat' => null,
-            'partner' => $name,
-            'num_doc' => null,
-            'date_doc' => null,
-            'note' => null,
-            'num_pay' => null,
-            'date_pay' => null,
-        ];
-    }
-
 }
