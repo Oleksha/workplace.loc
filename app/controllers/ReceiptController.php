@@ -209,7 +209,8 @@ class ReceiptController extends AppController {
             $edit_receipt['id'] = $v['id'];
             $edit_receipt['date'] = $v['date'];
             $edit_receipt['number'] = $v['number'];
-            $edit_receipt['sum'] = $v['sum'];
+            $edit_receipt['sum'] = $v['sum'];            
+            $edit_receipt['type'] = $v['type'];
             $edit_receipt['vat'] = $v['vat'];
             $edit_receipt['partner'] = $v['partner'];
             $edit_receipt['num_doc'] = $v['num_doc'];
