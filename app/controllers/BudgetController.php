@@ -68,7 +68,7 @@ class BudgetController extends AppController {
     private function get_array_sum($payments, $num_bo, $vat_bo) {
         $pay_arr = [];
         foreach ($payments as $payment) {
-            $pay['date'] = $payment['date'];
+            $pay['date_pay'] = $payment['date_pay'];
             $nums = explode(';', trim($payment['num_bo']));//->num_bo));
             $sums = explode(';', trim($payment['sum_bo']));//->sum_bo));
             $key = array_search($num_bo, $nums);
