@@ -40,7 +40,7 @@ class Budget extends AppModel {
     public function getBudgetPayment($number) {
         $pays = []; $payments = [];
         $number = '%' . $number . '%';
-        $pay_arrays = \R::find('payment', 'num_bo LIKE ? ORDER BY date', [$number]);
+        $pay_arrays = \R::find('payment', 'num_bo LIKE ? ORDER BY date_pay', [$number]);
         foreach ($pay_arrays as $pay_array) {
             // проходим по всем атрибутам
             foreach ($this->payment as $name => $value) {
