@@ -199,9 +199,11 @@ class ReceiptController extends AppController {
     public function payReceiptAction() {
         // получаем данные пришедшие методом POST
         $pay_receipt = !empty($_POST) ? $_POST : null;
-        // исправляем данные пришедшие в виде массива
+        $receipts = $this->getReceipts($pay_receipt['receipt']); // получаем массив ID приходов
+        // исправляем данные пришедшие в виде массива        
         $pay_receipt['num_er'] = $this->prepareData($pay_receipt['num_er']);
         $pay_receipt['sum'] = $this->prepareData($pay_receipt['sum']);
+        $pay_receipt['receipt'] = $this->prepareData($pay_receipt['receipt']);
         if (empty($pay_receipt['date_pay'])) $pay_receipt['date_pay'] = null;
         // внесение изменений в ЗО
         $pay = new Payment();
@@ -214,8 +216,6 @@ class ReceiptController extends AppController {
             $pay->edit('payment', $pay_receipt['id']);            
         }
         // внесение изменений в приходы
-        $receipts = $this->getReceipts($pay_receipt['receipt']); // получаем массив ID приходов
-        $pay_receipt['receipt'] = $this->prepareData($pay_receipt['receipt']);
         foreach ($receipts as $value) {
             $edit_receipt['id'] = $value['id'];
             $edit_receipt['date'] = $value['date'];
