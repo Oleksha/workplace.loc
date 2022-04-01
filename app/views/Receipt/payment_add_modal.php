@@ -16,7 +16,7 @@
     <div class="has-feedback col-6">
         <label for="sum_select">Сумма оплаты</label>
         <select name="sum[]" id="sum_select" data-placeholder="Выберите сумму..." class="sum_receipt_select" multiple>
-            <?php foreach ($receipt_nopay as $k => $value) : ?>
+            <?php foreach ($receipt_no_pay as $k => $value) : ?>
                 <option value="<?= $value['summa'];?>" data-number="<?= $value['number'];?>"
                     <?php if (in_array(array('number' => $value['number'], 'summa' => $value['summa']), $receipt_select)) echo " selected";?>
                 ><?= $value['summa'];?></option>
@@ -35,7 +35,7 @@
     <div class="has-feedback col-6">
         <label for="receipt_select">Номера приходов</label><br>
         <select name="receipt[]" id="receipt_select" data-placeholder="Выберите приход..." class="number_receipt_select" multiple>
-            <?php foreach ($receipt_nopay as $k => $value) : ?>
+            <?php foreach ($receipt_no_pay as $k => $value) : ?>
                 <option value="<?= $value['number'];?>" data-sum="<?= $value['summa'];?>"
                     <?php if (in_array(array('number' => $value['number'], 'summa' => $value['summa']), $receipt_select)) echo " selected";?>
                 ><?= $value['number'];?></option>
