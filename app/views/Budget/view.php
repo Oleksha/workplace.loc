@@ -61,7 +61,7 @@
             <tbody>
                 <?php foreach ($bo->pay_arr as $item): ?>
                 <tr>
-                    <th class="text-center h-100 align-middle" scope="row"><?= $item['date'];?></th>
+                    <th class="text-center h-100 align-middle" scope="row"><?= $item['date_pay'];?></th>
                     <td class="text-center h-100 align-middle"><?= number_format($item['summa'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
                     <th class="text-center h-100 align-middle"><a href="partner/<?= $item['partner']['inn'];?>"><?= $item['partner']['name'];?></a></th>
                 </tr>
