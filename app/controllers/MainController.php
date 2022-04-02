@@ -18,7 +18,6 @@ class MainController extends AppController {
             // Получаем отсрочку оплаты
             $delay = $partner->delay;
             // формирум массив для вывода
-            
             $receipt[$value->id] = [
                 'partner' => $value->partner,
                 'inn' => $partner->inn,
@@ -33,64 +32,49 @@ class MainController extends AppController {
                 'payment' => $value->payment,
             ];
         }
-        //debug($receipt);die;
-      // формируем метатеги для страницы
-      $this->setMeta('Главная страница', 'Содержит информацию о неоплаченных приходах', 'Ключевые слова');
-      
-      // Передаем полученные данные в вид
-      $this->set(compact('receipt'));
-
+        // формируем метатеги для страницы
+        $this->setMeta('Главная страница', 'Содержит информацию о неоплаченных приходах', 'Ключевые слова');
+        // Передаем полученные данные в вид
+        $this->set(compact('receipt'));
     }
 
+    /**
+     * Функция обработки нажатия кнопки Ввод оплаты
+     * @return void
+     */
     public function payAction() {
         // получаем переданный идентификатор прихода
         $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
-        unset($_SESSION['pay_date']); // Очищаем сессию
-        $_SESSION['pay_date'] = [
-            'id' => $id,
-            'date' => null,
-        ];
-        /*debug($id); die;
-        $receipt = null;
-        if ($id) {
-            // если у нас есть ID получаем все данные об этом приходе
-            $receipt = \R::findOne('receipt', 'id = ?', [$id]);
-            if (!$receipt) return false; // если такого прихода нет дальнейшие действия бессмысленны
-        }
-        $rec = new Receipt();
-        $rec->editReceipt($receipt);*/
-
         if ($this->isAjax()) {
             // Если запрос пришел АЯКСом
-            $this->loadView('pay_add_date');
-
+            $this->loadView('pay_add_date', compact('id'));
         }
         redirect();
     }
 
+    /**
+     * Функция занесения в БД данных об оплате прихода
+     * @return void
+     */
     public function payEnterAction() {
+        // получаем данные пришедшие методом POST
         $data = !empty($_POST) ? $_POST : null;
         $id_receipt = $data['id'];
-        $pay_date = $data['date'];
-        // необходимо внести оплату в приход
+        // получаем приход в который необходимо внести дату оплаты
         $edit_receipt = \R::findOne('receipt', 'id = ?', [$id_receipt]);
-        //debug($edit_receipt);
+        $edit_receipt['date_pay'] = $data['date']; // заносим оплату
+        // записываем исправленные данные в БД
         $receipt = new Receipt();
-        $receipt->editReceipt($edit_receipt);
-        $_SESSION['receipt']['date_pay'] = $pay_date;
-        $receipt->load($_SESSION['receipt']);
-        //debug($receipt->attributes);die;
+        /** @var array $edit_receipt */
+        $receipt->load($edit_receipt);
         $receipt->edit('receipt', $id_receipt);
-
-        // необходимо проверить совпадает ли оплата в ЗО с окончательной оплатой
-
-        //
         redirect();
     }
 
     /**
      * Функция получения данных об оплате конкретного прихода
-     * $num_receipt mix номер прихода в виде 0000000000/2022 или массив номеров
+     * @param $num_receipt mixed номер прихода в виде 0000000000/2022 или массив номеров
+     * @return mixed
      */
     public function getDatePayment($num_receipt) {
         $date_payment = null;

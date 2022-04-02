@@ -22,11 +22,9 @@ class ReceiptController extends AppController {
             $receipt = \R::findOne('receipt', 'id = ?', [$id]);
             if (!$receipt) die; // если такого прихода нет дальнейшие действия бессмысленны
         }
-        $rec = new Receipt();
-        $rec->editReceipt($receipt);
         if ($this->isAjax()) {
             // Если запрос пришел АЯКСом
-            $this->loadView('receipt_edit_modal');
+            $this->loadView('receipt_edit_modal', compact('receipt'));
         }
         redirect();
     }
