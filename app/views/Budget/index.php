@@ -3,11 +3,10 @@
         <div class="d-flex justify-content-between">
             <h1 class="mt-1">Список бюджетных операций</h1>
         </div>
-
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="<?=PATH;?>">Главная</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Бюджетные операции</li>
+                <li class="breadcrumb-item"><a href="<?=PATH;?>">Главная</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Бюджетные операции</li>
             </ol>
         </nav>
 
@@ -18,7 +17,8 @@
                         <div class="input-group-text">Год</div>
                     </div>
                     <select class="custom-select" id="select_year">
-                        <option value="2021" <?php if ($year == '2021') echo ' selected'; ?>>2021</option>
+                        <option value="2021" <?php /** @var string $year */
+                        if ($year == '2021') echo ' selected'; ?>>2021</option>
                         <option value="2022" <?php if ($year == '2022') echo ' selected'; ?>>2022</option>
                     </select>
                 </div>
@@ -29,7 +29,8 @@
                         <div class="input-group-text">Месяц</div>
                     </div>
                     <select class="custom-select" id="select_month">
-                        <option value="01" <?php if ($month == '01') echo ' selected'; ?>>Январь</option>
+                        <option value="01" <?php /** @var string $month */
+                        if ($month == '01') echo ' selected'; ?>>Январь</option>
                         <option value="02" <?php if ($month == '02') echo ' selected'; ?>>Февраль</option>
                         <option value="03" <?php if ($month == '03') echo ' selected'; ?>>Март</option>
                         <option value="04" <?php if ($month == '04') echo ' selected'; ?>>Апрель</option>
@@ -46,7 +47,8 @@
             </div>
         </div>
         <div class="product-one">
-            <?php if($budgets): ?>
+            <?php /** @var array $budgets */
+            if($budgets): ?>
                 <table id="bo_view" class="display" style="width:100%">
                     <thead>
                     <tr>
