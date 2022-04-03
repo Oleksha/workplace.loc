@@ -5,6 +5,16 @@ namespace app\models;
 class Budget extends AppModel {
 
     // поля таблицы для заполнения
+    public $attributes = [
+        'scenario' => '',
+        'month_exp' => '',
+        'month_pay' => '',
+        'number' => '',
+        'summa' => '',
+        'vat' => '',
+        'budget_item' => '',
+        'status' => '',
+    ];
     public $payment = [
         'date' => '',
         'number' => '',

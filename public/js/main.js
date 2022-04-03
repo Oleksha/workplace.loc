@@ -354,3 +354,29 @@ function showPaymentOnly(receipt) {
     $('#payModalMain .modal-body').html(receipt);
     $('#payModalMain').modal();
 }
+
+$('body').on('click', '.edit-budget-link', function (e) {
+    e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
+    // получаем необходимые нам данные
+    let id = $(this).data('id') // идентификатор прихода
+    // отправляем стандартный аякс запрос на сервер
+    $.ajax({
+        url: '/budget/edit', // всегда указываем от корня
+        data: {id: id}, // передаем данные
+        type: 'GET', // тип передаваемого запроса
+        success: function (res) {
+            // если данные получены
+            showEditBudget(res);
+        },
+        error: function () {
+            // если данных нет или запрос не дошел
+            alert('Ошибка получения данных с сервера! Попробуйте позже.');
+        }
+    });
+});
+
+function showEditBudget(bo) {
+    // выводим содержимое страницы
+    $('#editBudgetModal .modal-body').html(bo);
+    $('#editBudgetModal').modal();
+}

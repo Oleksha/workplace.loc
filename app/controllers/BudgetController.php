@@ -125,4 +125,28 @@ class BudgetController extends AppController {
         $this->set(compact('bo', 'payments'));
     }
 
+    public function editAction() {
+        $id_bo = isset($_GET['id']) ? $_GET['id'] : null;
+        // получаем данные по БО
+        $budget = \R::findOne('budget', 'id = ?', [$id_bo]);
+        // получаем все статьи расхода
+        $budget_items = \R::getAll('SELECT * FROM budget_items');
+        //debug($budget_items);
+        if ($this->isAjax()) {
+            // Если запрос пришел АЯКСом
+            $this->loadView('budget_edit_modal', compact('budget', 'budget_items'));
+        }
+        redirect();
+    }
+
+    public function boEditAction() {
+        // получаем данные пришедшие методом POST
+        $edit_budget = !empty($_POST) ? $_POST : null;
+        $budget = new Budget();
+        $budget->load($edit_budget);
+        $budget->edit('budget', $edit_budget['id']);
+        redirect();
+    }
+
+
 }

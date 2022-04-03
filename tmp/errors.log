@@ -634,3 +634,15 @@
 --------------------
 [2022-04-02 10:40:53] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
 --------------------
+[2022-04-02 15:47:28] Текст ошибки: Метод app\controllers\BudgetController::editAction не найден | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 42
+--------------------
+[2022-04-02 15:47:29] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-04-02 16:09:10] Текст ошибки: Метод app\controllers\BudgetController::editAction не найден | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 42
+--------------------
+[2022-04-02 16:10:12] Текст ошибки: Файл вида F:\WebServer\domains\workplace.loc/app/views/Budget/edit.php не найден | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\base\View.php | Строка: 55
+--------------------
+[2022-04-02 16:10:19] Текст ошибки: Файл вида F:\WebServer\domains\workplace.loc/app/views/Budget/edit.php не найден | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\base\View.php | Строка: 55
+--------------------
+[2022-04-02 21:24:22] Текст ошибки: syntax error, unexpected 'foreach' (T_FOREACH) | Файл: F:\WebServer\domains\workplace.loc\app\views\Budget\budget_edit_modal.php | Строка: 48
+--------------------

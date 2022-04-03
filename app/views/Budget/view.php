@@ -68,6 +68,31 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <?php endif; ?> 
+        <?php endif; ?>
+        <div class="d-flex justify-content-center">
+            <a type="button" href="budget/edit" class="btn btn-outline-info mt-3 edit-budget-link" data-id="<?= $bo->id;?>">Радактировать данные БО</a>
+        </div>
     </div>
 </main>
+
+<div id="editBudgetModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Редактирование данных БО</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="budget/bo-edit" id="bo-edit" role="form" class="was-validated">
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
