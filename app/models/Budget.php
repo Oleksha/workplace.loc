@@ -69,8 +69,9 @@ class Budget extends AppModel {
     }
 
     /**
+     * Возвращает массив с данными о КА
      * @param $names string наименование КА
-     * @return array возвращает массив с данными о КА
+     * @return array данные о КА
      */
     public function getBudgetPartner($names) {
         $part = [];
@@ -85,6 +86,15 @@ class Budget extends AppModel {
             }
         }
         return $part;
+    }
+
+    /**
+     * Функция возвращает диапазон +/- 1 месяц от переданной даты
+     * @param $date string переданная дата
+     * @return void
+     */
+    public function getRangeOneMonth($date) {
+
     }
 
 }
