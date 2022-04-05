@@ -149,6 +149,8 @@ class BudgetController extends AppController {
     }
 
     public function uploadAction() {
+        $file = !empty($_POST['file']) ? $_POST['file'] : null;
+        debug($file);
         // формируем метатеги для страницы
         $this->setMeta('Загрузка новых БО', '', '');
         // Передаем полученные данные в вид

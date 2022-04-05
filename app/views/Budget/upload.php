@@ -11,11 +11,6 @@
                 <li class="breadcrumb-item active" aria-current="page">Загрузка данных</li>
             </ol>
         </nav>
-        
-        <form action="">
-            <input type="file">
-            <button>загрузить</button>
-        </form>
 
     </div>
 </main>
