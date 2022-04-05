@@ -47,3 +47,4 @@ $scenario = $_monthsList[date_format($date, "n")].'&nbsp;'.date_format($date, "Y
 </div>
 <input type="hidden" name="scenario" value="<?=$budget['scenario'];?>">
 <input type="hidden" name="number" value="<?=$budget['number'];?>">
+<input type="hidden" name="status" value="<?=$budget['status'];?>">
