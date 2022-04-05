@@ -148,5 +148,11 @@ class BudgetController extends AppController {
         redirect();
     }
 
+    public function uploadAction() {
+        // формируем метатеги для страницы
+        $this->setMeta('Загрузка новых БО', '', '');
+        // Передаем полученные данные в вид
+        //$this->set(compact('receipt'));
+    }
 
 }
