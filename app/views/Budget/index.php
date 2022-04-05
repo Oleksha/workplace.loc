@@ -6,6 +6,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="<?=PATH;?>">Главная</a></li>
+                <li class="breadcrumb-item "><a href="<?=PATH;?>/budget/upload">Загрузка данных</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Бюджетные операции</li>
             </ol>
         </nav>
