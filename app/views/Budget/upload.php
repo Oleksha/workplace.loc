@@ -14,6 +14,7 @@
         
         <form action="">
             <input type="file">
+            <button>загрузить</button>
         </form>
 
     </div>
