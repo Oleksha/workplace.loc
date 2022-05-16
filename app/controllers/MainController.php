@@ -7,35 +7,28 @@ use app\models\Receipt;
 class MainController extends AppController {
 
     public function indexAction() {
-        // получение списка не оплаченных приходов из БД
-        $receipts = \R::find('receipt', "WHERE (date_pay is NULL) OR (date_pay = CURDATE()) ORDER BY partner");
-        // Создаем пустой массив для хранения необходимых для вывода данных
-        $receipt = [];
+        // получение ассоциативный массив не оплаченных приходов из БД
+        $receipts = \R::getAssoc("SELECT * FROM receipt WHERE (date_pay is NULL) OR (date_pay = CURDATE()) ORDER BY partner");
         // Получаем дополнительную информацию для каждого прихода
-        foreach ($receipts as $value) {
-            // Получаем номер информацию о КА
-            $partner = \R::findOne('partner', 'name = ?', [$value->partner]);
-            // Получаем отсрочку оплаты
-            $delay = $partner->delay;
-            // формирум массив для вывода
-            $receipt[$value->id] = [
-                'partner' => $value->partner,
-                'inn' => $partner->inn,
-                'number' => $value->number,
-                'date' => $value->date,
-                'sum' => $value->sum,
-                'num_pay' => $value->num_pay,
-                'date_pay' => $value->date_pay, // дата оплаты
-                'pay_date' => $this->getDatePayment(dateYear($value->number, $value->date)), // дата планируемой оплаты
-                'delay' => isset($delay) ? $delay : null,
-                'id_receipt' => $value->id,
-                'payment' => $value->payment,
-            ];
+        foreach ($receipts as $k => $v) {
+            //debug($value);
+            // Получаем всю информацию о КА
+            $partner = \R::findOne('partner', 'name = ?', [$v['partner']]);
+            // дописываем ИНН
+            if ($partner) {
+                $receipts[$k]['inn'] = $partner->inn;
+            } else {
+                $receipts[$k]['inn'] = '';
+            }
+            // дата планируемой оплаты
+            $receipts[$k]['pay_date'] = $this->getDatePayment(dateYear($v['number'], $v['date']));
+            // задержка
+            $receipts[$k]['delay'] = isset($partner->delay) ? $partner->delay : null;
         }
         // формируем метатеги для страницы
         $this->setMeta('Главная страница', 'Содержит информацию о неоплаченных приходах', 'Ключевые слова');
         // Передаем полученные данные в вид
-        $this->set(compact('receipt'));
+        $this->set(compact('receipts'));
     }
 
     /**

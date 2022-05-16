@@ -14,7 +14,7 @@
 </div>
 <div class="form-row">
     <div class="has-feedback col-6">
-        <label for="sum_select">Сумма оплаты</label>
+        <label for="sum_select" id="sum">Сумма оплаты</label>
         <select name="sum[]" id="sum_select" data-placeholder="Выберите сумму..." class="sum_receipt_select" multiple>
             <?php foreach ($receipt_no_pay as $k => $value) : ?>
                 <option value="<?= $value['summa'];?>" data-number="<?= $value['number'];?>"

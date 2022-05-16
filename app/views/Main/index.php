@@ -1,51 +1,59 @@
 <main role="main" class="flex-shrink-0">
-  <div class="container">
-    <h1 class="mt-1">Приходы требующие оплаты</h1>
-       <?php if($receipt): ?>
-          <table id="main_index" class="display" style="width:100%">
-              <thead>
-              <tr">
-                  <th>Имя КА</th>
-                  <th>Документ</th>
-                  <th>Сумма</th>
-                  <th>Дата оплаты</th>
-                  <th>Статус</th>
-                  <th>Действие</th>
-              </tr>
-              </thead>
-              <tbody>
-              <?php foreach ($receipt as $item): ?>
-                  <?php
-                  $status = '';
-                  $color= '';
-                  if (!$item['num_pay']) {
-                      $status = 'Приход не обработан';
-                      $color = ' table-danger';
-                  } elseif (!$item['date_pay']) {
-                      $status = 'Подано на оплату';
-                      $color = ' table-warning';
-                  } elseif ($item['date_pay'] = date('Y-m-d')) {
-                      $status = 'Оплачено';
-                      $color = ' table-success';
-                  }
-                    if ($item['pay_date']) {
-                        $pay = $item['pay_date'];
-                    } else {
-                        if ($item['delay']) {
-                            $date_elements = explode('-', $item['date']);
-                            $date = new DateTime($item['date']);
-                            $delay = (int)$item['delay'];
-                            date_add($date, date_interval_create_from_date_string("$delay days"));
-                            $pay = date_format($date, 'Y-m-d');
-                        } else {
-                            $pay = 'Нет данных';
+    <div class="container">
+        <h1 class="mt-1">Приходы требующие оплаты</h1>
+        <?php /** @var array $receipts */
+        if($receipts): ?>
+            <table id="main_index" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Имя КА</th>
+                        <th>Документ</th>
+                        <th>Сумма</th>
+                        <th>Дата оплаты</th>
+                        <th>Статус</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($receipts as $item): ?>
+                    <?php
+                        $status = '';
+                        $color= '';
+                        if (!$item['num_pay']) {
+                            $status = 'Приход не обработан';
+                            $color = ' table-danger';
+                        } elseif (!$item['date_pay']) {
+                            $status = 'Подано на оплату';
+                            $color = ' table-warning';
+                        } elseif ($item['date_pay'] = date('Y-m-d')) {
+                            $status = 'Оплачено';
+                            $color = ' table-success';
                         }
-                    }
-                  
-                  ?>
+                        if ($item['pay_date']) {
+                            $pay = $item['pay_date'];
+                        } else {
+                            if ($item['delay']) {
+                                $date_elements = explode('-', $item['date']);
+                                $date = new DateTime($item['date']);
+                                $delay = (int)$item['delay'];
+                                date_add($date, date_interval_create_from_date_string("$delay days"));
+                                $pay = date_format($date, 'Y-m-d');
+                            } else {
+                                $pay = 'Нет данных';
+                            }
+                        }
+                        $text = '';
+                        if ($item['type'] == 'ПТ') {
+                            $text = 'Поступление товаров и услуг ';
+                        } elseif ($item['type'] == 'ЗП') {
+                            $text = 'Заказ поставщику ';
+                        } elseif ($item['type'] == 'АО') {
+                            $text = 'Авансовый отчет ';
+                        }
+                    ?>
                   <tr>
                       <th><a href="partner/<?= $item['inn'];?>"><?= $item['partner'];?></a></th>
-                      <td>Поступление товаров и услуг <?= $item['number'];?> от <?= $item['date'];?></td>
+                      <td><?= $text;?><?= $item['number'];?> от <?= $item['date'];?></td>
                       <td><?= number_format($item['sum'], 2, ',', '&nbsp;');?>&nbsp;₽</td>
                       <td><?= $pay;?></td>
                       <td><?= $status;?></td>
@@ -68,9 +76,9 @@
                       </td>
                   </tr>
               <?php endforeach; ?>
-              </tbody>
-          </table>
-      <?php endif; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
   </div>
 </main>
 
