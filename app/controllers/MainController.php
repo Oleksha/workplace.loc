@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Partner;
 use app\models\Receipt;
 
 class MainController extends AppController {
@@ -11,19 +12,17 @@ class MainController extends AppController {
         $receipts = \R::getAssoc("SELECT * FROM receipt WHERE (date_pay is NULL) OR (date_pay = CURDATE()) ORDER BY partner");
         // Получаем дополнительную информацию для каждого прихода
         foreach ($receipts as $k => $v) {
-            //debug($value);
             // Получаем всю информацию о КА
-            $partner = \R::findOne('partner', 'name = ?', [$v['partner']]);
-            // дописываем ИНН
+            $partners = new Partner();
+            $partner = $partners->getPartner($v['partner']);
             if ($partner) {
-                $receipts[$k]['inn'] = $partner->inn;
-            } else {
-                $receipts[$k]['inn'] = '';
+                // если КА существует дописываем ИНН
+                $receipts[$k]['inn'] = $partner['inn'];
+                // дата планируемой оплаты
+                $receipts[$k]['pay_date'] = $this->getDatePayment(dateYear($v['number'], $v['date']));
+                // задержка
+                $receipts[$k]['delay'] = isset($partner['delay']) ? $partner['delay'] : null;
             }
-            // дата планируемой оплаты
-            $receipts[$k]['pay_date'] = $this->getDatePayment(dateYear($v['number'], $v['date']));
-            // задержка
-            $receipts[$k]['delay'] = isset($partner->delay) ? $partner->delay : null;
         }
         // формируем метатеги для страницы
         $this->setMeta('Главная страница', 'Содержит информацию о неоплаченных приходах', 'Ключевые слова');
