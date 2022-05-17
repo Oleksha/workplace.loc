@@ -9,7 +9,7 @@ class MainController extends AppController {
 
     public function indexAction() {
         // получение ассоциативный массив не оплаченных приходов из БД
-        $receipts = \R::getAssoc("SELECT * FROM receipt WHERE (date_pay is NULL) OR (date_pay = CURDATE()) ORDER BY partner");
+        $receipts = \R::getAssocRow("SELECT * FROM receipt WHERE (date_pay is NULL) OR (date_pay = CURDATE()) ORDER BY partner");
         // Получаем дополнительную информацию для каждого прихода
         foreach ($receipts as $k => $v) {
             // Получаем всю информацию о КА
