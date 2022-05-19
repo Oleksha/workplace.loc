@@ -129,5 +129,6 @@
         }
         bo = bo.substring(0, bo.length - 1);
         $('#num_bo').val(bo);
-    });
+        // /CUB[0-9]+\/[0-9]+/ правильное заполнение
+    }); 
 </script>
