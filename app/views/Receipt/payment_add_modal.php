@@ -108,10 +108,10 @@
         });
     })
     $("#sum_select").change(function() {
-        const ids = $('#sum_select').val();
+        const ids = $(this).val();
         let sum = 0;
         for(let i = 0; i < ids.length; i++) {
-            let $select = $('#sum_select');
+            let $select = $(this);
             console.log($select.children().eq(i).data('number'));
             sum += parseFloat(ids[i]);
         }
@@ -120,10 +120,10 @@
     });
     $("#num_bo").change(function() {
         //const ids = $('#num_bo').val();
-        let str = $('#num_bo').val();
+        let str = $(this).val();
         let arr = str.split(';');
         let bo = '';
-        for(var i = 0; i < arr.length; i++) {
+        for(let i = 0; i < arr.length; i++) {
             let mystr = arr[i];
             mystr = mystr.trim();
             let result = mystr.match(/CUB[0-9]+/);
