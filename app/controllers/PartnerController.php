@@ -4,54 +4,69 @@ namespace app\controllers;
 
 use app\models\Er;
 use app\models\Partner;
-use workplace\App;
-use workplace\libs\Pagination;
+use app\models\Payment;
+use app\models\Receipt;
+use Exception;
 
 class PartnerController extends AppController {
 
     public function indexAction() {
-        // получение списка КА из БД
-        $partners = \R::find('partner', "ORDER BY name");
-        // формируем метатеги для страницы
-        $this->setMeta('Cписок активных контрагентов', 'Описание...', 'Ключевые слова...');
-        // Получение количества действующих ЕР
+        // создаем необходимые объекты связи с БД
+        $partner_obj = new Partner(); // для КА
+        $er_obj = new Er();           // для ЕР
+        $receipt_obj = new Receipt(); // для приходов
+        // получаем информацию о КА
+        $partners = $partner_obj->getPartner('name');
+        // Получение дополнительную информацию о КА
+        $partners_ext = [];
         foreach ($partners as $partner) {
-            $ers = \R::getAll('SELECT * FROM er WHERE data_end >= CURDATE() AND id_partner = ?', [$partner['id']]);
-            $partner['er'] = count($ers);
+            // Получаем количество действующих ЕР
+            $ers = $er_obj->getCurrentEr($partner['id']);
+            $partner['er'] = $ers ? count($ers) : 0;
             $sum = 0;
-            $receipts = \R::getAll('SELECT * FROM receipt WHERE partner = ?', [$partner['name']]);
-            foreach ($receipts as $receipt) {
-                if (is_null($receipt['date_pay'])) {
+            // Получаем сумму дебиторской задолженности
+            $receipts = $receipt_obj->getReceiptNoPay($partner['name']);
+            if ($receipts) {
+                foreach ($receipts as $receipt) {
                     $sum += $receipt['sum'];
                 }
             }
             $partner['sum'] = $sum;
+            $partners_ext[] = $partner;
         }
+        $partners = $partners_ext;
+        // формируем метатеги для страницы
+        $this->setMeta('Cписок активных контрагентов', 'Содержит список активных КА с дополнительной информацией о каждом', 'контрагент,дебиторка,задолженность,отсрочка,ер,единоличные,решения');
         // Передаем полученные данные в вид
         $this->set(compact('partners'));
     }
 
+    /**
+     * Если контрагента несуществует
+     * @throws Exception
+     */
     public function viewAction() {
+        // создаем необходимые объекты связи с БД
+        $partner_obj = new Partner(); // для КА
+        $er_obj = new Er();           // для ЕР
+        $receipt_obj = new Receipt(); // для приходов
         // получение ИНН запрашиваемого контрагента
         $inn = $this->route['inn'];
         // получение данных по КА из БД
-        $partner = \R::findOne('partner', 'inn = ?', [$inn]);
+        $partner = $partner_obj->getPartnerByINN($inn);
         if (!$partner) {
             // Если такого контрагента нет выбрасываем исключение
-            throw new \Exception('Контрагент с ИНН ' . $inn . ' не найден', 500);
+            throw new Exception('Контрагент с ИНН ' . $inn . ' не найден', 500);
         }
-        // единоличные решения
-        // Получаем id контрагента
-        $id = $partner['id'];
+        // ЕДИНОЛИЧНЫЕ РЕШЕНИЯ
         // получение данных по ЕР для КА из БД
-        $ers = \R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$id]);
-        $ers = $this->costs($ers, $partner['vat'], $partner['name']);
-        // Приходы
-        $name = $partner['name'];
-        $receipt = \R::getAll('SELECT * FROM receipt WHERE partner = ? ORDER BY date', [$name]);
-
+        $ers = $er_obj->getCurrentEr($partner['id']);
+        // добавляем в массив данные по расходам этого ЕР
+        if ($ers) $ers = $this->costs($ers, $partner['vat'], $partner['name']);
+        // ПРИХОДЫ
+        $receipt = $receipt_obj->getReceipt('partner', $partner['name']);
         // формируем метатеги для страницы
-        $this->setMeta($partner->name, 'Описание...', 'Ключевые слова...');
+        $this->setMeta($partner['name'], 'Описание...', 'Ключевые слова...');
         // Передаем полученные данные в вид
         $this->set(compact('partner', 'ers', 'receipt'));
     }
@@ -62,10 +77,10 @@ class PartnerController extends AppController {
      * @return array список ЕР с остатками средств
      */
     public function costs($ers, $vat, $name) {
+        $pay_obj = new Payment();
         foreach ($ers as $k => $er) {
-            $er_num = '%' . $er['number'] . '%';
             // получаем все оплаты использующие эту ЕР
-            $payments = \R::find('payment', "(partner = '{$name}') AND (num_er LIKE ?)", [$er_num]);
+            $payments = $pay_obj->getPaymentEr($name, $er['number']);
             // проходимся по каждому приходу чтобы получить суммы расхода по данной ЕР
             /* создаем массив в виде
                 [0] [
@@ -73,14 +88,16 @@ class PartnerController extends AppController {
                     summa: 123.12
                 */
             $sum = 0.00;
-            foreach ($payments as $payment) {
-                // каждая оплата может использовать несколько ЕР
-                $nums = explode(';', $payment->num_er);
-                $sums = explode(';', $payment->sum_er);
-                $key = array_search($er['number'], $nums);
-                $sum += $sums[$key];
+            if ($payments) {
+                foreach ($payments as $payment) {
+                    // каждая оплата может использовать несколько ЕР
+                    $nums = explode(';', $payment['num_er']);
+                    $sums = explode(';', $payment['sum_er']);
+                    $key = array_search($er['number'], $nums);
+                    $sum += $sums[$key];
+                }
+                $sum = round($sum / $vat, 2);
             }
-            $sum = round($sum / $vat, 2);
             $ers[$k]['cost'] = $sum;
         }
         return $ers;

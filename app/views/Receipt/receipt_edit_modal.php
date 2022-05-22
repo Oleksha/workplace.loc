@@ -1,4 +1,4 @@
-<input type="hidden" name="id" value="<?= /** @var array $receipt содержит все данные о приходе */ $receipt['id'];?>">
+<input type="hidden" name="id" value="<?= $receipt['id'];?>">
 <div class="has-feedback">
     <label for="name">Наименование контрагента</label>
     <input type="text" name="name" class="form-control" id="name" placeholder="Наименование КА" value="<?=$receipt['partner'];?>" disabled>

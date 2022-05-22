@@ -41,7 +41,7 @@ class Er extends AppModel {
             $_SESSION['er'][$id] = [
                 'id_er' => null,
                 'id_partner' => $id,
-                'name_partner' => $partner->name,
+                'name_partner' => $partner['name'],
                 'id_budget_item' => null,
                 'budget_items' => $budget_items,
                 'number' => null,
@@ -65,6 +65,28 @@ class Er extends AppModel {
         } else {
             return \R::find('payment', 'num_er LIKE ? ORDER BY date', [$er]);
         }
+    }
+
+    /**
+     * Возвращает все действующие на сегодня ЕР
+     * @param $partner_id integer идентификатор КА
+     * @return array|false
+     */
+    public function getCurrentEr($partner_id) {
+        $ers = \R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$partner_id]);
+        if (!empty($ers)) return $ers;
+        return false;
+    }
+    /**
+     * Возвращает все действующие на указанную дату ЕР
+     * @param $partner_id integer идентификатор КА
+     * @param $date string строковое представление даты
+     * @return array|false
+     */
+    public function getCurrentErFromDate($partner_id, $date) {
+        $ers = \R::getAll("SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_start <= '{$date}') AND (data_end >= '{$date}') AND id_partner = ?", [$partner_id]);
+        if (!empty($ers)) return $ers;
+        return false;
     }
 
 }

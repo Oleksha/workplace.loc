@@ -14,7 +14,7 @@ class MainController extends AppController {
         foreach ($receipts as $k => $v) {
             // Получаем всю информацию о КА
             $partners = new Partner();
-            $partner = $partners->getPartner($v['partner']);
+            $partner = $partners->getPartnerByName($v['partner']);
             if ($partner) {
                 // если КА существует дописываем ИНН
                 $receipts[$k]['inn'] = $partner['inn'];

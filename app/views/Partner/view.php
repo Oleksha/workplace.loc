@@ -7,10 +7,10 @@
                 <li class="breadcrumb-item"><a href="<?=PATH;?>">Главная</a></li>
                 <li class="breadcrumb-item"><a href="<?=PATH;?>/partner">Список контрагентов</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><?=
-                    $partner->name; ?></li>
+                    $partner['name']; ?></li>
             </ol>
         </nav>
-        <h2><?=$partner->name; ?></h2>
+        <h2><?=$partner['name']; ?></h2>
         <div id="accordion">
             <div class="card">
                 <div class="card-header" id="headingOne">
@@ -62,7 +62,7 @@
                                             <td class="h-100 align-middle"><?= $item['note'];?></td>
                                             <td class="text-center h-100 align-middle"><?= $item['date_pay'];?></td>
                                             <td class="text-center h-100 align-middle">
-                                                <a type="button" class="btn btn-outline-info btn-sm pay-receipt-link" data-toggle="tooltip" data-placement="top" title="Оплата" data-id="<?= $item['id'];?>" data-partner="<?= $partner->id;?>" data-vat="<?= $partner->vat;?>">
+                                                <a type="button" class="btn btn-outline-info btn-sm pay-receipt-link" data-toggle="tooltip" data-placement="top" title="Оплата" data-id="<?= $item['id'];?>" data-partner="<?= $partner['id'];?>" data-vat="<?= $partner['vat'];?>">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
                                                         <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
                                                         <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
@@ -168,7 +168,7 @@
                                             <td class="h-100 align-middle"><?= $item['note'];?></td>
                                             <td class="text-center h-100 align-middle"><?= $item['date_pay'];?></td>
                                             <td class="text-center h-100 align-middle">
-                                                <a type="button" class="btn btn-outline-info btn-sm pay-receipt-link" data-toggle="tooltip" data-placement="top" title="Оплата" data-id="<?= $item['id'];?>" data-partner="<?= $partner->id;?>" data-vat="<?= $partner->vat;?>">
+                                                <a type="button" class="btn btn-outline-info btn-sm pay-receipt-link" data-toggle="tooltip" data-placement="top" title="Оплата" data-id="<?= $item['id'];?>" data-partner="<?= $partner['id'];?>" data-vat="<?= $partner['vat'];?>">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cash-coin" viewBox="0 0 16 16">
                                                         <path fill-rule="evenodd" d="M11 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm5-4a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
                                                         <path d="M9.438 11.944c.047.596.518 1.06 1.363 1.116v.44h.375v-.443c.875-.061 1.386-.529 1.386-1.207 0-.618-.39-.936-1.09-1.1l-.296-.07v-1.2c.376.043.614.248.671.532h.658c-.047-.575-.54-1.024-1.329-1.073V8.5h-.375v.45c-.747.073-1.255.522-1.255 1.158 0 .562.378.92 1.007 1.066l.248.061v1.272c-.384-.058-.639-.27-.696-.563h-.668zm1.36-1.354c-.369-.085-.569-.26-.569-.522 0-.294.216-.514.572-.578v1.1h-.003zm.432.746c.449.104.655.272.655.569 0 .339-.257.571-.709.614v-1.195l.054.012z"/>
@@ -190,10 +190,10 @@
                             </div>
                         </div>
                         <?php else : ?>
-                            <h3>Данные о приходах отсутствуют</h3>
+                        <h3>Данные о приходах отсутствуют</h3>
                         <?php endif; ?>
                         <div class="d-flex justify-content-center">
-                            <a type="button" class="btn btn-outline-info mt-3 add-receipt-link" data-vat="<?= $partner->vat;?>" data-name="<?= $partner->name;?>">Добавить новый приход</a>
+                            <a type="button" class="btn btn-outline-info mt-3 add-receipt-link" data-vat="<?= $partner['vat'];?>" data-name="<?= $partner['name'];?>">Добавить новый приход</a>
                         </div>
                     </div>
                 </div>
@@ -210,60 +210,47 @@
                     <div class="card-body">
                         <?php if(!empty($ers)): ?>
                             <?php foreach ($ers as $er): ?>
-                                <?php $result = false; $result_date = false; $result_null = false; $result_sum = false; ?>
-                                <?php $date = strtotime('+30 days'); ?>
-                                <?php if ($er['data_end'] < date('Y-m-d', $date))
-                                {
-                                    $result = true;
-                                    $result_date = true;
-                                }
-                                if (($er['summa'] - $er['cost']) < 30000)
-                                {
-                                    $result = true;
-                                    $result_sum = true;
-                                }
-                                if (($er['summa'] - $er['cost']) <= 0)
-                                {
-                                    $result_null = true;
-                                }
-                                ?>
+                            <?php
+                            $date = strtotime('+1 month'); // текущая дата +1 месяц
+                            $selector = 'alert alert-success';
+                            $class_date = '';
+                            $class_sum = '';
+                            if ($er['data_end'] < date('Y-m-d', $date))
+                            {
+                                $selector = 'alert alert-warning';
+                                $class_date = 'class="alert-warning"';
+                            }
+                            if (($er['summa'] - $er['cost']) < ($er['summa'] * 0.03))
+                            {
+                                $selector = 'alert alert-warning';
+                            }
+                            if (($er['summa'] - $er['cost']) <= 0)
+                            {
+                                $selector = 'alert alert-danger';
+                            }?>
                                 <div class="row align-items-center">
                                     <div class="col-12">
-                                        <div class="
-                                            <?php
-                                                if ($result_null) {
-                                                    echo 'alert alert-danger';
-                                                } else {
-                                                    if ($result) {
-                                                        echo 'alert alert-warning';
-                                                    } else {
-                                                        echo 'alert alert-success';
-                                                    }
-                                                }
-                                            ?>" role="alert">
+                                        <div class="<?= $selector; ?>" role="alert">
                                             <?= $er['name_budget_item'];?> - <b><i><?= $er['number'];?></i></b> - Осталось: <b><?= number_format($er['summa'] - $er['cost'], 2, ',', '&nbsp;');?>&nbsp;₽</b>
                                         </div>
                                         <div class="row d-flex align-items-center mb-3">
                                             <div class="col-10">
                                                 <strong>Период действия: </strong>
                                                 <?= $er['data_start'];?>&nbsp;/&nbsp;
-                                                <span <?php if ($result_date) echo 'class="alert-warning"' ?>>
-                                                    <?= $er['data_end'];?>
-                                                </span>;
+                                                <span <?= $class_date; ?>><?= $er['data_end'];?></span>;
                                                 <strong>Cумма: </strong>
                                                 <span>
                                                     <?= number_format($er['summa'], 2, ',', '&nbsp;');?>&nbsp;₽
                                                 </span>
                                             </div>
                                             <div class="col-2 text-right">
-                                                <a type="button" class="btn btn-outline-success view-er-link" data-partner="<?= $partner->name;?>" data-id="<?= $er['id'];?>" data-toggle="tooltip" data-placement="top" title="Просмотреть">
+                                                <a type="button" class="btn btn-outline-success view-er-link" data-partner="<?= $partner['name'];?>" data-id="<?= $er['id'];?>" data-toggle="tooltip" data-placement="top" title="Просмотреть">
                                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-zoom-out" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                         <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
                                                         <path d="M10.344 11.742c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1 6.538 6.538 0 0 1-1.398 1.4z"/>
-                                                        <!--<path fill-rule="evenodd" d="M3 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>-->
                                                     </svg>
                                                 </a>
-                                                <a type="button" class="btn btn-outline-info edit-er-link" data-id="<?= $er['id'];?>" data-toggle="tooltip" data-placement="top" title="Изменить" data-partner_id="<?= $partner->id;?>">
+                                                <a type="button" class="btn btn-outline-info edit-er-link" data-id="<?= $er['id'];?>" data-toggle="tooltip" data-placement="top" title="Изменить" data-partner_id="<?= $partner['id'];?>">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
                                                         <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"></path>
                                                     </svg>
@@ -283,7 +270,7 @@
                             <div class="alert alert-danger" role="alert">Нет действующих единоличных решений</div>
                         <?php endif; ?>
                             <div class="d-flex justify-content-center">
-                                <a type="button" href="er/add" class="btn btn-outline-info mt-3 add-er-link" data-id="<?= $partner->id;?>">Добавить новое ЕР</a>
+                                <a type="button" href="er/add" class="btn btn-outline-info mt-3 add-er-link" data-id="<?= $partner['id'];?>">Добавить новое ЕР</a>
                             </div>
 
                     </div>
@@ -303,65 +290,65 @@
                         <h5 class="card-title">Юридический адрес</h5>
                         <p class="card-text">
                             <?php
-                            if (!$partner->address) {
+                            if (!$partner['address']) {
                                 echo 'Нет данных';
                             } else {
-                                echo $partner->address;
+                                echo $partner['address'];
                             }
                             ?>
                         </p>
                         <h5 class="card-title">ИНН / КПП</h5>
                         <p class="card-text">
                             <?php
-                            if (!$partner->inn) {
+                            if (!$partner['inn']) {
                                 echo 'Нет данных';
                             } else {
-                                echo $partner->inn;
+                                echo $partner['inn'];
                             }
                             ?>&nbsp;/&nbsp;
                             <?php
-                            if (!$partner->kpp) {
+                            if (!$partner['kpp']) {
                                 echo 'Нет данных';
                             } else {
-                                echo $partner->kpp;
+                                echo $partner['kpp'];
                             }
                             ?>
                         </p>
                         <h5 class="card-title">e-mail</h5>
                         <p class="card-text">
                             <?php
-                            if (!$partner->email) {
+                            if (!$partner['email']) {
                                 echo 'Нет данных';
                             } else {
-                                echo '<a href="mailto:'.$partner->email.'">'.$partner->email.'</a>';
+                                echo '<a href="mailto:'.$partner['email'].'">'.$partner['email'].'</a>';
                             }
                             ?>
                         </p>
                         <h5 class="card-title">р/с / Банк / БИК</h5>
                         <p class="card-text">
                             <?php
-                            if (!$partner->kpp) {
+                            if (!$partner['account']) {
                                 echo 'Нет данных';
                             } else {
-                                echo $partner->account;
+                                echo $partner['account'];
                             }
                             ?>&nbsp;/&nbsp;
                             <?php
-                            if (!$partner->kpp) {
+                            if (!$partner['bank']) {
                                 echo 'Нет данных';
                             } else {
-                                echo $partner->bank;
+                                echo $partner['bank'];
                             }
                             ?>&nbsp;/&nbsp;
                             <?php
-                            if (!$partner->kpp) {
+                            if (!$partner['bic']) {
                                 echo 'Нет данных';
                             } else {
-                                echo $partner->bic;
+                                echo $partner['bic'];
                             }
                             ?>
                         </p>
-                        <a type="button" class="btn btn-outline-info edit-ka-link" data-id="<?= $partner->id;?>">Редактировать</a>
+                        <a type="button" class="btn btn-outline-info edit-ka-link" data-id="<?= $partner['id'];?>">Редактировать</a>
                     </div>
                 </div>
             </div>

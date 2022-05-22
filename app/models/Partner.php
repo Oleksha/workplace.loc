@@ -43,15 +43,51 @@ class Partner extends AppModel {
     }
 
     /**
+     * Возвращает массив данных о всех КА
+     * @param $sort_name string поле если нужна сортировка
+     * @return array|false
+     */
+    public function getPartner($sort_name = false) {
+        if ($sort_name) {
+            $sql = "SELECT * FROM partner ORDER BY $sort_name";
+        } else {
+            $sql = "SELECT * FROM partner";
+        }
+        $partner = \R::getAssocRow($sql);
+        if (!empty($partner)) return $partner;
+        return false;
+    }
+
+    /**
      * Возвращает массив данных о КА
      * @param $name string наименование КА
-     * @return mixed
+     * @return array|false
      */
-    public function getPartner($name) {
+    public function getPartnerByName($name) {
         $partner = \R::getAssocRow('SELECT * FROM partner WHERE name = ? LIMIT 1', [$name]);
-        if (!empty($partner)) {
-            return $partner[0];
-        }
+        if (!empty($partner)) return $partner[0];
+        return false;
+    }
+
+    /**
+     * Возвращает массив данных о КА
+     * @param $inn string ИНН КА
+     * @return array|false
+     */
+    public function getPartnerByINN($inn) {
+        $partner = \R::getAssocRow('SELECT * FROM partner WHERE inn = ? LIMIT 1', [$inn]);
+        if (!empty($partner)) return $partner[0];
+        return false;
+    }
+
+    /**
+     * Возвращает массив данных о КА
+     * @param $id string идентификатор КА
+     * @return array|false
+     */
+    public function getPartnerByID($id) {
+        $partner = \R::getAssocRow('SELECT * FROM partner WHERE id = ? LIMIT 1', [$id]);
+        if (!empty($partner)) return $partner[0];
         return false;
     }
 

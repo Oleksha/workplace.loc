@@ -79,7 +79,7 @@
                 $sum_str = rtrim($sum_str, ';');
             }            
         ?>
-        <input type="text" name="sum_er" class="form-control" id="sum_er" placeholder="" value="<?=isset($sum_str) ? $sum_str : '';?>" required>
+        <input type="text" name="sum_er" class="form-control" id="sum_er" placeholder="" value="<?=$sum_str;?>" required>
     </div>
 </div>
 <div class="form-row">
@@ -109,8 +109,10 @@
     })
     $("#sum_select").change(function() {
         const ids = $('#sum_select').val();
-        var sum = 0;
-        for(var i = 0; i < ids.length; i++) {
+        let sum = 0;
+        for(let i = 0; i < ids.length; i++) {
+            let $select = $('#sum_select');
+            console.log($select.children().eq(i).data('number'));
             sum += parseFloat(ids[i]);
         }
         $('#sum_er').val(sum.toFixed(2));
@@ -130,5 +132,6 @@
         bo = bo.substring(0, bo.length - 1);
         $('#num_bo').val(bo);
         // /CUB[0-9]+\/[0-9]+/ правильное заполнение
-    }); 
+    });
 </script>
+

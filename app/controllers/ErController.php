@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Er;
+use app\models\Partner;
 use RedBeanPHP\R;
 
 class ErController extends AppController {
@@ -47,14 +48,17 @@ class ErController extends AppController {
     }
 
     public function addAction() {
+        // создаем необходимые объекты связи с БД
+        $partner_obj = new Partner(); // для КА
+        $er_obj = new Er();           // для ЕР
         // получаем данные пришедшие методом POST
         // получаем переданный идентификатор КА
         $this->id_partner = !empty($_GET['partner']) ? (int)$_GET['partner'] : null;
         // получаем данные о контрагенте
-        $this->partner = \R::findOne('partner', 'id = ?', [$this->id_partner]);
+        $this->partner = $partner_obj->getPartnerByID($this->id_partner);
+        //$this->partner = \R::findOne('partner', 'id = ?', [$this->id_partner]);
         $this->budget = \R::getAll('SELECT * FROM budget_items ORDER BY name_budget_item');
-        $er = new Er();
-        $er->addEr($this->id_partner, $this->partner, $this->budget);
+        $er_obj->addEr($this->id_partner, $this->partner, $this->budget);
         if ($this->isAjax()) {
             // Если запрос пришел АЯКСом
             $this->loadView('er_add_modal');

@@ -8,14 +8,35 @@ namespace workplace\base;
  */
 class View {
 
-    public $route; // содержит массив всех данных о текущем маршруте
+    /**
+     * текущий маршрут и параметры (controller, action, params)
+     * @var array
+     */
+    public $route;
+    /**
+     * текущий controller
+     * @var string
+     */
     public $controller;
     public $model;
+    /**
+     * текущий вид
+     * @var string
+     */
     public $view;
+    /**
+     * текущий шаблон
+     * @var string
+     */
     public $layout;
     public $prefix;
     public $data = [];  // данные которые будут передаваться из контроллера в вид
     public $meta = [];  // метаданные которые будут передаваться из контроллера в вид
+    /**
+     * свойство для хранения вырезаемых скриптов
+     * @var array
+     */
+    public $scripts = [];
 
     public function __construct($route, $layout = '', $view = '', $meta) {
         $this->route = $route;
@@ -75,8 +96,8 @@ class View {
      */
     public function getMeta() {
         $output = '<title>' . $this->meta['title'] . '</title>' . PHP_EOL;
-        $output .= '<meta name="description" content="' . $this->meta['description'] . '">' . PHP_EOL;
-        $output .= '<meta name="keywords" content="' . $this->meta['keywords'] . '">' . PHP_EOL;
+        $output .= '    <meta name="description" content="' . $this->meta['description'] . '">' . PHP_EOL;
+        $output .= '    <meta name="keywords" content="' . $this->meta['keywords'] . '">' . PHP_EOL;
         return $output;
     }
 
