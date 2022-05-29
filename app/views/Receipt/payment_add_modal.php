@@ -106,32 +106,6 @@
         $(".sum_receipt_select").chosen({
             width: "100%"
         });
-    })
-    $("#sum_select").change(function() {
-        const ids = $(this).val();
-        let sum = 0;
-        for(let i = 0; i < ids.length; i++) {
-            let $select = $(this);
-            console.log($select.children().eq(i).data('number'));
-            sum += parseFloat(ids[i]);
-        }
-        $('#sum_er').val(sum.toFixed(2));
-        $('#sum_bo').val(sum.toFixed(2));
-    });
-    $("#num_bo").change(function() {
-        //const ids = $('#num_bo').val();
-        let str = $(this).val();
-        let arr = str.split(';');
-        let bo = '';
-        for(let i = 0; i < arr.length; i++) {
-            let mystr = arr[i];
-            mystr = mystr.trim();
-            let result = mystr.match(/CUB[0-9]+/);
-            bo = bo + result[0] + '/2022;';
-        }
-        bo = bo.substring(0, bo.length - 1);
-        $('#num_bo').val(bo);
-        // /CUB[0-9]+\/[0-9]+/ правильное заполнение
     });
 </script>
 

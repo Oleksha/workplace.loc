@@ -380,3 +380,163 @@ function showEditBudget(bo) {
     $('#editBudgetModal .modal-body').html(bo);
     $('#editBudgetModal').modal();
 }
+
+// Формирование ЗО на оплату
+
+$(".number_receipt_select").chosen({
+    width: "100%"
+});
+$(".num_er_select").chosen({
+    width: "100%"
+});
+$(".sum_receipt_select").chosen({
+    width: "100%"
+});
+$("#sum_select").change(function() {
+    const ids = $(this).val();
+    let sum = 0;
+    for(let i = 0; i < ids.length; i++) {
+        let $select = $(this);
+        console.log($select.children().eq(i).data('number'));
+        sum += parseFloat(ids[i]);
+    }
+    $('#sum_er').val(sum.toFixed(2));
+    $('#sum_bo').val(sum.toFixed(2));
+});
+/*
+(function() {
+    let app = {
+
+        initialize : function () {
+            this.modules();
+            this.setUpListeners();
+        },
+
+        modules: function () {
+
+        },
+
+        setUpListeners: function () {
+            $('form').on('submit', app.submitForm);
+        },
+
+        submitForm: function (e) {
+            e.preventDefault();
+            let form = $('#partner_payment2222');
+            app.validateForm(form);
+            console.log('Submit!!!');
+        },
+
+        validateForm: function (form) {
+            let inputs = form.find('input'),
+                valid = true;
+            inputs.tooltip('hide');
+            $.each(inputs, function (index, value) {
+                let input = $(value),
+                    val = input.val(),
+                    formGroup = input.parents('.has-feedback'),
+                    label = formGroup.find('label').text().toLowerCase(),
+                    textError = 'Введите ' + label;
+                if (value.id === 'num_bo') {
+                    if (val.length < 5) {
+                        console.log('это ' + value.id);
+                        input.addClass('is_invalid').removeClass('is_valid');
+                        input.tooltip({
+                            trigger: 'manual',
+                            placement: 'right',
+                            tooltip: textError
+                        }).tooltip('show');
+                        valid = false;
+                    } else {
+                        input.addClass('is_valid').removeClass('is_invalid');
+                    }
+
+
+                }
+            });
+        }
+
+    }
+
+    app.initialize();
+}());*/
+/*
+let form = $('#partner_payment');
+form.submit( function () {
+    let str = $('#num_bo').val();
+    //alert();
+    if (validateNumBO(str)) {
+        $(this).addClass('is_valid').removeClass('is_invalid');
+        alert('нормально');
+    } else {
+        $(this).addClass('is_invalid').removeClass('is_valid');
+        alert('Ошибка');
+    }
+});
+function validateNumBO(str) {
+    let arr = str.split(';');
+    let bo = '';
+    let valid = true;
+    for(let i = 0; i < arr.length; i++) {
+        let my_str = arr[i];
+        let result = my_str.match(/CUB[0-9]{10}\/[0-9]+/);
+        if (my_str !== result[0]) {
+            valid = false;
+            break;
+        }
+    }
+    return valid;
+};*/
+
+
+
+
+
+// валидация
+
+    // Пример стартового JavaScript для отключения отправки форм при наличии недопустимых полей
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
+            let forms = document.getElementsByClassName('needs-validation');
+            // Зацикливайтесь на них и предотвращайте подчинение
+            let validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+
+
+  /*  $("#num_bo").on('input', function() {
+        //const ids = $('#num_bo').val();
+        let str = $(this).val();
+        if (validateNumBO(str)) {
+            $(this).addClass('is_valid');
+            $(this).removeClass('is_invalid');
+            //alert('нормально');
+        } else {
+            $(this).addClass('is_invalid');
+            $(this).removeClass('is_valid');
+            //alert('Ошибка');
+            let arr = str.split(';');
+            let bo = '';
+            for(let i = 0; i < arr.length; i++) {
+                let mystr = arr[i];
+                mystr = mystr.trim();
+                let result = mystr.match(/CUB[0-9]+/);
+                bo = bo + result[0] + '/2022;';
+            }
+            bo = bo.substring(0, bo.length - 1);
+            $('#num_bo').val(bo);
+            // /CUB[0-9]+\/[0-9]+/ правильное заполнение
+        }
+
+    });*/
+

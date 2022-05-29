@@ -167,4 +167,109 @@ class PartnerController extends AppController {
         redirect();
     }
 
+    public function paymentAction() {
+        // получаем переданные GET данные
+        $id_receipt = !empty($_GET['receipt']) ? (int)$_GET['receipt'] : null; // идентификатор прихода
+        // создаем объекты для работы с БД
+        $receipt_obj = new Receipt(); // для приходов
+        $partner_obj = new Partner(); // для КА
+        $er_obj = new Er();           // для ЕР
+        $payment_obj = new Payment(); // для ЗО
+        $partner = null; $receipt = null;
+        if (!$id_receipt) redirect();
+        $receipt = $receipt_obj->getReceipt('id', $id_receipt);
+        $receipt = $receipt[0];
+        $partner = $partner_obj->getPartnerByName($receipt['partner']);
+        // получаем ставка НДС по которой работает КА
+        $vat = !empty($partner['vat']) ? $partner['vat'] : null;
+        $pay_key = !is_null($receipt['date_pay']); // индикатор оплаты прихода
+        /***** Начало получения данных для формирования заявки на оплату (ЗО) ******/
+        /* Получаем все действующие ЕР для этого КА на момент прихода */
+        $ers = $er_obj->getCurrentErFromDate($partner['id'], $receipt['date']);
+        $er = [];
+        foreach ($ers as $k => $v) {
+            $er[$k]['budget'] = $v['name_budget_item'];
+            $er[$k]['number'] = $v['number'];
+        }
+        $ers = $er;
+        /* Проверяем есть ли у этого прихода завка на оплату (ЗО) */
+        $name = $receipt['partner'];                                 // Имя КА (ВСС ООО)
+        $year = date('Y', strtotime($receipt['date']));       // Получаем год прихода (2022)
+        $receipt_num = '%' . $receipt['number'] . '/' . $year . '%'; // Получаем используемый номер прихода (TOF00000000/2022)
+        //$payments = \R::findOne('payment', "receipt LIKE ?", [$receipt_num]);   // Получаем заявку на оплату для этого прихода (если есть)
+        $payments = $payment_obj->getPaymentFromReceipt($receipt_num);  // Получаем заявку на оплату для этого прихода (если есть)
+        if ($payments) $payments = $payments[0];
+        //$receipts = \R::find('receipt', 'partner = ? AND date_pay IS NULL ORDER BY date', [$name]); // Получаем все неоплаченные приходы этого КА
+        $receipts = $receipt_obj->getReceiptNoPay($name); // Получаем все неоплаченные приходы этого КА
+        /***************** Получаем массив приходов в зависимости от режима
+        Array (пример)
+        (
+        [0] => Array
+        (
+        [number] => TOF00000278/2022 - номер неоплаченного прихода
+        [summa] => 37044.00          - сумма этого прихода
+
+
+        [1] => Array
+        (
+        [number] => TOF00000279/2022
+        [summa] => 20752.88
+        )
+
+        [2] => Array
+        (
+        [number] => TOF00000280/2022
+        [summa] => 3998.74
+        )
+        ) *****************************************************************/
+        $receipt_select = []; // массив содержащий выбранные приходы в ЗО
+        $receipt_no_pay = [];  // массив содержащий неоплаченные приходы данного КА
+        $ers_sel = []; $new_er = []; $new_sums = []; $new_recs = [];
+        foreach ($receipts as $k => $v) {
+            $receipt_no_pay[$k]['number'] = dateYear($v['number'], $v['date']);
+            $receipt_no_pay[$k]['summa'] = $v['sum'];
+        }
+        if (!$payments) {
+            // Если ЗО нет (режим добавления)
+            $receipt_select['0']['number'] = trim($receipt_num, '%');
+            $receipt_select['0']['summa'] = $receipt['sum'];
+        } else {
+            $er_sel = explode(';', $payments['num_er']); // выбранные ер
+            $er_sum = explode(';', $payments['sum_er']); // суммы выбранных ер
+            foreach ($er_sel as  $k => $v) {
+                $new_er[$k]['number'] = $v;
+                $new_er[$k]['summa'] = $er_sum[$k];
+            }
+            $ers_sel = $new_er;
+            $recs = explode(';', $payments['receipt']); // доступные приходы
+            $sums = explode(';', $payments['sum']); // все выбранные приходы
+            foreach ($recs as  $k => $v) {
+                $new_recs[$k]['number'] = $v;
+                $new_recs[$k]['summa'] = $sums[$k];
+            }
+            $receipt_select = $new_recs;
+            if ($pay_key) {
+                // Если ЗО создана и уже оплачена (режим просмотра)
+                $receipt_no_pay = $new_recs;
+            } else {
+                // Если ЗО создана но пока не оплачена (режим редактирования)
+                foreach ($receipts as $k => $v) {
+                    $new_sums[$k]['number'] = dateYear($v['number'], $v['date']);
+                    $new_sums[$k]['summa'] = $v['sum'];
+                }
+                $receipt_no_pay = $new_sums;
+            }
+        }
+        /***** Конец получения данных для формирования заявки на оплату ******/
+
+
+        //debug($receipt);debug($partner);die;
+
+        // формируем метатеги для страницы
+        $this->setMeta('Введение оплат', 'Введение заявки на оплату приходов текущего КА', '');
+        // Передаем полученные данные в вид
+        $this->set(compact('partner', 'receipt_select', 'receipt_no_pay', 'ers', 'ers_sel', 'payments', 'vat'));
+
+    }
+
 }

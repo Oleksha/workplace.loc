@@ -242,7 +242,7 @@ class ReceiptController extends AppController {
             $receipt->load($edit_receipt);
             $receipt->edit('receipt', $edit_receipt['id']);
         }
-        redirect();        
+        redirect("/partner/{$pay_receipt['inn']}");
     }
 
     /**

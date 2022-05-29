@@ -31,7 +31,7 @@ class Receipt extends AppModel {
     }
 
     /**
-     * Возвращает массив всех приходов для КА
+     * Возвращает массив всех приходов
      * @param $field string поле по которому происходит отбор
      * @param $value string значение по которому происходит отбор
      * @return array|false
