@@ -138,7 +138,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="partner" value="<?=isset($name) ? $name : '';?>">
+                    <input type="hidden" name="partner" value="<?=isset($partner['name']) ? $partner['name'] : '';?>">
                     <input type="hidden" name="id" value="<?=isset($payments['id']) ? $payments['id'] : '';?>">
                     <input type="hidden" name="inn" value="<?=isset($partner['inn']) ? $partner['inn'] : '';?>">
                     <div class="form-group text-center">
@@ -149,7 +149,7 @@
             </div>
         </div>
         <?php else : ?>
-        <h3>Отсутствуют данные для обратотки</h3>
+        <h3>Отсутствуют данные для обработки</h3>
         <?php endif; ?>
     </div>
 </main>
