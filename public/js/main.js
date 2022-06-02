@@ -383,26 +383,7 @@ function showEditBudget(bo) {
 
 // Формирование ЗО на оплату
 
-$(".number_receipt_select").chosen({
-    width: "100%"
-});
-$(".num_er_select").chosen({
-    width: "100%"
-});
-$(".sum_receipt_select").chosen({
-    width: "100%"
-});
-$("#sum_select").change(function() {
-    const ids = $(this).val();
-    let sum = 0;
-    for(let i = 0; i < ids.length; i++) {
-        let $select = $(this);
-        console.log($select.children().eq(i).data('number'));
-        sum += parseFloat(ids[i]);
-    }
-    $('#sum_er').val(sum.toFixed(2));
-    $('#sum_bo').val(sum.toFixed(2));
-});
+
 /*
 (function() {
     let app = {

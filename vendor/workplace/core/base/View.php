@@ -81,7 +81,14 @@ class View {
             $layoutFile = APP . "/views/layouts/{$this->layout}.php";
             // проверяем существует ли файл
             if (is_file($layoutFile)) {
-                // если файл найден подключаем его
+                // если файл найден вырезаем скрипты
+                $content = $this->getScript($content);
+                $scripts = []; //для хранения скриптов
+                if (!empty($this->scripts[0])) {
+                    // если скрипты найдены преобразуем массив в одномерный
+                    $scripts = $this->scripts[0];
+                }
+                // подключаем его
                 require_once $layoutFile;
             } else {
                 // если файла нет ошибка
@@ -99,6 +106,22 @@ class View {
         $output .= '    <meta name="description" content="' . $this->meta['description'] . '">' . PHP_EOL;
         $output .= '    <meta name="keywords" content="' . $this->meta['keywords'] . '">' . PHP_EOL;
         return $output;
+    }
+
+    /**
+     * Находит и вырезает все касающееся скриптов из вида
+     * @param $content string html-текст вида
+     * @return string html-текст вида без скриптов
+     */
+    protected function getScript($content) {
+        // переменная для хранения шаблона вдля поиска ивыпезания скриптов
+        $pattern = "#<script.*?>.*?</script>#si";
+        preg_match_all($pattern, $content, $this->scripts);
+        if (!empty($this->scripts)) {
+            // если скрипты найдены вырезаем их из вида
+            $content = preg_replace($pattern, '', $content);
+        }
+        return $content;
     }
 
 }
