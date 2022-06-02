@@ -153,6 +153,9 @@
         <?php endif; ?>
     </div>
 </main>
+<script type="text/javascript" src="chosen/chosen.jquery.js"></script>
+<script type="text/javascript" src="chosen/docsupport/prism.js"></script>
+<script type="text/javascript" src="chosen/docsupport/init.js"></script>
 <script>
     $(function () {
         $(".number_receipt_select").chosen({
