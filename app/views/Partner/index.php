@@ -12,7 +12,7 @@
         </nav>
         <?php /** @var array $partners */
         if($partners): ?>
-        <table id="example" class="display" style="width:100%">
+        <table id="partner_index" class="display" style="width:100%">
                 <thead>
                 <tr>
                     <th>Наименование</th>
@@ -45,3 +45,29 @@
         <?php endif; ?>
     </div>
 </main>
+<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<script>
+    $(function () {
+        $('#partner_index').dataTable( {
+        "aLengthMenu": [[7, 15, 25, -1], [7, 15, 25, "All"]],
+        "language": {
+            "url": "/DataTables/DataTables-1.11.3/js/ru.json"
+        },
+        "aoColumns": [
+            null,
+            {"bSearchable": false },
+            {"sClass": "text-center",
+                "bSearchable": false },
+            {"sClass": "text-center",
+                "bSearchable": false },
+            {"sClass": "text-center",
+                "bSearchable": false },
+            {"sClass": "text-center",
+                "bSearchable": false },
+            {"sClass": "text-center",
+                "bSearchable": false },
+
+        ]
+        });
+    });
+</script>
