@@ -3,7 +3,7 @@ $(function () {
 });
 
 /* Фильтр начало */
-/*$('body').on('change', '.filters select', function () {
+$('body').on('change', '.filters select', function () {
     let date_y = $('#select_year option:checked'), // получаем все отмеченные чекбоксы
         date_m = $('#select_month option:checked'), // получаем все отмеченные чекбоксы
         data = '';
@@ -50,7 +50,7 @@ $(function () {
         });
     }
     //alert(data);
-});*/
+});
 /* Фильтр конец */
 
 /* Поиск */
