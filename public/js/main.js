@@ -3,7 +3,7 @@ $(function () {
 });
 
 /* Фильтр начало */
-$('body').on('change', '.filters select', function () {
+/*$('body').on('change', '.filters select', function () {
     let date_y = $('#select_year option:checked'), // получаем все отмеченные чекбоксы
         date_m = $('#select_month option:checked'), // получаем все отмеченные чекбоксы
         data = '';
@@ -50,11 +50,11 @@ $('body').on('change', '.filters select', function () {
         });
     }
     //alert(data);
-});
+});*/
 /* Фильтр конец */
 
 /* Поиск */
-let partners = new Bloodhound ({
+/*let partners = new Bloodhound ({
     datumTokenizer: Bloodhound.tokenizers.whitespace,
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     remote: {
@@ -78,118 +78,7 @@ $("#typeahead").typeahead({
 $("#typeahead").bind('typeahead:select', function (ev, suggestion) {
     console.log(suggestion);
     window.location = path + '/search/?s=' + encodeURIComponent(suggestion.name);
-})
-
-/* Единоличное решение */
-$('body').on('click', '.edit-er-link', function (e) {
-    e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
-    // получаем необходимые нам данные
-    let id = $(this).data('id'), // идентификатор ЕР
-        partner = $(this).data('partner_id'); // идентификатор КА
-
-    // отправляем стандартный аякс запрос на сервер
-    $.ajax({
-        url: '/er/edit', // всегда указываем от корня
-        data: {id: id, partner: partner}, // передаем данные
-        type: 'GET', // тип передаваемого запроса
-        success: function (res) {
-            // если данные получены
-            showEr(res);
-        },
-        error: function () {
-            // если данных нет или запрос не дошел
-            alert('Ошибка получения данных с сервера! Попробуйте позже.');
-        }
-    });
-});
-
-$('body').on('click', '.add-er-link', function (e) {
-    e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
-    // получаем необходимые нам данные
-    let partner = $(this).data('id'); // идентификатор КА
-
-    // отправляем стандартный аякс запрос на сервер
-    $.ajax({
-        url: '/er/add', // всегда указываем от корня
-        data: {partner: partner}, // передаем данные
-        type: 'GET', // тип передаваемого запроса
-        success: function (res) {
-            // если данные получены
-            showAddEr(res);
-        },
-        error: function () {
-            // если данных нет или запрос не дошел
-            alert('Ошибка получения данных с сервера! Попробуйте позже.');
-        }
-    });
-});
-$('body').on('click', '.view-er-link', function (e) {
-    e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
-    // получаем необходимые нам данные
-    let id = $(this).data('id'), // идентификатор ЕР
-        partner = $(this).data('partner') // наименование КА
-    // отправляем стандартный аякс запрос на сервер
-    $.ajax({
-        url: '/er/view', // всегда указываем от корня
-        data: {id: id, partner: partner}, // передаем данные
-        type: 'GET', // тип передаваемого запроса
-        success: function (res) {
-            // если данные получены
-            showViewEr(res);
-        },
-        error: function () {
-            // если данных нет или запрос не дошел
-            alert('Ошибка получения данных с сервера! Попробуйте позже.');
-        }
-    });
-});
-
-/**
- * Показывает модальное окно с данными ЕР
- * @param er полученные данные
- */
-function showEr(er) {
-    // выводим содержимое страницы
-    $('#editERModal .modal-body').html(er);
-    $('#editERModal').modal();
-}
-function showAddEr(er) {
-    // выводим содержимое страницы
-    $('#addERModal .modal-body').html(er);
-    $('#addERModal').modal();
-}
-function showViewEr(er) {
-    // выводим содержимое страницы
-    $('#viewERModal .modal-body').html(er);
-    $('#viewERModal').modal();
-}
-
-$('body').on('click', '.edit-ka-link', function (e) {
-    e.preventDefault(); // отменяем действие по умолчанию для ссылки или кнопки
-    // получаем необходимые нам данные
-    let id = $(this).data('id'); // идентификатор КА
-
-    // отправляем стандартный аякс запрос на сервер
-    $.ajax({
-        url: '/partner/edit', // всегда указываем от корня
-        data: {id: id}, // передаем данные
-        type: 'GET', // тип передаваемого запроса
-        success: function (res) {
-            // если данные получены
-            showEditKa(res);
-        },
-        error: function () {
-            // если данных нет или запрос не дошел
-            alert('Ошибка получения данных с сервера! Попробуйте позже.');
-        }
-    });
-});
-
-function showEditKa(ka) {
-    // выводим содержимое страницы
-    $('#editKAModal .modal-body').html(ka);
-    $('#editKAModal').modal();
-}
+})*/
 
 
 
