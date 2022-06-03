@@ -98,3 +98,14 @@
         </div>
     </div>
 </main>
+<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<script>
+    $(function () {
+        $('#bo_view').dataTable( {
+        "ordering": false,
+        "language": {
+            "url": "/DataTables/DataTables-1.11.3/js/ru.json"
+        }
+        });
+    });
+</script>
