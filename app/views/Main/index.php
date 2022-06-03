@@ -123,3 +123,36 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<script>
+    $(function () {
+        $('#main_index').dataTable( {
+        "order": [[ 3, "asc" ]],        
+        "createdRow": function ( row, data, index ) {
+                if ( data[4] == "Подано на оплату" ) {
+                    $('td', row).eq(3).addClass('table-warning');
+                } 
+                if ( data[4] == "Приход не обработан" ) {
+                    $('td', row).eq(3).addClass('table-danger');
+                }
+                if ( data[4] == "Оплачено" ) {
+                    $('td', row).eq(3).addClass('table-success');
+                }
+             },    
+        "aLengthMenu": [[9, 15, 25, -1], [9, 15, 25, "All"]],
+        "language": {
+            "url": "/DataTables/DataTables-1.11.3/js/ru.json"
+        },
+        "aoColumns": [
+            null,
+            {"bSearchable": false },
+            null,
+            {"bSearchable": false },
+            {"bSearchable": false },
+            {"sClass": "text-center",
+                "bSearchable": false }
+
+        ]
+        });
+    });
+</script>
