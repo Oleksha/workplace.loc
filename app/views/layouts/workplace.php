@@ -61,8 +61,6 @@
     </script>
     <script type="text/javascript" src="chosen/docsupport/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="DataTables/datatables.min.js"></script>
-    <script type="text/javascript" src="js/typeahead.bundle.js"></script>
     <script type="text/javascript" src="js/main.js?<?echo time();?>"></script>
     <?php
         foreach ($scripts as $script) {
