@@ -211,11 +211,27 @@ class ReceiptController extends AppController {
         if (!$this->checkNumBO($data['num_bo'], substr($data['date'], 0, 4))) {
             $_SESSION['error_payment'][] = 'Ошибка заполнения поля НОМЕР БО';
             $verify = false;
-        }/*
-        if (!$this->checkNumBO($data['num_bo'])) {
-            $_SESSION['error_payment'][] = 'Ошибка заполнения формы';
+        }
+        if (count($data['receipt']) != count($data['sum'])) {
+            $_SESSION['error_payment'][] = 'Не сопадает количество выбранных приходов и сумм';
             $verify =  false;
-        }*/
+        }
+        if (count($data['num_er']) != count(explode(';', $data['sum_er']))) {
+            $_SESSION['error_payment'][] = 'Не сопадает количество выбранных ЕР и введенных сумм';
+            $verify =  false;
+        }
+        if (count(explode(';', $data['num_bo'])) != count(explode(';', $data['sum_bo']))) {
+            $_SESSION['error_payment'][] = 'Не сопадает количество введенных БО и введенных сумм';
+            $verify =  false;
+        }
+        if (array_sum($data['sum']) != array_sum(explode(';', $data['sum_er']))) {
+            $_SESSION['error_payment'][] = 'Не сопадает сумма выбранных приходов и суммы ЕР';
+            $verify =  false;
+        }
+        if (array_sum($data['sum']) != array_sum(explode(';', $data['sum_bo']))) {
+            $_SESSION['error_payment'][] = 'Не сопадает сумма выбранных приходов и суммы БО';
+            $verify =  false;
+        }
         return $verify;
     }
 
