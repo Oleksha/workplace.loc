@@ -878,3 +878,79 @@
 --------------------
 [2022-05-28 20:40:01] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
 --------------------
+[2022-06-03 18:14:50] Текст ошибки: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '' for column 'date' at row 1 | Файл: F:\WebServer\domains\workplace.loc\vendor\gabordemooij\redbean\RedBeanPHP\Driver\RPDO.php | Строка: 202
+--------------------
+[2022-06-03 18:14:51] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-03 18:16:46] Текст ошибки: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '' for column 'date' at row 1 | Файл: F:\WebServer\domains\workplace.loc\vendor\gabordemooij\redbean\RedBeanPHP\Driver\RPDO.php | Строка: 202
+--------------------
+[2022-06-03 18:16:46] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 13:31:56] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 13:36:46] Текст ошибки: syntax error, unexpected '}' | Файл: F:\WebServer\domains\workplace.loc\app\controllers\ReceiptController.php | Строка: 215
+--------------------
+[2022-06-05 13:36:46] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 13:37:03] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 14:02:05] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 14:02:21] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 14:13:21] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 14:13:41] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 14:15:04] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 14:16:30] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 14:31:45] Текст ошибки: Too few arguments to function app\controllers\ReceiptController::checkNumBO(), 1 passed in F:\WebServer\domains\workplace.loc\app\controllers\ReceiptController.php on line 211 and exactly 2 expected | Файл: F:\WebServer\domains\workplace.loc\app\controllers\ReceiptController.php | Строка: 228
+--------------------
+[2022-06-05 14:31:45] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 15:04:07] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 15:24:40] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 15:25:37] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 15:28:42] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 15:46:37] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 15:46:42] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:10:04] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:12:15] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:12:16] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:12:16] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:12:17] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:12:17] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:14:30] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:14:31] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:14:32] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:14:32] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:15:03] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:24:10] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:24:11] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:24:11] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:24:12] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-05 16:26:01] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------

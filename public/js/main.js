@@ -298,7 +298,8 @@ function validateNumBO(str) {
             }
             bo = bo.substring(0, bo.length - 1);
             $('#num_bo').val(bo);
-            // /CUB[0-9]+\/[0-9]+/ правильное заполнение
+            // /CUB[0-9]+\/[0-9]+/ правильное заполнение https://regex101.com/r/RfmP9B/1
+            (CUB[0-9]{10}\/[0-9]{4})?(;)?
         }
 
     });*/

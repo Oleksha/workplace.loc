@@ -168,6 +168,7 @@ class PartnerController extends AppController {
     }
 
     public function paymentAction() {
+        //unset($_SESSION['form_data']);die;
         // получаем переданные GET данные
         $id_receipt = !empty($_GET['receipt']) ? (int)$_GET['receipt'] : null; // идентификатор прихода
         // создаем объекты для работы с БД
@@ -229,11 +230,27 @@ class PartnerController extends AppController {
             $receipt_no_pay[$k]['number'] = dateYear($v['number'], $v['date']);
             $receipt_no_pay[$k]['summa'] = $v['sum'];
         }
+        // заполняем сессию с полями формы для заполнения
+        $_SESSION['form_data']['vat'] = $vat;
+        $_SESSION['form_data']['partner'] = $partner['name'];
+        $_SESSION['form_data']['inn'] = $partner['inn'];
         if (!$payments) {
             // Если ЗО нет (режим добавления)
             $receipt_select['0']['number'] = trim($receipt_num, '%');
             $receipt_select['0']['summa'] = $receipt['sum'];
+            // заполняем сессию с полями формы для заполнения
+            $_SESSION['form_data']['sum'][0] = $receipt['sum'];
+            $_SESSION['form_data']['receipt'][0] = trim($receipt_num, '%');
         } else {
+            // заполняем сессию с полями формы для заполнения
+            $_SESSION['form_data']['num_er'] = isset($_SESSION['form_data']['num_er']) ? $_SESSION['form_data']['num_er'] : explode(';', $payments['num_er']);
+            $_SESSION['form_data']['sum_er'] = isset($_SESSION['form_data']['sum_er']) ? $_SESSION['form_data']['sum_er'] : $payments['sum_er'];
+            $_SESSION['form_data']['date'] = isset($_SESSION['form_data']['date']) ? $_SESSION['form_data']['date'] : $payments['date'];
+            $_SESSION['form_data']['number'] = isset($_SESSION['form_data']['number']) ? $_SESSION['form_data']['number'] : $payments['number'];
+            $_SESSION['form_data']['id'] = $payments['id'];
+            $_SESSION['form_data']['date_pay'] = isset($_SESSION['form_data']['date_pay']) ? $_SESSION['form_data']['date_pay'] : $payments['date_pay'];
+            $_SESSION['form_data']['num_bo'] = isset($_SESSION['form_data']['num_bo']) ? $_SESSION['form_data']['num_bo'] : $payments['num_bo'];
+            $_SESSION['form_data']['sum_bo'] = isset($_SESSION['form_data']['sum_bo']) ? $_SESSION['form_data']['sum_bo'] : $payments['sum_bo'];
             $er_sel = explode(';', $payments['num_er']); // выбранные ер
             $er_sum = explode(';', $payments['sum_er']); // суммы выбранных ер
             foreach ($er_sel as  $k => $v) {
@@ -243,6 +260,8 @@ class PartnerController extends AppController {
             $ers_sel = $new_er;
             $recs = explode(';', $payments['receipt']); // доступные приходы
             $sums = explode(';', $payments['sum']); // все выбранные приходы
+            $_SESSION['form_data']['sum'] = isset($_SESSION['form_data']['sum']) ? $_SESSION['form_data']['sum'] : explode(';', $payments['sum']);
+            $_SESSION['form_data']['receipt'] = isset($_SESSION['form_data']['receipt']) ? $_SESSION['form_data']['receipt'] : explode(';', $payments['receipt']);
             foreach ($recs as  $k => $v) {
                 $new_recs[$k]['number'] = $v;
                 $new_recs[$k]['summa'] = $sums[$k];
@@ -263,7 +282,7 @@ class PartnerController extends AppController {
         /***** Конец получения данных для формирования заявки на оплату ******/
 
 
-        //debug($receipt);debug($partner);die;
+        //debug($_SESSION['form_data']);die;
 
         // формируем метатеги для страницы
         $this->setMeta('Введение оплат', 'Введение заявки на оплату приходов текущего КА', '');

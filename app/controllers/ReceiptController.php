@@ -202,12 +202,68 @@ class ReceiptController extends AppController {
     }
 
     /**
+     * проверка правильности заполнения полей формы
+     * @param $data
+     * @return bool
+     */
+    protected function checkPay($data) {
+        $verify = true;
+        if (!$this->checkNumBO($data['num_bo'], substr($data['date'], 0, 4))) {
+            $_SESSION['error_payment'][] = 'Ошибка заполнения поля НОМЕР БО';
+            $verify = false;
+        }/*
+        if (!$this->checkNumBO($data['num_bo'])) {
+            $_SESSION['error_payment'][] = 'Ошибка заполнения формы';
+            $verify =  false;
+        }*/
+        return $verify;
+    }
+
+    /**
+     * проверка правильности заполнения поля НОМЕРА БО
+     * @param $data string содержимое поля
+     * @param $year string год ЗО
+     * @return bool результат проверки
+     */
+    protected function checkNumBO($data, $year) {
+        // получаем массив номера заполненных БО
+        $bos = explode(';', $data);
+        // просматриваем каждую строку массива
+        foreach ($bos as $bo) {
+            if (strlen($bo) != 18) {
+                // проверка длинны каждой БО
+                return false;
+            } else {
+                // проверка соответствия БО шаблону CUB0123456789/2022
+                preg_match('/CUB[0-9]{10}\/[0-9]{4}/', $bo, $matches);
+                if (empty($matches)) {
+                    return false;
+                } else {
+                    // проверяем правильность заполнения года
+                    $str = explode('/', $bo);
+                    $year_bo = (int)$str[1];
+                    $years = [(int)$year - 1, (int)$year, (int)$year + 1];
+                    if (!in_array($year_bo, $years)) return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * Функция записывающая в БД ЗО и вносящая исправления в приходы оплаченные этой ЗО
      * @return void
      */
     public function payReceiptAction() {
         // получаем данные пришедшие методом POST
         $pay_receipt = !empty($_POST) ? $_POST : null;
+        // проверяем полученные данные
+        if (!$this->checkPay($pay_receipt)) {
+            // запоминаем значения формы
+            $_SESSION['form_data'] = $pay_receipt;
+            //debug($_SESSION['form_data']);die;
+            redirect();
+        }
         $receipts = $this->getReceipts($pay_receipt['receipt']); // получаем массив ID приходов
         // исправляем данные пришедшие в виде массива        
         $pay_receipt['num_er'] = $this->prepareData($pay_receipt['num_er']);
@@ -242,6 +298,7 @@ class ReceiptController extends AppController {
             $receipt->load($edit_receipt);
             $receipt->edit('receipt', $edit_receipt['id']);
         }
+        unset($_SESSION['form_data']);
         redirect("/partner/{$pay_receipt['inn']}");
     }
 
