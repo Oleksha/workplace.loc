@@ -30,7 +30,7 @@
                 <form method="post" action="receipt/pay-receipt" id="partner_payment" class="was-validated" novalidate>
                     <div class="has-feedback">
                         <label for="name">Наименование контрагента</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Наименование КА" value="<?=isset($_SESSION['form_data']['name']) ? $_SESSION['form_data']['name'] : 'Нет данных';?>" disabled>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Наименование КА" value="<?=isset($_SESSION['form_data']['partner']) ? $_SESSION['form_data']['partner'] : 'Нет данных';?>" disabled>
                     </div>
                     <div class="form-row">
                         <div class="has-feedback col-6">
@@ -157,7 +157,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="partner" value="<?=isset($_SESSION['form_data']['name']) ? $_SESSION['form_data']['name'] : '';?>">
+                    <input type="hidden" name="partner" value="<?=isset($_SESSION['form_data']['partner']) ? $_SESSION['form_data']['partner'] : '';?>">
                     <input type="hidden" name="id" value="<?=isset($payments['id']) ? $payments['id'] : '';?>">
                     <input type="hidden" name="inn" value="<?=isset($_SESSION['form_data']['inn']) ? $_SESSION['form_data']['inn'] : '';?>">
                     <div class="form-group text-center">
