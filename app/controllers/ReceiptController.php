@@ -224,16 +224,20 @@ class ReceiptController extends AppController {
             $_SESSION['error_payment'][] = 'Не сопадает количество введенных БО и введенных сумм';
             $verify =  false;
         }
-        if ((int)array_sum($data['sum'])*100 != (int)array_sum(explode(';', $data['sum_er']))*100) {
-            $s1 = array_sum($data['sum']);
-            $s2 = array_sum(explode(';', $data['sum_er']));
-            $_SESSION['error_payment'][] = "Не сопадает сумма выбранных приходов {$s1} и суммы ЕР {$s2}";
+        $a = array_sum($data['sum']);
+        $b = array_sum(explode(';', $data['sum_er']));
+        $epsilon = 0.00001;
+        if (abs($a - $b) < $epsilon) {
+            //echo "true";
+        } else {
+            $_SESSION['error_payment'][] = "Не сопадает сумма выбранных приходов {$a} и суммы ЕР {$b}";
             $verify =  false;
         }
-        if ((int)array_sum($data['sum'])*100 != (int)array_sum(explode(';', $data['sum_bo']))*100) {
-            $s1 = array_sum($data['sum']);
-            $s2 = array_sum(explode(';', $data['sum_bo']));
-            $_SESSION['error_payment'][] = "Не сопадает сумма выбранных приходов {$s1} и суммы БО {$s2}";
+        $b = array_sum(explode(';', $data['sum_bo']));
+        if (abs($a - $b) < $epsilon) {
+            //echo "true";
+        } else {
+            $_SESSION['error_payment'][] = "Не сопадает сумма выбранных приходов {$a} и суммы БО {$b}";
             $verify =  false;
         }
         return $verify;
