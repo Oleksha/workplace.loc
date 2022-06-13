@@ -90,7 +90,7 @@ class Payment extends AppModel {
      */
     public function getPaymentBo($bo) {
         $bo_num = '%' . $bo . '%';
-        debug($bo_num);
+        //debug($bo_num);
         $payments = \R::getAssocRow("SELECT * FROM payment WHERE num_bo LIKE ?", [$bo_num]);
         if (!empty($payments)) return $payments;
         return false;

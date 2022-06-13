@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Budget;
 use app\models\Er;
 use app\models\Payment;
 use app\models\Receipt;
@@ -259,12 +260,54 @@ class ReceiptController extends AppController {
                 }
             }
             $coast = $summa - $total;
+            if (abs($sum - $coast) > $epsilon) {
+                if ($sum > $coast) {
+                    $_SESSION['error_payment'][] = "Не хватает средств. Требуется сумма {$sum}, а в ЕР осталось {$coast}";
+                    $verify =  false;
+                }
+            }
+
+        }
+        $bo_obj = new Budget();
+        $bos = explode(';', $data['num_bo']);
+        $sums = explode(';', $data['sum_bo']);
+        foreach ($bos as $k => $v) {
+            $sum = $sums[$k];
+
+            // получаем все оплаты по этой <БО>
+            $pays_arr = $bo_obj->getPaymentCoast($v);
+            $bo = $bo_obj->getBo($v);
+            // получаем текущие данные
+            $current['number'] = $data['number'] . '/' . substr($data['date'], 0, 4);
+            if ($bo['vat'] = '1.20') {
+                if ($data['vat'] = '1.20') {
+                    $current['summa'] = $sum;
+                }
+                if ($data['vat'] = '1.00') {
+                    $current['summa'] = $sum * 1.2;
+                }
+            }
+            if ($bo['vat'] = '1.00') {
+                if ($data['vat'] = '1.00') {
+                    $current['summa'] = $sum;
+                }
+                if ($data['vat'] = '1.20') {
+                    $current['summa'] = $sum / 1.2;
+                }
+            }
+            $summa = $bo['summa'];
+            $total = 0.00;
+            foreach ($pays_arr as $item) {
+                if (($item['summa'] != $current['summa']) && ($item['number'] != $current['number'])) {
+                    $total += $item['summa'];
+                }
+            }
+            $coast = $summa - $total; // оставшаяся сумма БО
             if ($sum > $coast) {
-                $_SESSION['error_payment'][] = "Не хватает средств. Требуется сумма {$sum}, а в ЕР осталось {$coast}";
+                $_SESSION['error_payment'][] = "Не хватает средств. Требуется сумма {$sum}, а в БО осталось {$coast}";
                 $verify =  false;
             }
         }
-
         return $verify;
     }
 
