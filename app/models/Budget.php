@@ -97,4 +97,61 @@ class Budget extends AppModel {
 
     }
 
+    /**
+     * Возвращает массив содержащий номера оплат и суммы расхода по ЕР
+     * @param $num_bo string номер ЕР
+     * @return array
+     */
+    public function getPaymentCoast($num_bo) {
+        $pay_obj = new Payment();
+        $bo = $this->getBo($num_bo);
+        $bo['number'] = $bo['number'] . '/' . substr($bo['scenario'], 0, 4);
+        $pay = [];
+        // получаем все оплаты использующие эту БО
+        $payments = $pay_obj->getPaymentBo($num_bo);
+        // проходимся по всем оплатам использующим нашу ЕР
+        $st = 0.00;
+        foreach ($payments as $payment) {
+            $vat = $payment['vat'];
+            $nums = explode(';', trim($payment['num_bo']));
+            $sums = explode(';', trim($payment['sum_bo']));
+            $key = array_search($bo['number'], $nums);
+            $sum = $sums[$key];
+            $pay_bo['number'] = $payment['number'] . '/' . substr($payment['date'], 0, 4);
+            if ($bo['vat'] == '1.20') {
+                if ($vat == '1.20') {
+                    $pay_bo['summa'] = $sum;
+                }
+                if ($vat == '1.00') {
+                    $pay_bo['summa'] = round($sum * 1.2, 2);
+                }
+            }
+            if ($bo['vat'] == '1.00') {
+                if ($vat == '1.20') {
+                    $pay_bo['summa'] = round($sum / 1.2, 2);
+                }
+                if ($vat == '1.00') {
+                    $pay_bo['summa'] = $sum;
+                }
+            }
+            $st += $pay_bo['summa'];
+            $pay[] = $pay_bo;
+        }
+        return $pay;
+    }
+
+    /**
+     * возвращает все данные по ЕР по ее номеру
+     * @param $num_bo string в формате CUB0000000000/2022
+     * @return array|null
+     */
+    public function getBo($num_bo) {
+        if (strpos($num_bo, '/')) {
+            $bos = explode('/', $num_bo);
+            $bo = \R::getAssocRow("SELECT * FROM budget WHERE YEAR(scenario) = ? AND number = ?", [$bos[1], $bos[0]]);
+            return $bo[0];
+        }
+        return null;
+    }
+
 }

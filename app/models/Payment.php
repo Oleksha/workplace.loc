@@ -71,6 +71,31 @@ class Payment extends AppModel {
         return false;
     }
 
+    /**
+     * Возвращает массив всех оплат по конкретной ЕР
+     * @param $er string наименование КА
+     * @return array|false
+     */
+    public function getPayment($er) {
+        $er_num = '%' . $er . '%';
+        $payments = \R::getAssocRow("SELECT * FROM payment WHERE num_er LIKE ?", [$er_num]);
+        if (!empty($payments)) return $payments;
+        return false;
+    }
+
+    /**
+     * Возвращает массив всех оплат по конкретной ЕР
+     * @param $bo string наименование КА
+     * @return array|false
+     */
+    public function getPaymentBo($bo) {
+        $bo_num = '%' . $bo . '%';
+        debug($bo_num);
+        $payments = \R::getAssocRow("SELECT * FROM payment WHERE num_bo LIKE ?", [$bo_num]);
+        if (!empty($payments)) return $payments;
+        return false;
+    }
+
     public function getPaymentFromReceipt($receipt) {
         $payments = \R::getAssocRow("SELECT * FROM payment WHERE receipt LIKE ?", [$receipt]);
         if (!empty($payments)) return $payments;

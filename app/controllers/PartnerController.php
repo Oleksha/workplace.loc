@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Budget;
 use app\models\Er;
 use app\models\Partner;
 use app\models\Payment;
@@ -50,6 +51,7 @@ class PartnerController extends AppController {
         $partner_obj = new Partner(); // для КА
         $er_obj = new Er();           // для ЕР
         $receipt_obj = new Receipt(); // для приходов
+        //$bo_obj = new Budget(); debug($bo_obj->getPaymentCoast('CUB0000302427/2022'));die;
         // получение ИНН запрашиваемого контрагента
         $inn = $this->route['inn'];
         // получение данных по КА из БД

@@ -89,4 +89,65 @@ class Er extends AppModel {
         return false;
     }
 
+    /**
+     * Возвращает остоток денежных средств на ЕР
+     * @param $num_er string номер ЕР
+     * @return float сумма остатка денежных средств на ЕР
+     */
+    public function getBalance($num_er) {
+        $pay_obj = new Payment();
+        $er = $this->getEr($num_er);
+        $summa_er = $er['summa'];
+        $summa_coast = 0.00;
+        // получаем все оплаты использующие эту БО
+        $payments = $pay_obj->getPayment($num_er);
+        // проходимся по всем оплатам использующим нашу ЕР
+        foreach ($payments as $payment) {
+            $vat = $payment['vat'];
+            $nums = explode(';', $payment['num_er']);
+            $sums = explode(';', $payment['sum_er']);
+            $key = array_search($er['number'], $nums);
+            $sum = $sums[$key];
+            $summa_coast += round($sum / $vat, 2);
+        }
+        return $summa_er - $summa_coast;
+    }
+
+    /**
+     * Возвращает массив содержащий номера оплат и суммы расхода по ЕР
+     * @param $num_er string номер ЕР
+     * @return array
+     */
+    public function getPaymentCoast($num_er) {
+        $pay_obj = new Payment();
+        $er = $this->getEr($num_er);
+        $pay = [];
+        //$summa_er = $er['summa'];
+        //$summa_coast = 0.00;
+        // получаем все оплаты использующие эту БО
+        $payments = $pay_obj->getPayment($num_er);
+        // проходимся по всем оплатам использующим нашу ЕР
+        foreach ($payments as $payment) {
+            $vat = $payment['vat'];
+            $nums = explode(';', $payment['num_er']);
+            $sums = explode(';', $payment['sum_er']);
+            $key = array_search($er['number'], $nums);
+            $sum = $sums[$key];
+            $pay_er['number'] = $payment['number'] . '/' . substr($payment['date'], 0, 4);
+            $pay_er['summa'] = round($sum / $vat, 2);
+            $pay[] = $pay_er;
+        }
+        return $pay;
+    }
+
+    /**
+     * возвращает все данные по ЕР по ее номеру
+     * @param $num_er
+     * @return array|null
+     */
+    public function getEr($num_er) {
+        $er = \R::getAssocRow('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND number = ?', [$num_er]);
+        return $er[0];
+    }
+
 }

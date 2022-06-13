@@ -240,6 +240,31 @@ class ReceiptController extends AppController {
             $_SESSION['error_payment'][] = "Не сопадает сумма выбранных приходов {$a} и суммы БО {$b}";
             $verify =  false;
         }
+        $er_obj = new Er();
+        $ers = $data['num_er'];
+        $sums = explode(';', $data['sum_er']);
+        foreach ($ers as $k => $v) {
+            $sum = $sums[$k];
+            // получаем текущие данные
+            $current['number'] = $data['number'] . '/' . substr($data['date'], 0, 4);
+            $current['summa'] = $sum;
+            // получаем все оплаты по этой ЕР
+            $pays_arr = $er_obj->getPaymentCoast($v);
+            $er = $er_obj->getEr($v);
+            $summa = $er['summa'];
+            $total = 0.00;
+            foreach ($pays_arr as $item) {
+                if (($item['summa'] != $current['summa']) && ($item['number'] != $current['number'])) {
+                    $total += $item['summa'];
+                }
+            }
+            $coast = $summa - $total;
+            if ($sum > $coast) {
+                $_SESSION['error_payment'][] = "Не хватает средств. Требуется сумма {$sum}, а в ЕР осталось {$coast}";
+                $verify =  false;
+            }
+        }
+
         return $verify;
     }
 
