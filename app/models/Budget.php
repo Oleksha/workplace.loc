@@ -109,36 +109,41 @@ class Budget extends AppModel {
         $pay = [];
         // получаем все оплаты использующие эту БО
         $payments = $pay_obj->getPaymentBo($num_bo);
-        // проходимся по всем оплатам использующим нашу ЕР
-        $st = 0.00;
-        foreach ($payments as $payment) {
-            $vat = $payment['vat'];
-            $nums = explode(';', trim($payment['num_bo']));
-            $sums = explode(';', trim($payment['sum_bo']));
-            $key = array_search($bo['number'], $nums);
-            $sum = $sums[$key];
-            $pay_bo['number'] = $payment['number'] . '/' . substr($payment['date'], 0, 4);
-            if ($bo['vat'] == '1.20') {
-                if ($vat == '1.20') {
-                    $pay_bo['summa'] = $sum;
+        if ($payments) {
+            // проходимся по всем оплатам использующим нашу ЕР
+            $st = 0.00;
+
+            foreach ($payments as $payment) {
+                $vat = $payment['vat'];
+                $nums = explode(';', trim($payment['num_bo']));
+                $sums = explode(';', trim($payment['sum_bo']));
+                $key = array_search($bo['number'], $nums);
+                $sum = $sums[$key];
+                $pay_bo['number'] = $payment['number'] . '/' . substr($payment['date'], 0, 4);
+                if ($bo['vat'] == '1.20') {
+                    if ($vat == '1.20') {
+                        $pay_bo['summa'] = $sum;
+                    }
+                    if ($vat == '1.00') {
+                        $pay_bo['summa'] = round($sum * 1.2, 2);
+                    }
                 }
-                if ($vat == '1.00') {
-                    $pay_bo['summa'] = round($sum * 1.2, 2);
+                if ($bo['vat'] == '1.00') {
+                    if ($vat == '1.20') {
+                        $pay_bo['summa'] = round($sum / 1.2, 2);
+                    }
+                    if ($vat == '1.00') {
+                        $pay_bo['summa'] = $sum;
+                    }
                 }
+                $st += $pay_bo['summa'];
+                $pay[] = $pay_bo;
             }
-            if ($bo['vat'] == '1.00') {
-                if ($vat == '1.20') {
-                    $pay_bo['summa'] = round($sum / 1.2, 2);
-                }
-                if ($vat == '1.00') {
-                    $pay_bo['summa'] = $sum;
-                }
-            }
-            $st += $pay_bo['summa'];
-            $pay[] = $pay_bo;
         }
+        
         return $pay;
     }
+
 
     /**
      * возвращает все данные по ЕР по ее номеру
