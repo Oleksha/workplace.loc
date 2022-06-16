@@ -127,15 +127,17 @@ class Er extends AppModel {
         // получаем все оплаты использующие эту БО
         $payments = $pay_obj->getPayment($num_er);
         // проходимся по всем оплатам использующим нашу ЕР
-        foreach ($payments as $payment) {
-            $vat = $payment['vat'];
-            $nums = explode(';', $payment['num_er']);
-            $sums = explode(';', $payment['sum_er']);
-            $key = array_search($er['number'], $nums);
-            $sum = $sums[$key];
-            $pay_er['number'] = $payment['number'] . '/' . substr($payment['date'], 0, 4);
-            $pay_er['summa'] = round($sum / $vat, 2);
-            $pay[] = $pay_er;
+        if ($payments) {
+            foreach ($payments as $payment) {
+                $vat = $payment['vat'];
+                $nums = explode(';', $payment['num_er']);
+                $sums = explode(';', $payment['sum_er']);
+                $key = array_search($er['number'], $nums);
+                $sum = $sums[$key];
+                $pay_er['number'] = $payment['number'] . '/' . substr($payment['date'], 0, 4);
+                $pay_er['summa'] = round($sum / $vat, 2);
+                $pay[] = $pay_er;
+            }
         }
         return $pay;
     }
