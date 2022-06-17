@@ -246,6 +246,7 @@ class ReceiptController extends AppController {
         $sums = explode(';', $data['sum_er']);
         foreach ($ers as $k => $v) {
             $sum = $sums[$k];
+            $sum = round($sum / $data['vat'], 2);
             // получаем текущие данные
             $current['number'] = $data['number'] . '/' . substr($data['date'], 0, 4);
             $current['summa'] = $sum;
