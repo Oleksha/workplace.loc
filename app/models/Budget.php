@@ -28,26 +28,13 @@ class Budget extends AppModel {
         'sum_bo' => '',
         'date_pay' => '',
     ];
-    public $partner = [
-        'name' => '',
-        'alias' => '',
-        'inn' => '',
-        'kpp' => '',
-        'bank' => '',
-        'bic' => '',
-        'account' => '',
-        'address' => '',
-        'phone' => '',
-        'email' => '',
-        'delay' => '',
-        'vat' => '',
-    ];
 
     /**
+     * Возвращает массив оплат использующих БО
      * @param $number string номер БО в формате (CUB000000000/2021)
-     * @return array возвращает массив с оплатами и данными по приходам
+     * @return array
      */
-    public function getBudgetPayment($number) {
+    public function getBudgetPayment(string $number): array {
         $pays = []; $payments = [];
         $number = '%' . $number . '%';
         $pay_arrays = \R::find('payment', 'num_bo LIKE ? ORDER BY date_pay', [$number]);
@@ -69,23 +56,14 @@ class Budget extends AppModel {
     }
 
     /**
-     * Возвращает массив с данными о КА
+     * Возвращает массив данных о КА
      * @param $names string наименование КА
-     * @return array данные о КА
+     * @return array
      */
-    public function getBudgetPartner($names) {
-        $part = [];
-        $partner = \R::findOne('partner', 'name = ?', [$names]);
-        //debug($partner);
-        // проходим по всем атрибутам
-        foreach ($this->partner as $name => $value) {
-            // если в переданных данных data есть имя ключа атрибута
-            if (isset($partner[$name])) {
-                // запоминаем в атрибуте соответсвующее значение
-                $part[$name] = $partner[$name];
-            }
-        }
-        return $part;
+    public function getBudgetPartner(string $names): array
+    {
+        $partner = \R::getAssocRow('SELECT * FROM partner WHERE name = ?', [$names]);
+        return $partner[0];
     }
 
     /**
@@ -98,11 +76,11 @@ class Budget extends AppModel {
     }
 
     /**
-     * Возвращает массив содержащий номера оплат и суммы расхода по ЕР
-     * @param $num_bo string номер ЕР
+     * Возвращает массив содержащий номера оплат и суммы расхода по БО
+     * @param $num_bo string номер BO в формате CUB0000000000/2022
      * @return array
      */
-    public function getPaymentCoast($num_bo) {
+    public function getPaymentCoast(string $num_bo): array {
         $pay_obj = new Payment();
         $bo = $this->getBo($num_bo);
         $bo['number'] = $bo['number'] . '/' . substr($bo['scenario'], 0, 4);
@@ -146,17 +124,18 @@ class Budget extends AppModel {
 
 
     /**
-     * возвращает все данные по ЕР по ее номеру
-     * @param $num_bo string в формате CUB0000000000/2022
-     * @return array|null
+     * Возвращает данные БО по ее номеру
+     * @param $num_bo string номер БО в формате CUB0000000000/2022
+     * @return array
      */
-    public function getBo($num_bo) {
+    public function getBo(string $num_bo): array {
+        $bo_arr = [];
         if (strpos($num_bo, '/')) {
             $bos = explode('/', $num_bo);
             $bo = \R::getAssocRow("SELECT * FROM budget WHERE YEAR(scenario) = ? AND number = ?", [$bos[1], $bos[0]]);
-            return $bo[0];
+            $bo_arr = $bo[0];
         }
-        return null;
+        return $bo_arr;
     }
 
 }

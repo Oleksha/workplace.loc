@@ -8,7 +8,7 @@ class BudgetController extends AppController {
 
     public function indexAction() {
         // получаем сценарий для просмотра бюджетных операций если он есть
-        $filter_date = isset($_GET['filter']) ? $_GET['filter'] : date('Y-m-d');
+        $filter_date = $_GET['filter'] ?? date('Y-m-d');
         $year = mb_substr($filter_date, 0, 4);  // выделяем месяц сценария
         $month = mb_substr($filter_date, 5, 2); // выделяем год сценария
         $scenario = $year . '-' . $month . '-01';
@@ -100,9 +100,9 @@ class BudgetController extends AppController {
                     // если платеж с НДС
                     $pay['summa'] = round($sums[$key] / 1.2, 2);
                 }
-            }  
+            }
             $pay['partner'] = $payment['partner'];
-            $pay_arr[] = $pay;      
+            $pay_arr[] = $pay;
         }
         return $pay_arr;
     }
@@ -150,7 +150,6 @@ class BudgetController extends AppController {
 
     public function uploadAction() {
         $file = !empty($_POST['file']) ? $_POST['file'] : null;
-        debug($file);
         // формируем метатеги для страницы
         $this->setMeta('Загрузка новых БО', '', '');
         // Передаем полученные данные в вид
