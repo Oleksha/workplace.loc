@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use R;
+
 class Budget extends AppModel {
 
     // поля таблицы для заполнения
@@ -15,7 +17,7 @@ class Budget extends AppModel {
         'budget_item' => '',
         'status' => '',
     ];
-    public $payment = [
+    public array $payment = [
         'date' => '',
         'number' => '',
         'sum' => '',
@@ -37,7 +39,7 @@ class Budget extends AppModel {
     public function getBudgetPayment(string $number): array {
         $pays = []; $payments = [];
         $number = '%' . $number . '%';
-        $pay_arrays = \R::find('payment', 'num_bo LIKE ? ORDER BY date_pay', [$number]);
+        $pay_arrays = R::find('payment', 'num_bo LIKE ? ORDER BY date_pay', [$number]);
         foreach ($pay_arrays as $pay_array) {
             // проходим по всем атрибутам
             foreach ($this->payment as $name => $value) {
@@ -62,7 +64,7 @@ class Budget extends AppModel {
      */
     public function getBudgetPartner(string $names): array
     {
-        $partner = \R::getAssocRow('SELECT * FROM partner WHERE name = ?', [$names]);
+        $partner = R::getAssocRow('SELECT * FROM partner WHERE name = ?', [$names]);
         return $partner[0];
     }
 
@@ -71,7 +73,7 @@ class Budget extends AppModel {
      * @param $date string переданная дата
      * @return void
      */
-    public function getRangeOneMonth($date) {
+    public function getRangeOneMonth(string $date) {
 
     }
 
@@ -132,7 +134,7 @@ class Budget extends AppModel {
         $bo_arr = [];
         if (strpos($num_bo, '/')) {
             $bos = explode('/', $num_bo);
-            $bo = \R::getAssocRow("SELECT * FROM budget WHERE YEAR(scenario) = ? AND number = ?", [$bos[1], $bos[0]]);
+            $bo = R::getAssocRow("SELECT * FROM budget WHERE YEAR(scenario) = ? AND number = ?", [$bos[1], $bos[0]]);
             $bo_arr = $bo[0];
         }
         return $bo_arr;
