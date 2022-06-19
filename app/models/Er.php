@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use R;
+
 class Er extends AppModel {
 
     // поля таблицы для заполнения
@@ -61,9 +63,9 @@ class Er extends AppModel {
     public function getPayment($er, $partner = null) {
         $er = '%' . $er . '%';
         if ($partner) {
-            return \R::find('payment', 'num_er LIKE ? AND partner = ? ORDER BY date', [$er, $partner]);
+            return R::find('payment', 'num_er LIKE ? AND partner = ? ORDER BY date', [$er, $partner]);
         } else {
-            return \R::find('payment', 'num_er LIKE ? ORDER BY date', [$er]);
+            return R::find('payment', 'num_er LIKE ? ORDER BY date', [$er]);
         }
     }
 
@@ -73,7 +75,7 @@ class Er extends AppModel {
      * @return array|false
      */
     public function getCurrentEr($partner_id) {
-        $ers = \R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$partner_id]);
+        $ers = R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$partner_id]);
         if (!empty($ers)) return $ers;
         return false;
     }
@@ -84,7 +86,7 @@ class Er extends AppModel {
      * @return array|false
      */
     public function getCurrentErFromDate($partner_id, $date) {
-        $ers = \R::getAll("SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_start <= '{$date}') AND (data_end >= '{$date}') AND id_partner = ?", [$partner_id]);
+        $ers = R::getAll("SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_start <= '{$date}') AND (data_end >= '{$date}') AND id_partner = ?", [$partner_id]);
         if (!empty($ers)) return $ers;
         return false;
     }
@@ -92,25 +94,27 @@ class Er extends AppModel {
     /**
      * Возвращает остоток денежных средств на ЕР
      * @param $num_er string номер ЕР
-     * @return float сумма остатка денежных средств на ЕР
+     * @return float
      */
-    public function getBalance($num_er) {
-        $pay_obj = new Payment();
-        $er = $this->getEr($num_er);
-        $summa_er = $er['summa'];
-        $summa_coast = 0.00;
-        // получаем все оплаты использующие эту БО
+    public function getBalance(string $num_er): float {
+        $pay_obj = new Payment();       // объект ЗО
+        $er = $this->getEr($num_er);    // получаем информацию по ЕР
+        $summa_coast = 0.00;            // расходы по ЕР
+        // получаем все оплаты использующие эту ЕР
         $payments = $pay_obj->getPayment($num_er);
-        // проходимся по всем оплатам использующим нашу ЕР
-        foreach ($payments as $payment) {
-            $vat = $payment['vat'];
-            $nums = explode(';', $payment['num_er']);
-            $sums = explode(';', $payment['sum_er']);
-            $key = array_search($er['number'], $nums);
-            $sum = $sums[$key];
-            $summa_coast += round($sum / $vat, 2);
+        // Если таковые есть проходимся по всему массиву
+        if ($payments) {
+            foreach ($payments as $payment) {
+                $vat = $payment['vat']; // НДС текущей ЗО
+                $nums = explode(';', $payment['num_er']); // массив всех ЕР в ЗО
+                $sums = explode(';', $payment['sum_er']); // массив всех сумм ЕР в ЗО
+                $key = array_search($er['number'], $nums);  // индекс текущей ЕР в массиве ЕР
+                $sum = $sums[$key];                         // сумма текущей ЕР
+                // добавляем сумму ЗО в расходы по ЕР без НДС
+                $summa_coast += round($sum / $vat, 2);
+            }
         }
-        return $summa_er - $summa_coast;
+        return $er['summa'] - $summa_coast;
     }
 
     /**
@@ -118,38 +122,40 @@ class Er extends AppModel {
      * @param $num_er string номер ЕР
      * @return array
      */
-    public function getPaymentCoast($num_er) {
-        $pay_obj = new Payment();
-        $er = $this->getEr($num_er);
-        $pay = [];
-        //$summa_er = $er['summa'];
-        //$summa_coast = 0.00;
-        // получаем все оплаты использующие эту БО
+    public function getPaymentCoast(string $num_er): array {
+        $pay_obj = new Payment();       // объект ЗО
+        $er = $this->getEr($num_er);    // получаем информацию по ЕР
+        $pay = [];                      // массив содержащий возвращаемые данные
+        // получаем все оплаты использующие эту ЕР
         $payments = $pay_obj->getPayment($num_er);
-        // проходимся по всем оплатам использующим нашу ЕР
+        // Если оплаты есть проходимся по всему массиву
         if ($payments) {
             foreach ($payments as $payment) {
-                $vat = $payment['vat'];
-                $nums = explode(';', $payment['num_er']);
-                $sums = explode(';', $payment['sum_er']);
-                $key = array_search($er['number'], $nums);
-                $sum = $sums[$key];
+                $vat = $payment['vat']; // НДС текущей ЗО
+                $nums = explode(';', $payment['num_er']); // массив всех ЕР в ЗО
+                $sums = explode(';', $payment['sum_er']); // массив всех сумм ЕР в ЗО
+                $key = array_search($er['number'], $nums);  // индекс текущей ЕР в массиве ЕР
+                $sum = $sums[$key];                         // сумма текущей ЕР
+                // запоминаем внутренний номер ЗО в формате TOF0000000000/2022
                 $pay_er['number'] = $payment['number'] . '/' . substr($payment['date'], 0, 4);
+                // запоминаем сумму ЕР без НДС
                 $pay_er['summa'] = round($sum / $vat, 2);
-                $pay[] = $pay_er;
+                $pay[] = $pay_er; // добавляем полученные данные в массив оплат
             }
         }
         return $pay;
     }
 
     /**
-     * возвращает все данные по ЕР по ее номеру
-     * @param $num_er
-     * @return array|null
+     * Возвращает информацию по ЕР
+     * @param $num_er string номер ER
+     * @return array
      */
-    public function getEr($num_er) {
-        $er = \R::getAssocRow('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND number = ?', [$num_er]);
-        return $er[0];
+    public function getEr(string $num_er): array {
+        $er_arr = [];
+        $er = R::getAssocRow('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND number = ?', [$num_er]);
+        if ($er) $er_arr = $er[0];
+        return $er_arr;
     }
 
 }
