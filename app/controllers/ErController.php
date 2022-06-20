@@ -56,7 +56,6 @@ class ErController extends AppController {
         $this->id_partner = !empty($_GET['partner']) ? (int)$_GET['partner'] : null;
         // получаем данные о контрагенте
         $this->partner = $partner_obj->getPartnerByID($this->id_partner);
-        //$this->partner = \R::findOne('partner', 'id = ?', [$this->id_partner]);
         $this->budget = \R::getAll('SELECT * FROM budget_items ORDER BY name_budget_item');
         $er_obj->addEr($this->id_partner, $this->partner, $this->budget);
         if ($this->isAjax()) {

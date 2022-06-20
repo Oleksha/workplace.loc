@@ -1092,3 +1092,23 @@
 --------------------
 [2022-06-20 18:40:11] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
 --------------------
+[2022-06-20 18:54:38] Текст ошибки: SQLSTATE[HY000]: General error: 1366 Incorrect integer value: '' for column 'delay' at row 1 | Файл: F:\WebServer\domains\workplace.loc\vendor\gabordemooij\redbean\RedBeanPHP\Driver\RPDO.php | Строка: 202
+--------------------
+[2022-06-20 18:54:38] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-20 18:55:06] Текст ошибки: Метод app\controllers\PartnerController::adssadAction не найден | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 42
+--------------------
+[2022-06-20 18:55:06] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-20 19:06:18] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-20 19:07:22] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-20 19:16:01] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-20 19:16:42] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-20 19:17:23] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
+[2022-06-20 19:18:53] Текст ошибки: Страница не найдена | Файл: F:\WebServer\domains\workplace.loc\vendor\workplace\core\Router.php | Строка: 49
+--------------------
