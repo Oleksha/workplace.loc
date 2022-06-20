@@ -134,7 +134,7 @@ class Budget extends AppModel {
         $bo_arr = [];
         if (strpos($num_bo, '/')) {
             $bos = explode('/', $num_bo);
-            $bo = R::getAssocRow("SELECT * FROM budget WHERE YEAR(scenario) = ? AND number = ?", [$bos[1], $bos[0]]);
+            $bo = R::getAssocRow("SELECT * FROM budget WHERE status = 'Согласован' AND YEAR(scenario) = ? AND number = ?", [$bos[1], $bos[0]]);
             $bo_arr = $bo[0];
         }
         return $bo_arr;
