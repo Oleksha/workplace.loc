@@ -189,6 +189,7 @@ class PartnerController extends AppController {
         /***** Начало получения данных для формирования заявки на оплату (ЗО) ******/
         /* Получаем все действующие ЕР для этого КА на момент прихода */
         $ers = $er_obj->getCurrentErFromDate($partner['id'], $receipt['date']);
+
         $er = [];
         foreach ($ers as $k => $v) {
             $er[$k]['budget'] = $v['name_budget_item'];

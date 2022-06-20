@@ -57,10 +57,10 @@ class Er extends AppModel {
 
     /**
      * @param $er string номер Единоличного решения
-     * @param $partner string Наименование контрагента
+     * @param $partner string|null Наименование контрагента
      * @return array массив заявок на опалату
      */
-    public function getPayment($er, $partner = null) {
+    public function getPayment(string $er, string $partner = null): array {
         $er = '%' . $er . '%';
         if ($partner) {
             return R::find('payment', 'num_er LIKE ? AND partner = ? ORDER BY date', [$er, $partner]);
@@ -72,23 +72,20 @@ class Er extends AppModel {
     /**
      * Возвращает все действующие на сегодня ЕР
      * @param $partner_id integer идентификатор КА
-     * @return array|false
+     * @return array
      */
-    public function getCurrentEr($partner_id) {
-        $ers = R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$partner_id]);
-        if (!empty($ers)) return $ers;
-        return false;
+    public function getCurrentEr(int $partner_id): array {
+        return R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$partner_id]);
     }
+
     /**
      * Возвращает все действующие на указанную дату ЕР
      * @param $partner_id integer идентификатор КА
      * @param $date string строковое представление даты
-     * @return array|false
+     * @return array
      */
-    public function getCurrentErFromDate($partner_id, $date) {
-        $ers = R::getAll("SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_start <= '{$date}') AND (data_end >= '{$date}') AND id_partner = ?", [$partner_id]);
-        if (!empty($ers)) return $ers;
-        return false;
+    public function getCurrentErFromDate(int $partner_id, string $date): array {
+        return R::getAll("SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_start <= '$date') AND (data_end >= '$date') AND id_partner = ?", [$partner_id]);
     }
 
     /**
