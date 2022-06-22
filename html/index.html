@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ru" class="h-100">
+  <head>
+    <!-- Обязательные метатеги -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Рабочее место new</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="bootstrap-5.1.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+  </head>
+  <body class="d-flex flex-column h-100">
+    <header>
+      <!-- Fixed navbar -->
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <img src="img/logo.png" width="30" height="30" alt="">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-bs-toggle="collapse" data-bs-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Главная</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="ka.html">Контрагенты</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="er.html">Единоличные решения</a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search">
+              <button class="btn btn-outline-info" type="submit">Поиск</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Begin page content -->
+    <main class="flex-shrink-0">
+      <div class="container">
+        <h1 class="mt-3">Текущие оплаты</h1>
+        <table class="table table-striped table-sm">
+          <thead>
+            <tr class="table-active text-center">
+              <th scope="col" class="h-100 align-middle">Имя КА</th>
+              <th scope="col" class="h-100 align-middle">Документ</th>
+              <th scope="col" class="h-100 align-middle">Сумма</th>
+              <th scope="col" class="h-100 align-middle">Дата оплаты</th>
+              <th scope="col" class="h-100 align-middle" colspan="2">Статус</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">ЦГиЭ в Самарской области в городе Тольятти</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг CNT00000156 от 01.10.2021 18:00:00</td>
+              <td class="text-center h-100 align-middle">111&nbsp;199,36&nbsp;₽</td>
+              <td class="table-warning text-center h-100 align-middle">30.10.2021</td>
+              <td class="text-center h-100 align-middle">подано на оплату</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">Авант-подшипник ТД ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг TOF00001292 от 04.10.2021 1:00:00</td>
+              <td class="text-center h-100 align-middle">22&nbsp;092,00&nbsp;₽</td>
+              <td class="table-success text-center h-100 align-middle">18.10.2021</td>
+              <td class="text-center h-100 align-middle">Оплачено</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">ВСС ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг TOF00001292 от 04.10.2021 1:00:00</td>
+              <td class="text-center h-100 align-middle">153&nbsp;190,00&nbsp;₽</td>
+              <td class="table-danger text-center h-100 align-middle">11.11.2021</td>
+              <td class="text-center h-100 align-middle">Ожидает оплаты</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">ВСС ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг TOF00001292 от 04.10.2021 1:00:00</td>
+              <td class="text-center h-100 align-middle">1&nbsp;512,10&nbsp;₽</td>
+              <td class="table-danger text-center h-100 align-middle">11.11.2021</td>
+              <td class="text-center h-100 align-middle">Ожидает оплаты</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">ВСС ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг TOF00001292 от 04.10.2021 1:00:00</td>
+              <td class="text-center h-100 align-middle">99&nbsp;999,99&nbsp;₽</td>
+              <td class="table-danger text-center h-100 align-middle">11.11.2021</td>
+              <td class="text-center h-100 align-middle">Ожидает оплаты</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">Гидродинамика ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг CNT00000156 от 01.10.2021 18:00:00</td>
+              <td class="text-center h-100 align-middle">7&nbsp;000,00&nbsp;₽</td>
+              <td class="table-warning text-center h-100 align-middle">11.11.2021</td>
+              <td class="text-center h-100 align-middle">подано на оплату</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">Индустриальный Парк Краснодар УК ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг CNT00000156 от 01.10.2021 18:00:00</td>
+              <td class="text-center h-100 align-middle">912,23&nbsp;₽</td>
+              <td class="table-warning text-center h-100 align-middle">01.11.2021</td>
+              <td class="text-center h-100 align-middle">подано на оплату</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">ВСС ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг TOF00001292 от 04.10.2021 1:00:00</td>
+              <td class="text-center h-100 align-middle">99&nbsp;999,99&nbsp;₽</td>
+              <td class="table-danger text-center h-100 align-middle">11.11.2021</td>
+              <td class="text-center h-100 align-middle">Ожидает оплаты</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">Гидродинамика ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг CNT00000156 от 01.10.2021 18:00:00</td>
+              <td class="text-center h-100 align-middle">7&nbsp;000,00&nbsp;₽</td>
+              <td class="table-warning text-center h-100 align-middle">11.11.2021</td>
+              <td class="text-center h-100 align-middle">подано на оплату</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">Индустриальный Парк Краснодар УК ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг CNT00000156 от 01.10.2021 18:00:00</td>
+              <td class="text-center h-100 align-middle">912,23&nbsp;₽</td>
+              <td class="table-warning text-center h-100 align-middle">01.11.2021</td>
+              <td class="text-center h-100 align-middle">подано на оплату</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">ВСС ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг TOF00001292 от 04.10.2021 1:00:00</td>
+              <td class="text-center h-100 align-middle">99&nbsp;999,99&nbsp;₽</td>
+              <td class="table-danger text-center h-100 align-middle">11.11.2021</td>
+              <td class="text-center h-100 align-middle">Ожидает оплаты</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">Гидродинамика ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг CNT00000156 от 01.10.2021 18:00:00</td>
+              <td class="text-center h-100 align-middle">7&nbsp;000,00&nbsp;₽</td>
+              <td class="table-warning text-center h-100 align-middle">11.11.2021</td>
+              <td class="text-center h-100 align-middle">подано на оплату</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+            <tr>
+              <th class="h-100 align-middle" scope="row"><a href="view-ka.html">Индустриальный Парк Краснодар УК ООО</a></th>
+              <td class="h-100 align-middle">Поступление товаров и услуг CNT00000156 от 01.10.2021 18:00:00</td>
+              <td class="text-center h-100 align-middle">912,23&nbsp;₽</td>
+              <td class="table-warning text-center h-100 align-middle">01.11.2021</td>
+              <td class="text-center h-100 align-middle">подано на оплату</td>
+              <td class="text-center h-100 align-middle">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" data-bs-toggle="modal" data-bs-target="#payModal">Оплата</button>
+                <button type="button" class="btn btn-outline-warning btn-sm w-100" data-bs-toggle="modal" data-bs-target="#editModal">Править</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light">
+      <div class="container">
+        <span class="text-muted">Разработано ИТО ОП "Тольятти"</span>
+      </div>
+    </footer>
+
+    <div id="payModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Подаем на оплату</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Здесь будет форма оплаты</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            <button type="button" class="btn btn-primary">Оплатить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Редактирование статуса</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Здесь будет поля для редактирования</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            <button type="button" class="btn btn-primary">Записать</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Вариант 1: Bootstrap в связке с Popper -->
+    <script src="bootstrap-5.1.3-dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
