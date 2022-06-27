@@ -160,3 +160,17 @@ span.twitter-typeahead {
     top: 50vh;
     margin: -100px 0 0 -100px;
 }
+
+#cartPartner .form-control:disabled,
+#erPartner .form-control:disabled {
+    background-color: #f9fcff;
+}
+
+#erPartner span {
+    font-weight: bold;
+}
+
+#erPartner .alert {
+    --bs-alert-padding-x: 0.5rem;
+    --bs-alert-padding-y: 0.5rem;
+}

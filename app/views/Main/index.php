@@ -1,9 +1,9 @@
-<main role="main" class="flex-shrink-0">
+<main class="flex-shrink-0">
     <div class="container">
         <h1 class="mt-1">Приходы требующие оплаты</h1>
         <?php /** @var array $receipts */
         if($receipts): ?>
-            <table id="main_index" class="display" style="width:100%">
+            <table id="main_index" class="table display" style="width:100%">
                 <thead>
                     <tr>
                         <th>Имя КА</th>
@@ -123,7 +123,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<script type="text/javascript" src="assets/DataTables/datatables.min.js"></script>
 <script>
     $(function () {
         $('#main_index').dataTable( {
@@ -139,9 +139,9 @@
                     $('td', row).eq(3).addClass('table-success');
                 }
              },    
-        "aLengthMenu": [[9, 15, 25, -1], [9, 15, 25, "All"]],
+        "aLengthMenu": [[8, 15, 25, -1], [8, 15, 25, "All"]],
         "language": {
-            "url": "/DataTables/DataTables-1.11.3/js/ru.json"
+            "url": "/assets/DataTables/ru.json"
         },
         "aoColumns": [
             null,

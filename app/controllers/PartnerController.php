@@ -61,8 +61,11 @@ class PartnerController extends AppController {
             throw new Exception('Контрагент с ИНН ' . $inn . ' не найден', 500);
         }
         // ЕДИНОЛИЧНЫЕ РЕШЕНИЯ
+        // Получаем все ЕР для КА действующие на данный момент
         // получение данных по ЕР для КА из БД
         $ers = $er_obj->getCurrentEr($partner['id']);
+        $ers_all = $er_obj->getAllEr($partner['id']);
+        $diff = $this->my_array_diff($ers_all, $ers);
         // добавляем в массив данные по расходам этого ЕР
         if ($ers) $ers = $this->costs($ers, $partner['vat'], $partner['name']);
         // ПРИХОДЫ
@@ -70,7 +73,26 @@ class PartnerController extends AppController {
         // формируем метатеги для страницы
         $this->setMeta($partner['name'], 'Описание...', 'Ключевые слова...');
         // Передаем полученные данные в вид
-        $this->set(compact('partner', 'ers', 'receipt'));
+        $this->set(compact('partner', 'ers', 'diff', 'receipt'));
+    }
+
+    public function my_array_diff(&$arr1, &$arr2): array {
+        $diff = [];
+        if(is_array($arr1) and is_array($arr2)) {
+            foreach ($arr1 as $item) {
+                $key = false;
+                foreach ($arr2 as $value) {
+                    if ($item['number'] === $value['number']) {
+                        $key = true;
+                        break;
+                    }
+                }
+                if (!$key) {
+                    $diff[] = $item;
+                }
+            }
+        }
+        return $diff;
     }
 
     /**
@@ -122,6 +144,8 @@ class PartnerController extends AppController {
                 // запоминаем уже введенные данные
                 $_SESSION['form_data'] = $data;
             } else {
+                $user->attributes['delay'] = (int)$user->attributes['delay'];
+                $user->attributes['vat'] = (double)$user->attributes['vat'];
                 // если проверка пройдена записываем данные в таблицу
                 if ($id = $user->save('partner')) {
                     // если все прошло хорошо в ID номер зарегистрированного пользователя
@@ -141,11 +165,15 @@ class PartnerController extends AppController {
     }
 
     public function editAction() {
+        // очищаем сессию если она существует
+        unset($_SESSION['form_data']);
         // получаем переданный идентификатор КА
         $id = !empty($_GET['id']) ? (int)$_GET['id'] : null;
         if ($id) {
             // если у нас есть ID получаем все данные об этом KA
-            $partner = \R::findOne('partner', 'id = ?', [$id]);
+            $ka_arr = new Partner();
+            //$partner = \R::findOne('partner', 'id = ?', [$id]);
+            $partner = $ka_arr->getPartnerByID($id);
             if (!$partner) return false; // если RF не найден дальнейшие действия бессмысленны
             // запоминаем полученные данные
             $_SESSION['form_data'] = $partner;

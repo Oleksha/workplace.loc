@@ -1,4 +1,4 @@
-<main role="main" class="flex-shrink-0">
+<main class="flex-shrink-0">
     <div class="container">
         <div class="d-flex justify-content-between">
             <h1 class="mt-1">Список контрагентов</h1>
@@ -12,7 +12,7 @@
         </nav>
         <?php /** @var array $partners */
         if($partners): ?>
-        <table id="partner_index" class="display" style="width:100%">
+        <table id="partner_index" class="table display" style="width:100%">
                 <thead>
                 <tr>
                     <th>Наименование</th>
@@ -45,13 +45,13 @@
         <?php endif; ?>
     </div>
 </main>
-<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<script type="text/javascript" src="assets/DataTables/datatables.min.js"></script>
 <script>
     $(function () {
         $('#partner_index').dataTable( {
-        "aLengthMenu": [[7, 15, 25, -1], [7, 15, 25, "All"]],
+        "aLengthMenu": [[8, 15, 25, -1], [8, 15, 25, "All"]],
         "language": {
-            "url": "/DataTables/DataTables-1.11.3/js/ru.json"
+            "url": "/assets/DataTables/ru.json"
         },
         "aoColumns": [
             null,

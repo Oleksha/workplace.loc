@@ -6,43 +6,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?=$this->getmeta();?>
-    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="css/sticky-footer-navbar.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
-    <link rel="stylesheet" type="text/css" href="chosen/docsupport/prism.css"/>
-    <link rel="stylesheet" type="text/css" href="chosen/chosen.css"/>
+    <link href="assets/bootstrap-5.2.0-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/DataTables/datatables.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="assets/chosen/chosen.css"/>
+    <link rel="stylesheet" type="text/css" href="assets/chosen/docsupport/prism.css"/>
     <link href="css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body class="d-flex flex-column h-100">
-    <header>
-        <!-- Fixed navbar -->
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="img/logo.png" width="30" height="30" alt="">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="grid" fill="#ffffff" viewBox="0 0 16 16">
+            <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z"></path>
+        </symbol>
+    </svg>
+    <header class="p-3 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Grid"><use xlink:href="#grid"></use></svg>
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"> <!-- active">-->
-                            <a class="nav-link" href="/">Главная </a> <!--<span class="sr-only">(current)</span>-->
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/partner">Контрагенты</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/budget">Бюджет</a>
-                        </li>
-                    </ul>
-                    <!--<form class="form-inline mt-2 mt-md-0">
-                        <input class="form-control mr-sm-2" type="text" placeholder="Поиск" aria-label="Search">
-                        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Поиск</button>
-                    </form>-->
-                </div>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/" class="nav-link px-2 text-secondary">Главная</a></li>
+                    <li><a href="/partner" class="nav-link px-2 text-white">Контрагенты</a></li>
+                    <li><a href="/budget" class="nav-link px-2 text-white">Бюджет</a></li>
+                </ul>
             </div>
-        </nav>
+        </div>
     </header>
     <div class="content">
         <?= /** @var string $content */
@@ -59,8 +47,8 @@
     <script>
         let path = '<?=PATH;?>';
     </script>
-    <script type="text/javascript" src="chosen/docsupport/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="assets/chosen/docsupport/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="assets/bootstrap-5.2.0-dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="js/main.js?<?echo time();?>"></script>
     <?php
         foreach ($scripts as $script) {

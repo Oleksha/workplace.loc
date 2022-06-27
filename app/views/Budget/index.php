@@ -50,7 +50,7 @@
         <div class="product-one">
             <?php /** @var array $budgets */
             if($budgets): ?>
-                <table id="bo_view" class="display" style="width:100%">
+                <table id="bo_view" class="table display" style="width:100%">
                     <thead>
                     <tr>
                         <th>Сценарий</th>
@@ -98,14 +98,14 @@
         </div>
     </div>
 </main>
-<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<script type="text/javascript" src="assets/DataTables/datatables.min.js"></script>
 <script>
     $(function () {
         $('#bo_view').dataTable( {
-        "ordering": false,
-        "language": {
-            "url": "/DataTables/DataTables-1.11.3/js/ru.json"
-        }
+            "ordering": false,
+            "language": {
+                "url": "/assets/DataTables/ru.json"
+            }
         });
     });
 </script>

@@ -214,15 +214,15 @@ class ReceiptController extends AppController {
             $verify = false;
         }
         if (count($data['receipt']) != count($data['sum'])) {
-            $_SESSION['error_payment'][] = 'Не сопадает количество выбранных приходов и сумм';
+            $_SESSION['error_payment'][] = 'Не совпадает количество выбранных приходов и сумм';
             $verify =  false;
         }
         if (count($data['num_er']) != count(explode(';', $data['sum_er']))) {
-            $_SESSION['error_payment'][] = 'Не сопадает количество выбранных ЕР и введенных сумм';
+            $_SESSION['error_payment'][] = 'Не совпадает количество выбранных ЕР и введенных сумм';
             $verify =  false;
         }
         if (count(explode(';', $data['num_bo'])) != count(explode(';', $data['sum_bo']))) {
-            $_SESSION['error_payment'][] = 'Не сопадает количество введенных БО и введенных сумм';
+            $_SESSION['error_payment'][] = 'Не совпадает количество введенных БО и введенных сумм';
             $verify =  false;
         }
         $a = array_sum($data['sum']);
@@ -231,85 +231,98 @@ class ReceiptController extends AppController {
         if (abs($a - $b) < $epsilon) {
             //echo "true";
         } else {
-            $_SESSION['error_payment'][] = "Не сопадает сумма выбранных приходов {$a} и суммы ЕР {$b}";
+            $_SESSION['error_payment'][] = "Не совпадает сумма выбранных приходов {$a} и суммы ЕР {$b}";
             $verify =  false;
         }
         $b = array_sum(explode(';', $data['sum_bo']));
         if (abs($a - $b) < $epsilon) {
             //echo "true";
         } else {
-            $_SESSION['error_payment'][] = "Не сопадает сумма выбранных приходов {$a} и суммы БО {$b}";
+            $_SESSION['error_payment'][] = "Не совпадает сумма выбранных приходов {$a} и суммы БО {$b}";
             $verify =  false;
         }
-        $er_obj = new Er();
-        $ers = $data['num_er'];
-        $sums = explode(';', $data['sum_er']);
-        foreach ($ers as $k => $v) {
-            $sum = $sums[$k];
-            $sum = round($sum / $data['vat'], 2);
-            // получаем текущие данные
-            $current['number'] = $data['number'] . '/' . substr($data['date'], 0, 4);
-            $current['summa'] = $sum;
-            // получаем все оплаты по этой ЕР
-            $pays_arr = $er_obj->getPaymentCoast($v);
-            $er = $er_obj->getEr($v);
-            $summa = $er['summa'];
-            $total = 0.00;
-            foreach ($pays_arr as $item) {
-                if (($item['summa'] != $current['summa']) && ($item['number'] != $current['number'])) {
-                    $total += $item['summa'];
+        if (count(explode(';', $data['sum_er'])) == count($data['num_er'])) {
+            $er_obj = new Er();
+            $ers = $data['num_er'];
+            $sums = explode(';', $data['sum_er']);
+            foreach ($ers as $k => $v) {
+                $sum = $sums[$k];
+                $sum = round($sum / $data['vat'], 2);
+                // получаем текущие данные
+                $current['number'] = $data['number'] . '/' . substr($data['date'], 0, 4);
+                $current['summa'] = $sum;
+                // получаем все оплаты по этой ЕР
+                $pays_arr = $er_obj->getPaymentCoast($v);
+                $er = $er_obj->getEr($v);
+                $summa = $er['summa'];
+                $total = 0.00;
+                foreach ($pays_arr as $item) {
+                    if (($item['summa'] != $current['summa']) && ($item['number'] != $current['number'])) {
+                        $total += $item['summa'];
+                    }
+                }
+                $coast = $summa - $total;
+                if (abs($sum - $coast) > $epsilon) {
+                    if ($sum > $coast) {
+                        $_SESSION['error_payment'][] = "Не хватает средств. Требуется сумма {$sum}, а в ЕР осталось {$coast}";
+                        $verify =  false;
+                    }
                 }
             }
-            $coast = $summa - $total;
-            if (abs($sum - $coast) > $epsilon) {
-                if ($sum > $coast) {
-                    $_SESSION['error_payment'][] = "Не хватает средств. Требуется сумма {$sum}, а в ЕР осталось {$coast}";
-                    $verify =  false;
-                }
-            }
-
+        } else {
+            $a = count($data['num_er']);
+            $b = count(explode(';', $data['sum_er']));
+            $_SESSION['error_payment'][] = "Не совпадает сумма количество введеных ЕР {$a} и количество сумм ЕР {$b}";
+            $verify =  false;
         }
-        $bo_obj = new Budget();
-        $bos = explode(';', $data['num_bo']);
-        $sums = explode(';', $data['sum_bo']);
-        foreach ($bos as $k => $v) {
-            $sum = $sums[$k];
+        if (count(explode(';', $data['sum_bo'])) == count(explode(';', $data['num_bo']))) {
+            $bo_obj = new Budget();
+            $bos = explode(';', $data['num_bo']);
+            $sums = explode(';', $data['sum_bo']);
+            foreach ($bos as $k => $v) {
+                $sum = $sums[$k];
 
-            // получаем все оплаты по этой <БО>
-            $pays_arr = $bo_obj->getPaymentCoast($v);
-            $bo = $bo_obj->getBo($v);
-            // получаем текущие данные
-            $current['number'] = $data['number'] . '/' . substr($data['date'], 0, 4);
-            if ($bo['vat'] = '1.20') {
-                if ($data['vat'] = '1.20') {
-                    $current['summa'] = $sum;
+                // получаем все оплаты по этой <БО>
+                $pays_arr = $bo_obj->getPaymentCoast($v);
+                $bo = $bo_obj->getBo($v);
+                // получаем текущие данные
+                $current['number'] = $data['number'] . '/' . substr($data['date'], 0, 4);
+                if ($bo['vat'] = '1.20') {
+                    if ($data['vat'] = '1.20') {
+                        $current['summa'] = $sum;
+                    }
+                    if ($data['vat'] = '1.00') {
+                        $current['summa'] = $sum * 1.2;
+                    }
                 }
-                if ($data['vat'] = '1.00') {
-                    $current['summa'] = $sum * 1.2;
+                if ($bo['vat'] = '1.00') {
+                    if ($data['vat'] = '1.00') {
+                        $current['summa'] = $sum;
+                    }
+                    if ($data['vat'] = '1.20') {
+                        $current['summa'] = $sum / 1.2;
+                    }
+                }
+                $summa = $bo['summa'];
+                $total = 0.00;
+                foreach ($pays_arr as $item) {
+                    if (($item['summa'] != $current['summa']) && ($item['number'] != $current['number'])) {
+                        $total += $item['summa'];
+                    }
+                }
+                $coast = $summa - $total; // оставшаяся сумма БО
+                if (abs($sum - $coast) > $epsilon) {
+                    if ($sum > $coast) {
+                        $_SESSION['error_payment'][] = "Не хватает средств. Требуется сумма {$sum}, а в БО осталось {$coast}";
+                        $verify =  false;
+                    }
                 }
             }
-            if ($bo['vat'] = '1.00') {
-                if ($data['vat'] = '1.00') {
-                    $current['summa'] = $sum;
-                }
-                if ($data['vat'] = '1.20') {
-                    $current['summa'] = $sum / 1.2;
-                }
-            }
-            $summa = $bo['summa'];
-            $total = 0.00;
-            foreach ($pays_arr as $item) {
-                if (($item['summa'] != $current['summa']) && ($item['number'] != $current['number'])) {
-                    $total += $item['summa'];
-                }
-            }
-            $coast = $summa - $total; // оставшаяся сумма БО
-            if (abs($sum - $coast) > $epsilon) {
-                if ($sum > $coast) {
-                    $_SESSION['error_payment'][] = "Не хватает средств. Требуется сумма {$sum}, а в БО осталось {$coast}";
-                    $verify =  false;
-                }
-            }
+        } else {
+            $a = count(explode(';', $data['num_bo']));
+            $b = count(explode(';', $data['sum_bo']));
+            $_SESSION['error_payment'][] = "Не совпадает сумма количество введеных БО {$a} и количество сумм БО {$b}";
+            $verify =  false;
         }
         return $verify;
     }

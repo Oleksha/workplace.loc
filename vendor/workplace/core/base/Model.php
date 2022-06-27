@@ -37,7 +37,7 @@ abstract class Model {
      * @param $table string Имя таблицы в которой будут сохранены данные
      * @return int 0 если произошла ошибка, и ID новой записи если все хорошо
      */
-    public function save($table) {
+    public function save(string $table) {
         $tbl = \R::dispense($table); // подключаем источник данных table
         foreach ($this->attributes as $name => $value) {
             // проходим по всем атрибутам содержащим данные для добавления

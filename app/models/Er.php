@@ -70,12 +70,28 @@ class Er extends AppModel {
     }
 
     /**
+     * Возвращает все ЕР указанного КА
+     * @param $partner_id integer идентификатор КА
+     * @return array
+     */
+    public function getAllEr(int $partner_id): array {
+        return R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND id_partner = ? ORDER BY budget_items.name_budget_item', [$partner_id]);
+    }
+
+    /**
      * Возвращает все действующие на сегодня ЕР
      * @param $partner_id integer идентификатор КА
      * @return array
      */
     public function getCurrentEr(int $partner_id): array {
-        return R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ?', [$partner_id]);
+        $ers = R::getAll('SELECT er.*, budget_items.name_budget_item FROM er, budget_items WHERE (budget_items.id = er.id_budget_item) AND (data_end >= CURDATE()) AND id_partner = ? ORDER BY budget_items.name_budget_item', [$partner_id]);
+        $ers_no_null = [];
+        foreach ($ers as $er) {
+            if ($this->getBalance($er['number']) > 0) {
+                $ers_no_null[] = $er;
+            }
+        }
+        return $ers_no_null;
     }
 
     /**
