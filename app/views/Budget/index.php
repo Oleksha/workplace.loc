@@ -12,12 +12,10 @@
         </nav>
 
         <div class="breadcrumb filters">
-            <div class="col-auto">
+            <div class="col-auto me-3">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Год</div>
-                    </div>
-                    <select class="custom-select" id="select_year">
+                    <label class="input-group-text" for="select_year">Год</label>
+                    <select class="form-select" id="select_year">
                         <option value="2021" <?php /** @var string $year */
                         if ($year == '2021') echo ' selected'; ?>>2021</option>
                         <option value="2022" <?php if ($year == '2022') echo ' selected'; ?>>2022</option>
@@ -26,10 +24,8 @@
             </div>
             <div class="col-auto">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">Месяц</div>
-                    </div>
-                    <select class="custom-select" id="select_month">
+                    <label class="input-group-text" for="select_month">Месяц</label>
+                    <select class="form-select" id="select_month">
                         <option value="01" <?php /** @var string $month */
                         if ($month == '01') echo ' selected'; ?>>Январь</option>
                         <option value="02" <?php if ($month == '02') echo ' selected'; ?>>Февраль</option>
