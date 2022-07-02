@@ -1,3 +1,8 @@
+<?php
+if (!isset($_SESSION['user'])) {
+    header('Location: /user/login');
+}
+?>
 <!DOCTYPE html>
 <html lang="ru" class="h-100">
 <head>
@@ -29,6 +34,23 @@
                     <li><a href="/partner" class="nav-link px-2 text-white">Контрагенты</a></li>
                     <li><a href="/budget" class="nav-link px-2 text-white">Бюджет</a></li>
                 </ul>
+                <?php if (isset($_SESSION['user'])): ?>
+                <?php if ($_SESSION['user']['avatar'] == '') {
+                        $img = '/upload/noavatar.png';
+                    } else {
+                        $img = $_SESSION['user']['avatar'];
+                    } ?>
+                <div class="dropdown text-end my-style">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="<?=$img;?>" alt="<?=$_SESSION['user']['login'];?>" class="rounded-circle" width="32" height="32">
+                    </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1" style="">
+                        <li><a class="dropdown-item" href="#">Профиль, <?=$_SESSION['user']['login'];?></a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="user/logout">Выход</a></li>
+                    </ul>
+                </div>
+                <?php endif; ?>
             </div>
         </div>
     </header>

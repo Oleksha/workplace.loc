@@ -174,3 +174,9 @@ span.twitter-typeahead {
     --bs-alert-padding-x: 0.5rem;
     --bs-alert-padding-y: 0.5rem;
 }
+
+.my-style .link-dark,
+.my-style .link-dark:focus,
+.my-style .link-dark:hover {
+    color: #ffffff !important;
+}

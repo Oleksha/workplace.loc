@@ -61,6 +61,8 @@ abstract class Model {
      * @return boolean TRUE если проверка пройдена, и FALSE если нет
      */
     public function validate($data) {
+        // Русифицируем сообщения валидатора
+        Validator::lang('ru');
         // создаем объект установленного vlucas/valitron
         $v = new Validator($data);
         // передаем ему массив установленных нами правил

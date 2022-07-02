@@ -8,6 +8,7 @@
   "require": {
     "gabordemooij/redbean": "dev-master",
     "ext-json": "*",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "vlucas/valitron": "^1.4"
   }
 }
