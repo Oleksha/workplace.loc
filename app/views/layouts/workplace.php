@@ -30,7 +30,7 @@ if (!isset($_SESSION['user'])) {
                     <svg class="bi me-2" width="40" height="32" role="img" aria-label="Grid"><use xlink:href="#grid"></use></svg>
                 </a>
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="/" class="nav-link px-2 text-secondary">Главная</a></li>
+                    <li><a href="/" class="nav-link px-2 text-white">Главная</a></li>
                     <li><a href="/partner" class="nav-link px-2 text-white">Контрагенты</a></li>
                     <li><a href="/budget" class="nav-link px-2 text-white">Бюджет</a></li>
                 </ul>
