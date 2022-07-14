@@ -180,3 +180,7 @@ span.twitter-typeahead {
 .my-style .link-dark:hover {
     color: #ffffff !important;
 }
+
+.my-btn:hover {
+    background-color: rgb(191, 216, 250);
+}
