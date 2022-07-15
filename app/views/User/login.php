@@ -15,7 +15,7 @@
         <label for="login">Ваш логин</label>
     </div>
     <div class="form-floating mb-3">
-        <input type="password" name="password" class="form-control" id="password" placeholder="" required>
+        <input type="password" name="password" class="form-control" id="password" placeholder="pass" required>
         <label for="password">Введите пароль</label>
     </div>
     <div class="text-center">
