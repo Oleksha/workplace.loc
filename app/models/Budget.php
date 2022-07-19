@@ -15,6 +15,7 @@ class Budget extends AppModel {
         'summa' => '',
         'vat' => '',
         'budget_item' => '',
+        'budget_item_id' => '',
         'status' => '',
     ];
     public array $payment = [
