@@ -34,10 +34,10 @@ $scenario = $_monthsList[date_format($date, "n")].'&nbsp;'.date_format($date, "Y
 </div>
 <div class="col-12 has-feedback">
     <label for="budget_item">Статья расхода</label>
-    <select class="form-control" name="budget_item" id="budget_item">
+    <select class="form-control" name="budget_item_id" id="budget_item">
         <?php /** @var array $budget_items статьи расхода*/
         foreach ($budget_items as $item) : ?>
-            <option value="<?= $item['name_budget_item']; ?>" <?php if ($budget['budget_item'] == $item['name_budget_item']) { echo ' selected';} ?>><?= $item['name_budget_item']; ?></option>
+            <option value="<?= (int)$item['id']; ?>" <?php if ($budget['name_budget_item'] == $item['name_budget_item']) { echo ' selected';} ?>><?= $item['name_budget_item']; ?></option>
         <?php endforeach; ?>
     </select>
 </div>
