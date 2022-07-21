@@ -14,12 +14,16 @@ class BudgetController extends AppController {
         $scenario = $year . '-' . $month . '-01';
         // получение данных из БД соответственно сценарию
         $budgets = \R::find('budget', "WHERE scenario = '{$scenario}' AND status = 'Согласован' ORDER BY scenario, number");
+        
         // получаем расходы по выбранным БО
         foreach ($budgets as $item) {
             // получаем составной номер БО НОМЕР/ГОД
             $num_bo = $item['number'].'/'.$year;
             $payments = \R::find('payment', "num_bo LIKE '%{$num_bo}%'");
+            $id = (int)$item['budget_item_id'];
+            $bos = \R::getAssoc('SELECT * FROM budget_items WHERE id=?', [$id]);
             $item['payment'] = $this->get_sum($payments, $num_bo, $item['vat']);
+            $item['budget_item_name'] = $bos[$id]['name_budget_item'];
         }
         // начинаем работать с AJAX-запросом если включены фильтра
         // если данные пришли AJAX-запросом
@@ -108,8 +112,8 @@ class BudgetController extends AppController {
     }
 
     public function viewAction() {
-        $id_bo = isset($_GET['id']) ? $_GET['id'] : null;
-        $bo = \R::findOne('budget', 'id = ?', [$id_bo]);
+        $id_bo = isset($_GET['id']) ? (int)$_GET['id'] : null;
+        $bo = \R::getRow( 'SELECT budget.id, budget.scenario, budget.month_exp, budget.month_pay, budget.number, budget.summa, budget.vat, budget.budget_item_id, budget.status, budget_items.name_budget_item FROM budget INNER JOIN budget_items ON budget.budget_item_id=budget_items.id WHERE budget.id = ?', [$id_bo]);
         $year = mb_substr($bo['scenario'], 0, 4);
         // формируем составной номер БО (НОМЕР/ГОД)
         $num_bo = $bo['number'].'/'.$year;
@@ -127,11 +131,11 @@ class BudgetController extends AppController {
 
     public function editAction() {
         $id_bo = isset($_GET['id']) ? $_GET['id'] : null;
+        
         // получаем данные по БО
-        $budget = \R::findOne('budget', 'id = ?', [$id_bo]);
+        $budget = \R::getRow( 'SELECT budget.id, budget.scenario, budget.month_exp, budget.month_pay, budget.number, budget.summa, budget.vat, budget.budget_item_id, budget.status, budget_items.name_budget_item FROM budget INNER JOIN budget_items ON budget.budget_item_id=budget_items.id WHERE budget.id = ?', [$id_bo]);
         // получаем все статьи расхода
-        $budget_items = \R::getAll('SELECT * FROM budget_items');
-        //debug($budget_items);
+        $budget_items = \R::getAll('SELECT * FROM budget_items ORDER BY name_budget_item');
         if ($this->isAjax()) {
             // Если запрос пришел АЯКСом
             $this->loadView('budget_edit_modal', compact('budget', 'budget_items'));
@@ -142,9 +146,13 @@ class BudgetController extends AppController {
     public function boEditAction() {
         // получаем данные пришедшие методом POST
         $edit_budget = !empty($_POST) ? $_POST : null;
+        $_POST['budget_item_id']=(int) $_POST['budget_item_id'];
         $budget = new Budget();
         $budget->load($edit_budget);
-        $budget->edit('budget', $edit_budget['id']);
+        $budget->attributes['budget_item_id'] = (int)$budget->attributes['budget_item_id'];
+        $budget->attributes['summa'] = (float)$budget->attributes['summa'];
+        $budget->attributes['vat'] = (float)$budget->attributes['vat'];
+        $budget->edit('budget', (int)$edit_budget['id']);
         redirect();
     }
 
