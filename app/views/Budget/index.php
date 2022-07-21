@@ -64,7 +64,7 @@
                     <?php foreach ($budgets as $budget): ?>
                         <tr>
                             <?php
-                            $date = date_create($budget->scenario);
+                            $date = date_create($budget['scenario']);
                             $_monthsList = array(
                                 "1"=>"Янв","2"=>"Фев","3"=>"Мар",
                                 "4"=>"Апр","5"=>"Май", "6"=>"Июн",
@@ -72,9 +72,9 @@
                                 "10"=>"Окт","11"=>"Ноя","12"=>"Дек");
 
                             $scenario = $_monthsList[date_format($date, "n")].'&nbsp;'.date_format($date, "Y");
-                            $date = date_create($budget->month_exp);
+                            $date = date_create($budget['month_exp']);
                             $month_exp = $_monthsList[date_format($date, "n")];//.'&nbsp;'.date_format($date, "Y");
-                            $date = date_create($budget->month_pay);
+                            $date = date_create($budget['month_pay']);
                             $month_pay = $_monthsList[date_format($date, "n")];//.'&nbsp;'.date_format($date, "Y");
                             ?>
                             <td><?= $scenario;?></td>
@@ -85,7 +85,7 @@
                             <td><?= number_format($budget->payment, 2, ',', '&nbsp;');?>&nbsp;₽</td>
                             <th><?= number_format($budget->summa - $budget->payment, 2, ',', '&nbsp;');?>&nbsp;₽</th>
                             <td><?= $budget->vat;?></td>
-                            <td><?= $budget->budget_item;?></td>
+                            <td><?= $budget->budget_item_name;?></td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
